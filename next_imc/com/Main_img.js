@@ -4,7 +4,7 @@ import { Box,Card,CardMedia} from "@mui/material";
 export default function Main1_img(){
 
     return(
-        <Box style={{width:'1600px',height:'600px', margin:'auto'}}> 
+        <div style={{width:'1600px',height:'600px', margin:'auto'}}> 
             <Card style={{width:'1600px',height:'600px', margin:'auto'}}>
                 <CardMedia 
                                 component='img'
@@ -14,6 +14,6 @@ export default function Main1_img(){
                                 alt='unsplash image'
                 />
             </Card>
-        </Box>
+        </div>
     );
 }

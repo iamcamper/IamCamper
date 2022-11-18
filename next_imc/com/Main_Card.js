@@ -6,7 +6,7 @@ import { margin } from '@mui/system';
 export default function Main_Card(){
 
     return(
-        <Box style={{width:'1500px', margin:'auto'}}> 
+        <div style={{width:'1500px', margin:'auto'}}> 
         <Stack spacing={25} direction='row'>
                 <Box style={{width:'400px',marginTop:'60px'}}>
                     <Card>
@@ -75,6 +75,6 @@ export default function Main_Card(){
                     </Card>
                 </Box>
             </Stack>
-        </Box>
+        </div>
     );
 }
