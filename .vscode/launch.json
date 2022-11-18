@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BootImcApplication<boot_imc>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.iamcamper.boot_imc.BootImcApplication",
+            "projectName": "boot_imc",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
