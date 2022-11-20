@@ -1,19 +1,119 @@
 
-import { Box,Card,CardMedia} from "@mui/material";
+import { Box,Card,CardMedia,TextField} from "@mui/material";
+import zIndex from "@mui/material/styles/zIndex";
+import { useState,useEffect } from "react";
+import {FaArrowAltCircleRight,FaArrowAltCircleLeft} from 'react-icons/fa';
 
 export default function Main1_img(){
+    //---------받아온 이미지 경로 저장할 곳---------------------
+    const [Data,setData] = useState([
+        {
+            image:'https://www.seoul.go.kr/upload/hotissue/22a91f27e7b44311b3aa11404b480ada.jpg'
+        },
+        {
+            image:'https://www.seoul.go.kr/upload/hotissue/f0ba114f6ca448e4b2fa34ee97db843f.jpg'
+        },
+        {
+            image:'https://www.seoul.go.kr/upload/hotissue/491d1c3d9b8141aca72c5b63a97c6f6f.jpg'
+        },
+        {
+            image:'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxODEyMzFfNTkg%2FMDAxNTQ2MjQyNjQxODY3.k_7sYsUWGBo3hvQAJNUzj5WpYVSFBXl3yQ2vB-2-pRAg.j3L_RCi9pZCGlVdBfK7_sfHW6uOuApMpB1e9dW1LHikg.JPEG.dodreamgj%2F3.jpg&type=a340'
+        },
+        {
+            image:'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20151227_14%2Fboreumm_1451226185243639Jq_PNG%2Fcamping2_b5.png&type=a340'
+        }
+    ])
+    //------------------------------------------------
+
+    const [cnt , setcnt] = useState(0);
+    const length = Data.length;
+
+    const nextSlide = () =>{
+        setcnt(cnt === length -1 ? 0 : cnt +1);
+    }
+    const prevSlide = () => {
+        setcnt(cnt === 0 ? length - 1 : cnt -1);
+    }
+   //console.log(cnt);
+
+    if(!Array.isArray(Data)|| Data.length <= 0){
+        return null;
+    }
+
+    //5초마다 nextSlide를 실행하는 함수
+    useEffect (()=>{
+        
+        const loop = setInterval(()=>{
+            nextSlide();
+            console.log(cnt);
+        },6000);
+        return ()=> clearInterval(loop);
+    });
 
     return(
-        <div style={{width:'1600px',height:'600px', margin:'auto'}}> 
-            <Card style={{width:'1600px',height:'600px', margin:'auto'}}>
-                <CardMedia 
-                                component='img'
-                                height='100%'
-                                width='100%'
-                                image="https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1824,c_limit/28381cf9-4f31-4e89-bd92-caf677fd2cdf/nike-just-do-it.png"
-                                alt='unsplash image'
+        <div style={{width:'1600px',height:'600px', margin:'0 auto'}}> 
+            <section className="slider" style={{
+                position:'relative',
+                display:'flex',
+                justifyContent:'center',
+                alignItems:'center',
+            }}>
+                < FaArrowAltCircleLeft className="left-arrow" style={{
+                    position:'absolute',
+                    left:'32px',
+                    fontSize:'50px',
+                    color:'#000',
+                    zIndex:'10',
+                    cursor:'pointer',
+                    userSelect:'none'
+                    
+                }}
+                onClick={prevSlide}
                 />
-            </Card>
+             {Data.map((item,index) => (
+                <div className={index === cnt ? 'slide active' : 'slide'} key={index}>
+                    {index === cnt && (
+                           <img src={item.image} style={{
+                            width:'1600px',
+                            height:'600px',
+                            borderRadius:'10px'
+                        }}/>
+
+                    )}
+                 
+                </div>
+             ))}
+             < FaArrowAltCircleRight className="Right-arrow" style={{
+                    position:'absolute',
+                    right:'32px',
+                    fontSize:'3rem',
+                    color:'#000',
+                    zIndex:'10',
+                    cursor:'pointer',
+                    userSelect:'none'
+                }}
+                onClick={nextSlide}
+                />
+                <span style={{
+                    position:'absolute',
+                    right:'32px',
+                    bottom:'32px',
+                    fontSize:'3rem',
+                    color:'#000',
+                    zIndex:'10',
+                    cursor:'pointer',
+                    userSelect:'none',
+                    fontSize:'20px',
+                    color: "gray"
+                }}
+                onClick={nextSlide}
+                >{cnt+1}/{length}</span>
+             </section>
+             
+
         </div>
+         
+        
+      
     );
 }

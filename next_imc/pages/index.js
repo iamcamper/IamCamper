@@ -14,6 +14,7 @@ export default function Home() {
       <Main1/>
       <Main1_Menu/>
       <Main1_img/>
+      <Main_Card/>
       <Main_Bottom/>
     </div>
   )
