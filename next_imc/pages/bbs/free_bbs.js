@@ -15,7 +15,6 @@ import TableRow from '@mui/material/TableRow';
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import router from "next/router";
-import Paging from "./paging";
 
 
 
@@ -87,7 +86,7 @@ export default function free_bbs(){
         </Table>
       </TableContainer>
     </Paper>
-    <Paging/>
+  
         </div>  
             <Main_Bottom/>
         </div>

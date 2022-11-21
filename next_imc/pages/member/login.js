@@ -3,7 +3,7 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main_Bottom from "../../com/Main_Bottom";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
-import { Box, Container, Paper, FormControl, Stack, TextField, Button } from '@mui/material';
+import { Box, Container, Paper, FormControl, Stack, TextField, Button, Link } from '@mui/material';
 
 export default function login(){
 
@@ -31,11 +31,15 @@ export default function login(){
                 </Paper>
                 <Paper elevation={2} sx={{width:'500px' , height:'200px', margin:'auto', padding:'10px', marginTop:'10px'}}>
                     <h2>간편 소셜 로그인</h2>
-                    <div><img src="../images/kakao_login.png" alt="kakaologin" width="183px" height="45px"></img></div>
+                    <div>
+                        <Link href={"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=80dbe36c8a45235bf28e54201f359542&redirect_uri=http://localhost:8080/mem/kakao"}>
+                        <img src="../images/kakao_login.png" alt="kakaologin" width="183px" height="45px">
+                    </img></Link></div>
                     <div><img src="../images/naver_login.png" alt="naverlogin" width="183px" height="45px"></img></div>
                 </Paper>
              </Box>
         </Container>
+        
       </div>
 
       <Main_Bottom/>
