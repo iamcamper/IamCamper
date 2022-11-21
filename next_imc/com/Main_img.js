@@ -3,6 +3,8 @@ import { Box,Card,CardMedia,TextField} from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
 import { useState,useEffect } from "react";
 import {FaArrowAltCircleRight,FaArrowAltCircleLeft} from 'react-icons/fa';
+//import styles from '../styles/main.module.css';
+
 
 export default function Main1_img(){
     //---------받아온 이미지 경로 저장할 곳---------------------
@@ -45,72 +47,26 @@ export default function Main1_img(){
         
         const loop = setInterval(()=>{
             nextSlide();
-            console.log(cnt);
         },6000);
         return ()=> clearInterval(loop);
     });
 
     return(
         <div style={{width:'1600px',height:'600px', margin:'0 auto'}}> 
-            <section className="slider" style={{
-                position:'relative',
-                display:'flex',
-                justifyContent:'center',
-                alignItems:'center',
-            }}>
-                < FaArrowAltCircleLeft className="left-arrow" style={{
-                    position:'absolute',
-                    left:'32px',
-                    fontSize:'50px',
-                    color:'#000',
-                    zIndex:'10',
-                    cursor:'pointer',
-                    userSelect:'none'
-                    
-                }}
-                onClick={prevSlide}
-                />
-             {Data.map((item,index) => (
-                <div className={index === cnt ? 'slide active' : 'slide'} key={index}>
-                    {index === cnt && (
-                           <img src={item.image} style={{
-                            width:'1600px',
-                            height:'600px',
-                            borderRadius:'10px'
-                        }}/>
-
+            <section className='slider'>
+                < FaArrowAltCircleLeft className='leftarrow' onClick={prevSlide}/>
+             {Data.map((item,index) => {
+                return(
+                <div className={index === cnt ? 'slide active':'slide'} key={index}>
+                    {index === cnt &&(
+                    <img src={item.image} alt='image' className='image'/>
                     )}
-                 
                 </div>
-             ))}
-             < FaArrowAltCircleRight className="Right-arrow" style={{
-                    position:'absolute',
-                    right:'32px',
-                    fontSize:'3rem',
-                    color:'#000',
-                    zIndex:'10',
-                    cursor:'pointer',
-                    userSelect:'none'
-                }}
-                onClick={nextSlide}
-                />
-                <span style={{
-                    position:'absolute',
-                    right:'32px',
-                    bottom:'32px',
-                    fontSize:'3rem',
-                    color:'#000',
-                    zIndex:'10',
-                    cursor:'pointer',
-                    userSelect:'none',
-                    fontSize:'20px',
-                    color: "gray"
-                }}
-                onClick={nextSlide}
-                >{cnt+1}/{length}</span>
+                )
+            })}
+             < FaArrowAltCircleRight className='Rightarrow' onClick={nextSlide}/>
+                <span className='item'>{cnt+1}/{length}</span>
              </section>
-             
-
         </div>
          
         
