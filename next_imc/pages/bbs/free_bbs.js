@@ -15,10 +15,17 @@ import TableRow from '@mui/material/TableRow';
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import router from "next/router";
+import Pagination from "react-js-pagination";
 
 
 
 export default function free_bbs(){ 
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
     return(
           <div className= {styles.container}>  
             <Main1_top/>
@@ -53,22 +60,10 @@ export default function free_bbs(){
                     <TableCell>테스트1</TableCell>
                     <TableCell>테스트1</TableCell>
                     <TableCell>테스트1</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>테스트1</TableCell>
-                    <TableCell>테스트1</TableCell>
-                    <TableCell>테스트1</TableCell>
-                    <TableCell>테스트1</TableCell>
                     <TableCell>테스트1</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>테스트1</TableCell>
-                    <TableCell>테스트1</TableCell>
-                    <TableCell>테스트1</TableCell>
-                    <TableCell>테스트1</TableCell>
-                    <TableCell>테스트1</TableCell>
-                  </TableRow>
-                  <TableRow>
                     <TableCell>테스트1</TableCell>
                     <TableCell>테스트1</TableCell>
                     <TableCell>테스트1</TableCell>
@@ -81,14 +76,57 @@ export default function free_bbs(){
                     <TableCell>테스트1</TableCell>
                     <TableCell>테스트1</TableCell>
                     <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
                   </TableRow>
-          </TableBody>
+                  <TableRow>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                    <TableCell>테스트1</TableCell>
+                  </TableRow>
+            </TableBody>
         </Table>
       </TableContainer>
     </Paper>
-  
-        </div>  
+       </div> 
+       <div class="bottom-div">
+          <form class="search-form">
+            <input type="search" value="" placeholder="Search" class="search-input"/>
+            <button type="submit" class="search-button">
+              <img src={'/images/search_icon.png'}/>
+            </button>
+          </form>
+           <Pagination
+              activePage={page}
+              itemsCountPerPage={10}
+              totalItemsCount={450}
+              pageRangeDisplayed={5}
+              prevPageText={"‹"}
+              nextPageText={"›"}
+              onChange={handlePageChange}
+            />
+      </div>
+          <div> 
             <Main_Bottom/>
+          </div>
         </div>
     )
 }
