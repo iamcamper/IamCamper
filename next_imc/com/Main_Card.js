@@ -10,7 +10,50 @@ export default function Main_Card(){
 
     //------------------------------비동기식 통신으로 램덤 자료 3개 받을 곳!----------------------
     const [list,setList] =useState([]);
-
+    //------------------------------비동기식 통신으로 받아올 베스트 글 정보 저장할 곳 !  -------------------
+    const [c_list,setC_list] = useState([
+        {
+            title:'오늘의 베스트 켐핑장',
+            category:'자랑'
+        },
+        {
+            title:'캠핑장에서 이렇게 먹었어요',
+            category:'먹거리'
+        },
+        {
+            title:'지역 특상품 : 가평 밤막걸리 짱! + 해장국 여기 대박이에요 !! 꼭',
+            category:'먹거리'
+        },
+        {
+            title:'땅끝마을에서 차박 했어요 !!!!',
+            category:'자랑'
+        },
+        {
+            title:'대박 강릉 닭강정 맛있어요 ~',
+            category:'먹거리'
+        },
+        {
+            title:'드라이브 중 발견한 안목해변 풍경',
+            category:'추천'
+        },
+        {
+            title:'이건 꼭 봐야함 안보면 ....',
+            category:'자유'
+        },
+        {
+            title:'어디갈까요 ? 투표 부탁드립니다 !! ',
+            category:'자유'
+        },
+        {
+            title:'이걸 안본다고 ??',
+            category:'자유'
+        },
+        {
+            title:'좋아요 눌러줘 이렇게 부탁할게',
+            category:'자유'
+        }
+    ]);
+        
     const API_URL ='https://apis.data.go.kr/B551011/GoCamping/searchList?serviceKey=wBQmzgiBACZ1O%2FJ79%2FmqTep2O%2BGJZiXE2%2BHacF5l2epi%2FT4f1uh270dxEAiIzwstnzWTF74b6C%2BRli%2BRL4UlTQ%3D%3D&numOfRows=3&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&keyword=%EC%95%BC%EC%98%81%EC%9E%A5'
     const API_URL2 = 'http://localhost8080/getList'
     function getData(){
@@ -32,12 +75,10 @@ export default function Main_Card(){
 
     useEffect(() => { 
         getData();
-        //getList();
     },[]);
 
-
-
-
+    //-------------------------------------
+   
 
 
     return(
@@ -47,7 +88,7 @@ export default function Main_Card(){
             <Stack spacing={25} direction='row'>
                 <Grid container>
                     <Grid item xs>
-                        <Box style={{width:'100%',height:'100%',marginTop:'30px',padding:'20px'}}>
+                        <Box className="box">
                                     <Typography variant='h5' component='div' textAlign='left' marginBottom='20px'>
                                     오늘의 추천 Pick
                                     </Typography>
@@ -62,10 +103,10 @@ export default function Main_Card(){
                                                />
                                              </Grid>
                                             <Grid item xs={8}>
-                                                <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
+                                                <Typography variant='body1'color='text.secondary' className="camtitle">
                                                        {item.facltNm}
                                                 </Typography>
-                                                <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
+                                                <Typography variant='body1'color='text.secondary' className="camtitle" >
                                                     {item.addr1}
                                                 </Typography>
                                                 <CardActions>
@@ -78,257 +119,46 @@ export default function Main_Card(){
                         </Box>
                     </Grid>
                     <Grid item xs>
-                        <Box style={{width:'100%',height:'100%',marginTop:'30px',padding:'20px'}}>
+                        <Box className="box">
                                     <Typography variant='h5' component='div' textAlign='left' marginBottom='10px'>
                                     I am Camper 중고거래
                                     </Typography>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
+                            {c_list.map((item2) => (
+                                <Grid container className="bbsbox" >
                                  <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
+                                     <Typography variant='body1' color='text.secondary' className="bbscategory">
+                                    [{item2.category}]
+                                      </Typography>
                                  </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       클릭 시 해당 글 보기로 이동 ! 
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
+                                 <Grid item xs={9}>
+                                    <Typography variant='body1' color='text.secondary'className='bbstitle'>
+                                      {item2.title}
+                                   </Typography>
                                  </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
+                                </Grid>       
+                            ))}
                         </Box>
                     </Grid>
                     <Grid item xs>
-                        <Box style={{width:'100%',height:'100%',marginTop:'30px',padding:'20px'}}>
+                        <Box className="box">
                                     <Typography variant='h5' component='div' textAlign='left' marginBottom='10px'>
                                     I am Camper 오늘의 화제
-                                    </Typography>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     클릭 시 해당 글 보기로 이동 ! 
-                                    </Typography>
+                                    </Typography> 
+                            {c_list.map((item2) => (
+                                <Grid container className="bbsbox">
+                                <Grid item xs={3}>
+                                <Typography variant='body1' color='text.secondary' className="bbscategory">
+                                    [{item2.category}]
+                                 </Typography>
                                 </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container marginTop='5px' borderBottom="1px solid #d3d3d3" paddingBottom='5px'>
-                                 <Grid item xs={3}>
-                                 <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                     [카테고리]
-                                  </Typography>
-                                 </Grid>
-                                <Grid item xs={9}>
-                                     <Typography variant='body1' color='text.secondary' textAlign='left' marginTop='10px' marginLeft='10px'>
-                                       강원도 용용캠핑장 대박 후기!! 꼭 보세요
-                                    </Typography>
-                                </Grid>
-                            </Grid>
+                               <Grid item xs={9}>
+                                    <Typography variant='body1' color='text.secondary' className='bbstitle' >
+                                      {item2.title}
+                                   </Typography>
+                               </Grid>
+                           </Grid>       
+                                    ))}
+
                         </Box>
                     </Grid>
                 </Grid>
