@@ -32,7 +32,7 @@ export default function login(){
                 <Paper elevation={2} sx={{width:'500px' , height:'200px', margin:'auto', padding:'10px', marginTop:'10px'}}>
                     <h2>간편 소셜 로그인</h2>
                     <div>
-                        <Link href={"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=80dbe36c8a45235bf28e54201f359542&redirect_uri=http://localhost:8080/mem/kakao"}>
+                        <Link href={"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=80dbe36c8a45235bf28e54201f359542&redirect_uri=http://localhost:8080/mem/kakaologin"}>
                         <img src="../images/kakao_login.png" alt="kakaologin" width="183px" height="45px">
                     </img></Link></div>
                     <div><img src="../images/naver_login.png" alt="naverlogin" width="183px" height="45px"></img></div>

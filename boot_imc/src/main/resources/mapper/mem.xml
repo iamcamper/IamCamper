@@ -7,4 +7,12 @@
     select * from member
     WHERE id = #{id} AND pw = #{pw}
   </select>
+  <select id="kakaologin" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Object">
+    select * from member
+    WHERE snsId = #{snsId}
+  </select>
+  <insert id="kakaoinsert" parameterType="Map">
+    INSERT INTO member(snsId, snsNickname, snsByear, email, nickname)
+    VALUES(#{snsId}, #{snsNickname}, 1, #{email}, "kakao")
+  </insert>
 </mapper>

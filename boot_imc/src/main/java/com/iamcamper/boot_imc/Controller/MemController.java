@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iamcamper.boot_imc.VO.MemVO;
+import com.iamcamper.boot_imc.mapper.MemMapper;
 import com.iamcamper.boot_imc.service.MemService;
-import com.iamcamper.boot_imc.service.authService;
+
+import ch.qos.logback.core.joran.conditional.ElseAction;
 
 @RestController
 @RequestMapping("/mem")
@@ -22,8 +24,6 @@ public class MemController {
 
     @Autowired
     private MemService m_Service;
-    @Autowired
-    private HttpSession session;
 
     @RequestMapping("/login")
     public Map<String, Object> login(String id, String pw) {
@@ -38,21 +38,23 @@ public class MemController {
         return resMap;
     }
 
-    @Autowired
-    private authService a_kakao;
+    @ResponseBody
+    @GetMapping("/kakaologin")
+    public void kakaoCall(@RequestParam String code) {
+        String access_Token = m_Service.getKakaoAccessToken(code);
+
+        m_Service.UserKakaoLogin(access_Token);
+
+    }
 
     @ResponseBody
-    @GetMapping("/kakao")
-    public String kakaoCall(@RequestParam String code) {
-        String access_Token = a_kakao.getKakaoAccessToken(code);
-        HashMap<String, Object> userInfo = a_kakao.createKakaoUser(access_Token);
-        System.out.println("login Controller : " + userInfo);
+    @RequestMapping("/kakaologout")
+    public String logout(HttpSession session) {
+        m_Service.UserKakaoLogout((String) session.getAttribute("access_Token"));
+        session.removeAttribute("access_Token");
+        session.removeAttribute("userId");
 
-        // 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
-        if (userInfo.get("email") != null) {
-            session.setAttribute("userId", userInfo.get("email"));
-            session.setAttribute("access_Token", access_Token);
-        }
-        return "/mem/kakao";
+        return "index";
     }
+
 }
