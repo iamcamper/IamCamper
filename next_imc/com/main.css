@@ -69,4 +69,77 @@
     transition-duration:1s ;
     transform:scale(1);
   }
+/* --------------------------------------------------------*/
 
+.box{
+  width:100%;
+  height:100%;
+  margin-top:30px;
+  padding:20px;
+  font-weight:bold ;
+}
+
+.bbstitle{
+    text-align:left;
+    margin-top:10px;
+    margin-left:10px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    width:350px;
+    white-space:nowrap;
+    font-size:16px;
+    cursor:pointer;
+    
+}
+.bbscategory{
+  text-align:left;
+  margin-top:10px;
+  margin-left:10px;
+  font-size:16px;
+}
+
+.camtitle{
+  text-align:left;
+  margin-top:10px;
+  margin-left:10px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  width:320px;
+  white-space:nowrap;
+  font-size:16px;
+  
+}
+.bbsbox{
+  border-bottom :1px solid #d3d3d3;
+  padding-bottom:5px;
+  margin-top: 5px; 
+}
+/* ======================================캠핑장 페이지 나중에 옮겨갈거====================================*/
+
+.icons{
+  position:absolute;
+  height:70px;
+  width:70px;
+  border:5px solid #B4FBFF; 
+  border-radius:25%;
+  cursor:pointer;
+  background-color: #9DE4ff;
+  border-block-color: #98DFFF;
+  writing-mode: horizontal-tb;
+}
+.icons:hover{
+  background-color: #00BFFF;
+}
+
+.icons:active{
+  background-color: #6495ED;
+}
+
+.icon{
+  height:60px;
+  width:60px;
+  color: #ffffff;
+}
+.name{
+  font-size: 13px;
+}
