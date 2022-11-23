@@ -4,8 +4,31 @@ import Main_Bottom from "../../com/Main_Bottom";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
 import { Box, Container, Paper, FormControl, Stack, TextField, Button, Link } from '@mui/material';
+import { useState ,useEffect} from "react";
+import Axios from 'axios';
 
 export default function login(){
+
+    const API_URL = "http://localhost:8080/sns/naverlogin";
+    const [naverURL,setNaverURL] = useState("");
+    
+    function getURL(){
+        Axios.get(
+            API_URL
+        ).then((json)=>{
+            console.log(json.data);
+            setNaverURL(json.data);
+        });
+    }
+
+
+    useEffect(() => { 
+        getURL();
+
+    },[]);
+
+
+
 
     return(
     <div className={styles.container}>
@@ -35,7 +58,11 @@ export default function login(){
                         <Link href={"https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=80dbe36c8a45235bf28e54201f359542&redirect_uri=http://localhost:8080/mem/kakaologin"}>
                         <img src="../images/kakao_login.png" alt="kakaologin" width="183px" height="45px">
                     </img></Link></div>
-                    <div><img src="../images/naver_login.png" alt="naverlogin" width="183px" height="45px"></img></div>
+                    <div>
+                        <Link href={naverURL} >
+                            <img src="../images/naver_login.png" alt="naverlogin" width="183px" height="45px"/>
+                        </Link>
+                    </div>
                 </Paper>
              </Box>
         </Container>
