@@ -34,10 +34,10 @@ export default function free_bbs(){
           <div>
           <Paper sx={{width:'1600px', margin:'auto', textAlign:'center', height:'auto'}}>
             <Grid container my={8} style={{textAlign:'center', marginBottom:'15px'}}>
-                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={()=>router.push("/camping/imc_camping")} >임시 버튼1</Button></Grid>
-                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} >임시 버튼2</Button></Grid>
-                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} >임시 버튼3</Button></Grid>
-                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}}>임시 버튼4</Button></Grid>
+                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={()=>router.push("/camping/imc_camping")} > 자유 게시판 </Button></Grid>
+                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} >후기 게시판</Button></Grid>
+                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} > 맛집 게시판</Button></Grid>
+                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}}>중고 거래 게시판</Button></Grid>
           </Grid>
           <Grid item xs style={{textAlign:'right', marginTop:'0px'}}> 
             <Button variant="contained" style={{marginRight:'15px'}} onClick={()=>router.push("/bbs/edit_bbs")} startIcon={<EditIcon/>}>글쓰기</Button>
@@ -107,10 +107,10 @@ export default function free_bbs(){
       </TableContainer>
     </Paper>
        </div> 
-       <div class="bottom-div">
-          <form class="search-form">
-            <input type="search" value="" placeholder="Search" class="search-input"/>
-            <button type="submit" class="search-button">
+       <div className="bottom-div">
+          <form className="search-form">
+            <input type="text" placeholder="Search" className="search-input"/>
+            <button type="submit" className="search-button">
               <img src={'/images/search_icon.png'}/>
             </button>
           </form>

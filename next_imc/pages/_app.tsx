@@ -4,5 +4,8 @@ import '../com/main.css'
 import '../pages/bbs/bbs.css'
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+  <Component {...pageProps} />
+    
+  ) 
 }

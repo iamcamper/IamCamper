@@ -128,6 +128,7 @@ public class MemService {
             System.out.println(snsNickname);
             System.out.println(snsByear);
 
+            userInfo.put("id", snsId);
             userInfo.put("snsId", snsId);
             userInfo.put("snsNickname", snsNickname);
             userInfo.put("snsByear", snsByear);

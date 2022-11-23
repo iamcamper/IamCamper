@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iamcamper.boot_imc.VO.MemVO;
-import com.iamcamper.boot_imc.mapper.MemMapper;
 import com.iamcamper.boot_imc.service.MemService;
-
-import ch.qos.logback.core.joran.conditional.ElseAction;
 
 @RestController
 @RequestMapping("/mem")
