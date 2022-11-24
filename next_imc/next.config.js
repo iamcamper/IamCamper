@@ -1,5 +1,3 @@
-
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -8,12 +6,11 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        destination: "http://localhost:8080/sns/:path*",
-        source: "/sns/:path*",
+        destination: "http://localhost:8080/:path*",
+        source: "/:path*",
       }
     ];
-  },
-
+    },
 }
 module.exports = nextConfig
 

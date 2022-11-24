@@ -9,7 +9,7 @@ import Axios from 'axios';
 
 export default function login(){
 
-    const API_URL = "http://localhost:8080/sns/naverlogin";
+    const API_URL = "/sns/naverlogin";
     const [naverURL,setNaverURL] = useState("");
     
     function getURL(){
