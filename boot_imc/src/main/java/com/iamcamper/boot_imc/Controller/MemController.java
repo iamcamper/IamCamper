@@ -16,7 +16,7 @@ import com.iamcamper.boot_imc.VO.MemVO;
 import com.iamcamper.boot_imc.service.MemService;
 
 @RestController
-@RequestMapping("/mem")
+@RequestMapping("/sns")
 public class MemController {
 
     @Autowired
