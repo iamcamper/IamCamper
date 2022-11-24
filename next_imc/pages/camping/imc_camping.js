@@ -5,6 +5,15 @@ import Main_Bottom from "../../com/Main_Bottom";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
 import { Box, Container, Paper, FormControl, Stack, TextField, Button ,InputLabel,Select,MenuItem} from '@mui/material';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+
+
 import { useEffect ,useState} from 'react';
 import Grid from '@mui/material/Grid';
 import { borderRadius, width } from "@mui/system";
@@ -15,7 +24,9 @@ import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import AirportShuttleIcon from '@mui/icons-material/AirportShuttle';
 import PetsSharpIcon from '@mui/icons-material/PetsSharp';
 import WarehouseSharpIcon from '@mui/icons-material/WarehouseSharp';
-
+import FitScreenIcon from '@mui/icons-material/FitScreen';
+import Pagination from '@mui/material/Pagination';
+//-------------------------import ---------------------------
 export default function imc_camping(){
   
 //-------------------------지도-------------------------------------------------------
@@ -67,18 +78,39 @@ export default function imc_camping(){
 //-------------------------지도-------------------------------------------------------
 
 const [addr,setAddr] = useState('');
-const [title,setTitle] = useState('');
+const [title,setTitle] = useState([list]);
+var list =[""];
+
 const category= ['서울특별시','부산광역시','대구광역시','인청광역시','광주광역시','울산','경기도','강원도','충청남도','경상북도','경상남도','전라북도','전라남도','제주','세종특별자치시 '];
 
 const handleChange = (event) => {
     setAddr(event.target.value);
-    console.log(addr+'/'+title);
+    //console.log(addr+'/'+title);
 };
 
 function setTag (name) {
-  setTitle(name);
-  console.log(addr+'/'+title);
+  var chk = true;
+  list.forEach(element => {
+
+      if(element == name){
+        chk=false;
+      }
+  });
+  if(chk){
+    list.push(name);
+  }
+  list.forEach(element => {
+    console.log(element);
+});
+
+  
 };
+function setId(e){
+    
+}
+
+
+
     return(
     
     <div className={styles.container}>
@@ -97,6 +129,7 @@ function setTag (name) {
                     alignItems: "center",
                     justifyContent: "center",
                     margin:"auto",
+                    borderRadius:"10px"
                   }}/>
               </div>
             </Grid>
@@ -118,31 +151,29 @@ function setTag (name) {
                     </Select>
                   </FormControl>  
                 </div>
-              
-
-                  <div style={{top:'150px',left:'170px'}} className='icons' onClick={() => setTag("야영")} >  
-                    <LocalFireDepartmentIcon className='icon' />
-                    <span className="name">야영장</span>
+                  <div style={{top:'150px',left:'170px'}} className='icons' onClick={() => {setTag("");}} >  
+                    <FitScreenIcon className='icon' onClick={setId}/>
+                    <span className="name">전체 보기</span>
                   </div>
                   <div style={{top:'150px',left:'270px'}} className='icons' onClick={() => setTag("애완동물")}>
-                    <PetsSharpIcon className='icon'/>
+                    <PetsSharpIcon className='icon' onClick={setId}/>
                   <span className="name">애완동물</span>
                   </div>
-                  <div style={{top:'150px',left:'370px'}} className='icons' onClick={() => setTag("자동차")}>
-                    <AirportShuttleIcon className='icon'/>
-                  <span className="name">자동차</span>
-                  </div>
-                  <div style={{top:'150px',left:'470px'}}className='icons' onClick={() => setTag("카라반")}>
-                    <DriveEtaIcon className='icon'/>
+                  <div style={{top:'150px',left:'370px'}}className='icons' onClick={() => setTag("카라반")}>
+                    <AirportShuttleIcon className='icon' onClick={setId}/>
                   <span className="name">카라반</span>
+                  </div>
+                  <div style={{top:'150px',left:'470px'}} className='icons'>
+                    <DriveEtaIcon className='icon' onClick={() => setTag("자동차")}/>
+                  <span className="name">자동차</span>
                   </div>
                   <div style={{top:'250px',left:'170px'}}className='icons' onClick={() => setTag("글램핑")}>
                     <WarehouseSharpIcon className='icon'/>
                   <span className="name">글램핑</span>
                   </div>
-                  <div style={{top:'250px',left:'270px'}}className='icons' onClick={() => setTag("애완동물")}>
-                    <DriveEtaIcon className='icon'/>
-                  <span className="name">애완동물</span>
+                  <div style={{top:'250px',left:'270px'}}className='icons' onClick={() => setTag("야영장")}>
+                    <LocalFireDepartmentIcon className='icon'/>
+                  <span className="name">야영장</span>
                   </div>
                   <div style={{top:'250px',left:'370px'}}className='icons' onClick={() => setTag("병원")}>
                     <MedicalServicesIcon className='icon'/>
@@ -156,23 +187,95 @@ function setTag (name) {
                     <Button variant="contained" style={{width:'100%',height:"100%"}} >go Camping</Button>
                   </div>
               </div>
-
-              
-            
             </Grid>
           </Grid>
       </Box>
       
-      <Box  div style={{width:'1600px', margin:'0 auto' ,height:"800px"}}>
+      <Box  div style={{width:'1600px', margin:'0 auto' ,height:"900px" ,marginTop:'30px'}}>
         <Grid container  style={{textAlign:'center'}}>
-            <Grid  item xs style={{border:"1px solid #D8D8D8",height:"800px"}}>미리보기 영역 및 페이징 기법</Grid>
+          <Table sx={{ width:"1400px",margin:"0 auto" }} size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow >
+                <TableCell style={{width:"30%",textAlign:"center" }}>이미지</TableCell>
+                <TableCell style={{width:"70%" ,textAlign:"center"}} >소개</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell style={{height:"250px"}}> 
+                  <div style={{width:"300px",height:"200px",margin:"auto"}}> 
+                    <img 
+                      src={"https://lh5.googleusercontent.com/p/AF1QipPgFsF6qvIrWFf2jdnBVG3JVD641Z7ws0WfKUjB=w114-h114-n-k-no"}
+                      style={{width:"300px",height:"200px"}}
+                    />
+                  </div>
+                </TableCell>
+                <TableCell styles={{heigth:"250px"}}>
+                  <div>
+                    <span style={{display:"inline-block",height:"60px",width:"50%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>업체명</span>
+                    <span style={{display:"inline-block",height:"60px",width:"50%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>카테고리</span>    
+                  </div>
+                  <div>
+                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>주소</span>
+                  </div>
+                  <div>
+                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>전화번호</span>
+                  </div>
+                  <div>
+                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>예약방법</span>
+                  </div>
+                  <div>
+                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>애완동물 동반 여부</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell style={{height:"250px"}}> 
+                  <div style={{width:"300px",height:"200px",margin:"auto"}}> 
+                    <img 
+                      src={"https://lh5.googleusercontent.com/p/AF1QipPgFsF6qvIrWFf2jdnBVG3JVD641Z7ws0WfKUjB=w114-h114-n-k-no"}
+                      style={{width:"300px",height:"200px"}}
+                    />
+                  </div>
+                </TableCell>
+                <TableCell styles={{heigth:"250px"}}>
+                  <div>
+                    <span style={{display:"inline-block",height:"60px",width:"50%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>업체명</span>
+                    <span style={{display:"inline-block",height:"60px",width:"50%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>카테고리</span>    
+                  </div>
+                  <div>
+                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>주소</span>
+                  </div>
+                  <div>
+                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>전화번호</span>
+                  </div>
+                  <div>
+                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>예약방법</span>
+                  </div>
+                  <div>
+                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>애완동물 동반 여부</span>
+                  </div>
+                </TableCell>
+              </TableRow>
+              <TableRow >
+                <TableCell colSpan={2}>
+                  <div>
+                    <Stack spacing={2}  >
+                      <Pagination count={10} />
+                    </Stack>
+                  </div>
+                </TableCell>
+              </TableRow>
+              
+            </TableBody>
+          </Table>             
+
           </Grid>
       </Box>
           
         
-      <Main_Bottom/>
+      <Main_Bottom />
 
-    <span className="name">애완동물</span>
     </div>
     );
 }

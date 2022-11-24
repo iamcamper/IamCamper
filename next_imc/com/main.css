@@ -143,3 +143,9 @@
 .name{
   font-size: 13px;
 }
+
+.clickimg{
+  background-color: #6495ED;
+  border-radius:25%;
+  
+}
