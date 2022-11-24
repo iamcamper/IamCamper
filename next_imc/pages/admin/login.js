@@ -1,7 +1,42 @@
 import { Box, Container, Paper, FormControl, Stack, TextField, Button, Link, Card, CardContent, Typography, CardMedia } from '@mui/material';
 import Main_Bottom from '../../com/Main_Bottom';
+import { useRouter } from 'next/router';
+import Axios from 'axios';
+import { useState } from 'react';
+import Admin_Footer from '../../com/Admin_Footer';
+
 
 export default function login () {
+
+    const router = useRouter();
+    
+    const [admin, setAdmin] = useState({
+        id : '',
+        pw: '',
+    });
+    
+    const API_URL = "/admin/login/chk";
+    
+    function changeAdmin(e){
+    
+        setAdmin({
+            ...admin,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    function LoginChk(){
+        Axios.post(
+            API_URL, null,
+            {params:{id: admin.id, pw: admin.pw, grade: 9}}
+        ).then(json =>{
+            if(json.data.chk==0)
+                router.push("/admin/login");
+            else{
+                router.push("/admin/main");
+            }
+        })
+    }
 
     return(
         <div>
@@ -23,9 +58,9 @@ export default function login () {
         <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1, textAlign: 'center', margin:'auto', paddingBottom:'20px'}}>
             <FormControl>
                 <Stack direction="column" alignItems="center" spacing={1} sx={{textAlign:'center', margin:'auto'}}>
-                    <TextField name="id" label="Enter User ID" fullWidth autoFocus></TextField>
-                    <TextField name="pw" label="Enter User Password" type="password" fullWidth></TextField>
-                    <Button variant="contained" fullWidth>로그인</Button>
+                    <TextField name="id" label="Enter User ID" fullWidth autoFocus onChange={changeAdmin}></TextField>
+                    <TextField name="pw" label="Enter User Password" type="password" fullWidth onChange={changeAdmin}></TextField>
+                    <Button variant="contained" fullWidth onClick={LoginChk}>로그인</Button>
                 </Stack>
             </FormControl>
         </Box>
