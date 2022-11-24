@@ -1,7 +1,8 @@
 import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper } from '@mui/material';
+import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
 import Admin_Sidebar from '../../com/Admin_Sidebar';
-import Main_Bottom from '../../com/Main_Bottom';
+
 
 
 export default function notice(){
@@ -46,7 +47,7 @@ export default function notice(){
                 </TableContainer>
             </Box>
         </Stack>
-        <Main_Bottom/>
+        <Admin_Footer/>
 
     </Box>
 

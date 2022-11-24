@@ -1,7 +1,6 @@
 import Admin_Sidebar from '../../com/Admin_Sidebar';
 import { Box, Container, Stack } from "@mui/material";
 import Admin_Navbar from '../../com/Admin_Navbar';
-import Main_Bottom from '../../com/Main_Bottom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -10,6 +9,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import styled from "@emotion/styled";
+import Admin_Footer from '../../com/Admin_Footer';
+
 
 export default function main(){
     return(
@@ -41,8 +42,7 @@ export default function main(){
                     </TableContainer>
                 </Box>
             </Stack>
-            <Main_Bottom/>
-
+            <Admin_Footer/>
         </Box>
     );
 
