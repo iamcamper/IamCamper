@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iamcamper.boot_imc.mapper.CommMapper">
+
+	<!-- 특정 원글의 댓글들만 반환 -->
+	<select id="commList" resultType="com.iamcamper.boot_imc.VO.CommVO"
+	parameterType="String">
+		SELECT * FROM comment
+		WHERE b_idx = #{b_idx}
+	</select>
+	
+	<!-- 댓글 저장 -->
+	<insert id="addAns" parameterType="com.iamcamper.boot_imc.VO.CommVO">
+		INSERT INTO comment(writer, content, write_date, ip, pwd, b_idx)
+		VALUES(#{writer}, #{content}, NOW(), #{ip}, #{pwd}, #{b_idx})
+	</insert>
+
+</mapper>

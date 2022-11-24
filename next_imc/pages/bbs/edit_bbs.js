@@ -3,7 +3,7 @@ import Main1_Menu from '../../com/Main1_Menu';
 import Main_Bottom from '../../com/Main_Bottom';
 import Main1_top from '../../com/Main_top';
 import styles from '../../styles/Home.module.css';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
  import { Editor } from '@tinymce/tinymce-react';
  import TextField from '@mui/material/TextField';
  import InputLabel from '@mui/material/InputLabel';
@@ -21,14 +21,18 @@ export default function edit_bbs(){
        console.log(editorRef.current.getContent());
      }
    };
-   const [value, setValue] = React.useState('Controlled');
+   const [value, setValue] = useState('Controlled');
 
-   const [bbs, setBbs] = React.useState('');
+   const [bbs, setBbs] = useState('');
 
-    const handleChange = (event) => {
-        setValue(event.target.value);
-        setBbs(event.target.value);
-    };
+    const valueChange = (e) => {
+        setValue(e.target.value);
+       
+    }; 
+    const bbsChange = (e) => {
+       setBbs(e.target.value);
+    }; 
+    
     return(
         <div className= {styles.container}>  
             <Main1_top/>
@@ -44,7 +48,7 @@ export default function edit_bbs(){
                     id="demo-select-small"
                     value={bbs}
                     label="bbs"
-                    onChange={handleChange}
+                    onChange={valueChange}
                 >
                     <MenuItem value={0}>
                     <em>자유게시판</em>

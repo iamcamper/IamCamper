@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iamcamper.boot_imc.mapper.BbsMapper">
+    <resultMap type="com.iamcamper.boot_imc.VO.BbsVO" id="map1">
+		<id property="b_idx" column="b_idx"/>
+		<collection property="c_list" ofType="com.iamcamper.boot_imc.VO.CommVO"
+				select="comm.commList" column="b_idx"/>
+	</resultMap>
+	<select id="list" resultType="com.iamcamper.boot_imc.VO.BbsVO" 
+		parameterType="Map">
+		SELECT a.* FROM(
+			SELECT @RN:=@RN+1 AS rownnum, b.* 
+			FROM (SELECT * FROM bbs
+					WHERE status = 0 ORDER BY b_idx DESC) b, (SELECT @RN:=0) r
+		) a
+		WHERE rownnum BETWEEN #{begin} AND #{end}
+	</select>
+    <insert id="add" parameterType="java.util.Map">
+		INSERT INTO bbs(subject, writer, content, file_name, ori_name,
+			ip, write_date, hit, status)
+		VALUES(#{subject}, #{writer}, #{content}, #{file_name}, #{ori_name},
+			#{ip}, NOW(), 0, 0)
+	</insert>
+	
+	<!-- 원글 검색 -->
+	<select id="view" resultMap="map1" parameterType="String">
+		SELECT * FROM bbs
+		WHERE b_idx = #{idx}
+	</select>
+	
+	<!-- 원글 수정 -->
+	<update id="edit" parameterType="java.util.Map">
+		UPDATE bbs
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="subject != null">
+				subject = #{subject},
+			</if>
+			<if test="content != null">
+				content = #{content},
+			</if>
+			<if test="fname != null">
+				file_name = #{file_name},
+				ori_name = #{ori_name},
+			</if>
+		</trim>
+		WHERE b_idx = #{b_idx}
+	</update>
+	<update id="del" parameterType="String">
+		UPDATE bbs
+		SET status = 1
+		WHERE b_idx = #{b_idx}
+	</update>
+</mapper>
