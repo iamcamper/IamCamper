@@ -12,7 +12,7 @@
     WHERE snsId = #{snsId}
   </select>
   <insert id="kakaoinsert" parameterType="Map">
-    INSERT INTO member(snsId, snsNickname, snsByear, email, nickname)
-    VALUES(#{snsId}, #{snsNickname}, 1, #{email}, "kakao")
+    INSERT INTO member(id, snsId, snsNickname, snsByear, email, snsAuth)
+    VALUES(#{snsId}, #{snsId}, #{snsNickname}, 1, #{email}, "kakao")
   </insert>
 </mapper>

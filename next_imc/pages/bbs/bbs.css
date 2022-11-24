@@ -1,6 +1,6 @@
-
-
-
+/*
+  free_bbs의 검색
+*/
   .search-form {
     position: relative;
     top: 50%;
@@ -110,3 +110,4 @@
     height: 30px;
     color: #337ab7;
   }
+ 

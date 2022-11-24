@@ -15,7 +15,7 @@ export default function Admin_Sidebar(){
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" href="#notice">
+                    <ListItemButton component="a" href="/admin/notice">
                         <ListItemIcon>
                             <Campaign/>
                         </ListItemIcon>
@@ -23,7 +23,7 @@ export default function Admin_Sidebar(){
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" href="#banner">
+                    <ListItemButton component="a" href="/admin/banner">
                         <ListItemIcon>
                             <Event/>
                         </ListItemIcon>

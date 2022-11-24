@@ -44,7 +44,7 @@ public class MemService {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=80dbe36c8a45235bf28e54201f359542");
-            sb.append("&redirect_uri=http://localhost:8080/mem/kakaologin");
+            sb.append("&redirect_uri=http://localhost:8080/sns/kakaologin");
             sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();
@@ -128,6 +128,7 @@ public class MemService {
             System.out.println(snsNickname);
             System.out.println(snsByear);
 
+            userInfo.put("id", snsId);
             userInfo.put("snsId", snsId);
             userInfo.put("snsNickname", snsNickname);
             userInfo.put("snsByear", snsByear);
