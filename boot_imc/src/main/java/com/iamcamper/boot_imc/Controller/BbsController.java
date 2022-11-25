@@ -34,4 +34,16 @@ public class BbsController {
 
         return map;
     }
+
+    @RequestMapping("/blist")
+    public Map<String, Object> blist() {
+        // 게시판 bname 정해지면 수정 할 곳!
+        BbsVO[] ar = b_Service.blist("BBS");
+        BbsVO[] ar2 = b_Service.blist("USED");
+        Map<String, Object> map = new HashMap<>();
+        map.put("blist", ar);
+        map.put("ulist", ar2);
+
+        return map;
+    }
 }

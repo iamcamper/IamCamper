@@ -23,4 +23,14 @@ public class BbsService {
         return ar;
     }
 
+    public BbsVO[] blist(String bname) {
+        List<BbsVO> list = mapper.blist(bname);
+        BbsVO[] ar = null;
+        if (list != null && list.size() > 0) {
+            ar = new BbsVO[list.size()];
+            list.toArray(ar);
+        }
+        return ar;
+    }
+
 }

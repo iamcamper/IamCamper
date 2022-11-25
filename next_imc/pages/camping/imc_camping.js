@@ -26,8 +26,57 @@ import PetsSharpIcon from '@mui/icons-material/PetsSharp';
 import WarehouseSharpIcon from '@mui/icons-material/WarehouseSharp';
 import FitScreenIcon from '@mui/icons-material/FitScreen';
 import Pagination from '@mui/material/Pagination';
+import { INTERNALS } from "next/dist/server/web/spec-extension/request";
 //-------------------------import ---------------------------
 export default function imc_camping(){
+  const [camlist,setCamlist] = useState([
+    {
+      title:"xx캠핑장",
+      image:"https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMzBfMTUx%2FMDAxNjY3MTE4Mjc4NzM2.w-t-3vX19TkE1gS6nF1mtokVrGMg2LMCUlOog40ra3cg.m4LSUKD5SgHD2x5QOnYXJ1VZe41q_DbpxUI38GUACdgg.JPEG.bbaltae%2F1667118265169.jpg&type=l340_165",
+      category:"야영장",
+      mapX:"35.9840344",
+      mapY:"129.0005945",
+      explain:"야영이 가능한 캠핑장",
+      minutely:"자세한 설명",
+      facilities: "편의점",
+      manner: "전화,온라인",
+      animal:"가능",
+      tel:"010-0000-0000",
+      page:"http://increpas.com",
+      addr:"서울 어딘가"
+    },
+    {
+      title:"xx캠핑장",
+      image:"https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMzBfMTUx%2FMDAxNjY3MTE4Mjc4NzM2.w-t-3vX19TkE1gS6nF1mtokVrGMg2LMCUlOog40ra3cg.m4LSUKD5SgHD2x5QOnYXJ1VZe41q_DbpxUI38GUACdgg.JPEG.bbaltae%2F1667118265169.jpg&type=l340_165",
+      category:"야영장",
+      mapX:"36.5017433",
+      mapY:"127.0207700",
+      explain:"야영이 가능한 캠핑장",
+      minutely:"자세한 설명",
+      facilities: "편의점",
+      manner: "전화,온라인",
+      animal:"가능",
+      tel:"010-0000-0000",
+      page:"http://increpas.com",
+      addr:"서울 어딘가"
+    },
+    {
+      title:"xx캠핑장",
+      category:"야영장",
+      mapX:"36.0300417",
+      mapY:"128.6304762",
+      explain:"야영이 가능한 캠핑장",
+      minutely:"자세한 설명",
+      facilities: "편의점",
+      manner: "전화,온라인",
+      animal:"가능",
+      tel:"010-0000-0000",
+      page:"http://increpas.com",
+      addr:"서울 어딘가"
+    }
+  
+  ]);
+
   
 //-------------------------지도-------------------------------------------------------
   const new_script = src => { 
@@ -106,12 +155,13 @@ function setTag (name) {
   
 };
 function setId(e){
-    
+
 }
 
 
 
     return(
+      <>
     
     <div className={styles.container}>
       
@@ -163,24 +213,24 @@ function setId(e){
                     <AirportShuttleIcon className='icon' onClick={setId}/>
                   <span className="name">카라반</span>
                   </div>
-                  <div style={{top:'150px',left:'470px'}} className='icons'>
-                    <DriveEtaIcon className='icon' onClick={() => setTag("자동차")}/>
+                  <div style={{top:'150px',left:'470px'}} className='icons'onClick={() => setTag("자동차")}>
+                    <DriveEtaIcon className='icon' onClick={setId}/>
                   <span className="name">자동차</span>
                   </div>
                   <div style={{top:'250px',left:'170px'}}className='icons' onClick={() => setTag("글램핑")}>
-                    <WarehouseSharpIcon className='icon'/>
+                    <WarehouseSharpIcon className='icon' onClick={setId}/>
                   <span className="name">글램핑</span>
                   </div>
                   <div style={{top:'250px',left:'270px'}}className='icons' onClick={() => setTag("야영장")}>
-                    <LocalFireDepartmentIcon className='icon'/>
+                    <LocalFireDepartmentIcon className='icon' onClick={setId}/>
                   <span className="name">야영장</span>
                   </div>
                   <div style={{top:'250px',left:'370px'}}className='icons' onClick={() => setTag("병원")}>
-                    <MedicalServicesIcon className='icon'/>
+                    <MedicalServicesIcon className='icon' onClick={setId}/>
                   <span className="name">병원</span>
                   </div>
                   <div style={{top:'250px',left:'470px'}}className='icons' onClick={() => setTag("약국")}>
-                   <MedicationIcon className='icon'/>
+                   <MedicationIcon className='icon' onClick={setId}/>
                   <span className="name">약국</span>
                   </div>
                   <div style={{position:'absolute',left:'170px',top:'360px' ,width:'370px',height:'60px'}}>
@@ -201,62 +251,50 @@ function setId(e){
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
+
+              {camlist.map((item,index)=>(
+                <TableRow>
                 <TableCell style={{height:"250px"}}> 
-                  <div style={{width:"300px",height:"200px",margin:"auto"}}> 
+                 
+                    <div style={{width:"300px",height:"200px",margin:"auto"}}> 
                     <img 
-                      src={"https://lh5.googleusercontent.com/p/AF1QipPgFsF6qvIrWFf2jdnBVG3JVD641Z7ws0WfKUjB=w114-h114-n-k-no"}
+                      src={item.image !=null  ? item.image:"http://www.increpas.com/images/main_img3.jpg"}
                       style={{width:"300px",height:"200px"}}
                     />
-                  </div>
+                  </div>             
                 </TableCell>
                 <TableCell styles={{heigth:"250px"}}>
                   <div>
-                    <span style={{display:"inline-block",height:"60px",width:"50%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>업체명</span>
-                    <span style={{display:"inline-block",height:"60px",width:"50%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>카테고리</span>    
+                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>업체명 : </span>
+                    <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.title}</span>
+                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>카테고리 : </span>
+                    <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.category}</span>    
                   </div>
                   <div>
-                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>주소</span>
+                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>주소 :</span>
+                    <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.addr}</span>
                   </div>
                   <div>
-                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>전화번호</span>
+                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>전화번호 :</span>
+                    <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.tel}</span>
                   </div>
                   <div>
-                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>예약방법</span>
+                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>예약방법 :</span>
+                    <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.manner}</span>
                   </div>
+                  {item.animal != null?
                   <div>
-                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>애완동물 동반 여부</span>
+                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>애완동물 :</span>
+                    <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.animal}</span>
                   </div>
+                  :없음  
+                }
                 </TableCell>
               </TableRow>
-              <TableRow>
-                <TableCell style={{height:"250px"}}> 
-                  <div style={{width:"300px",height:"200px",margin:"auto"}}> 
-                    <img 
-                      src={"https://lh5.googleusercontent.com/p/AF1QipPgFsF6qvIrWFf2jdnBVG3JVD641Z7ws0WfKUjB=w114-h114-n-k-no"}
-                      style={{width:"300px",height:"200px"}}
-                    />
-                  </div>
-                </TableCell>
-                <TableCell styles={{heigth:"250px"}}>
-                  <div>
-                    <span style={{display:"inline-block",height:"60px",width:"50%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>업체명</span>
-                    <span style={{display:"inline-block",height:"60px",width:"50%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>카테고리</span>    
-                  </div>
-                  <div>
-                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>주소</span>
-                  </div>
-                  <div>
-                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>전화번호</span>
-                  </div>
-                  <div>
-                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>예약방법</span>
-                  </div>
-                  <div>
-                    <span style={{display:"block",height:"60px",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>애완동물 동반 여부</span>
-                  </div>
-                </TableCell>
-              </TableRow>
+
+              ))}
+
+              
               <TableRow >
                 <TableCell colSpan={2}>
                   <div>
@@ -274,8 +312,11 @@ function setId(e){
       </Box>
           
         
-      <Main_Bottom />
+      
+      
 
     </div>
+    <Main_Bottom />
+    </>
     );
 }
