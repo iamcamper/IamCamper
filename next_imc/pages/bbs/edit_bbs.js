@@ -4,17 +4,19 @@ import Main_Bottom from '../../com/Main_Bottom';
 import Main1_top from '../../com/Main_top';
 import styles from '../../styles/Home.module.css';
 import React, { useRef, useState } from 'react';
- import { Editor } from '@tinymce/tinymce-react';
  import TextField from '@mui/material/TextField';
  import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Paper from '@mui/material/Paper';
+import dynamic from 'next/dynamic';
 
-
+const Editbbs = dynamic(()=> import('../../com/Admin_Editor'), {ssr:false});
 export default function edit_bbs(){
     const editorRef = useRef(null);
+
+    
 
    const log = () => {
      if (editorRef.current) {
@@ -74,47 +76,9 @@ export default function edit_bbs(){
                     variant="standard"
                 />
             </div>
-
-            <Editor
-                id = 'tinyEditor'
-                apiKey = '064mhttd25ukeh524gyod1h6zq7im55mopqp61hwdabecd2n'
-                selector= "textarea"
-                initialValue="<p>This is the initial content of the editor.</p>"
-            init={{
-                height: 500,
-                menubar: false,
-                paste_data_images: true,
-                plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount',
-                    'image'
-                ],
-                    toolbar: 'undo redo | formatselect | ' +
-                    'bold italic backcolor | alignleft aligncenter ' +
-                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                    'removeformat |' + ' image | help',
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                    automatic_uploads: true,
-                    file_browser_callback_types: "image",
-                    image_advtab: true,
-                    file_picker_callback: function (callback, value, meta) {
-                        if (meta.filetype == 'file') {
-                            callback('mypage.html', {text: 'My text'});
-                          }
-                      
-                          // Provide image and alt text for the image dialog
-                          if (meta.filetype == 'image') {
-                            callback('myimage.jpg', {alt: 'My alt text'});
-                          }
-                      
-                          // Provide alternative source and posted for the media dialog
-                          if (meta.filetype == 'media') {
-                            callback('movie.mp4', {source2: 'alt.ogg', poster: 'image.jpg'});
-                          }
-                    },
-                }}
-            />
+             <Editbbs
+             />
+            
             <button onClick={log}>Log editor content</button>
             </Paper>
           <div> 
