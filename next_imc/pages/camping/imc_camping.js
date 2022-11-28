@@ -139,11 +139,14 @@ const handleChange = (event) => {
 
 function setTag (name) {
   var chk = true;
+  var i = 0;
   list.forEach(element => {
 
       if(element == name){
         chk=false;
+        list.slice(i,1);
       }
+      i++;
   });
   if(chk){
     list.push(name);
