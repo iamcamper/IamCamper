@@ -3,8 +3,33 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iamcamper.boot_imc.mapper.AdminMapper">
+
+<!-- 게시글과 댓글을 담는 resultMap -->
+<resultMap type="com.iamcamper.boot_imc.VO.BbsVO" id="listMap">
+  <id property="b_idx" column="b_idx"/>
+  <collection property="c_list" ofType="com.iamcamper.boot_imc.VO.CommVO" 
+  select="com.iamcamper.boot_imc.mapper.CommMapper.commList"
+  column="b_idx"></collection>
+</resultMap>
+
+<!-- login 기능 -->
     <select id="login" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Map">
     SELECT * FROM member
     WHERE id = #{id} AND pw = #{pw} AND grade = #{grade}
     </select>
+<!-- 전체 게시글의 수 반환 -->
+    <select id="totalCount" resultType="int" parameterType="String">
+    SELECT COUNT(*) FROM bbs
+    WHERE bname = #{bname} AND status = 0
+    </select>
+<!-- 해당 게시글 페이징 기법으로 반환 -->
+    <select id="list" resultMap="listMap" parameterType="Map">
+    SELECT a.* FROM (
+      SELECT @RN:=@RN+1 AS rownum, b.* FROM(
+        SELECT * FROM bbs WHERE bname = #{bname} AND status = 0 ORDER BY b_idx DESC) b,
+        (SELECT @RN:=0) r
+      ) a
+    WHERE rownum BETWEEN #{begin} AND #{end}
+    </select>
+    
 </mapper>

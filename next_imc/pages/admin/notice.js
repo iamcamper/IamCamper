@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
 import Admin_Sidebar from '../../com/Admin_Sidebar';
+import Axios from 'axios';
+import { useEffect, useState } from 'react';
 
 
 
@@ -11,6 +13,23 @@ import Admin_Sidebar from '../../com/Admin_Sidebar';
 export default function notice(){
 
     const router = useRouter();
+    const API_URL = "/admin/notice/list";
+    const [list, setList] = useState([]);
+    const [cPage, setCpage] = useState(1);
+
+    function getList(){
+        console.log("123123123");
+        Axios.post(
+            API_URL, null,
+            {params:{bname:'ADNOTICE', cPage:cPage}}
+        ).then(json =>{
+            setList(json.data.list);
+        })
+    }
+
+    useEffect(()=>{
+        getList()
+    },[]);
 
     return(
 
@@ -20,7 +39,7 @@ export default function notice(){
             <Admin_Sidebar/>
             <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
                 <h5>공지사항</h5>
-                <Button size="small" variant="contained" sx={{margin:"10px"}} onClick={()=>router.push("/admin/write")}>
+                <Button size="small" variant="contained" sx={{margin:"10px"}}>
                     글쓰기</Button>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -30,17 +49,19 @@ export default function notice(){
                             <TableCell>제목</TableCell>
                             <TableCell align="right">글쓴이</TableCell>
                             <TableCell align="right">날짜</TableCell>
+                            <TableCell align="right">조회수</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
-                            <TableCell>1</TableCell>
-                            <TableCell component="th" scope="row">
-                                회원간 분쟁에 대한 공지사항
-                            </TableCell>
-                            <TableCell align="right">admin</TableCell>
-                            <TableCell align="right">2022-11-23</TableCell>
-                            </TableRow>
+                            {list.map((data, index)=> 
+                                <TableRow key={index}>
+                                <TableCell>{data.b_idx}</TableCell>
+                                <TableCell>{data.subject}</TableCell>
+                                <TableCell align="right">{data.nickname}</TableCell>
+                                <TableCell align="right">{data.write_date}</TableCell>
+                                <TableCell align="right">{data.hit}</TableCell>
+                                </TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>

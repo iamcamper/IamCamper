@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Axios from 'axios';
 import { useState } from 'react';
 import Admin_Footer from '../../com/Admin_Footer';
+import { setCookie } from 'cookies-next';
 
 
 export default function login () {
@@ -30,9 +31,10 @@ export default function login () {
             API_URL, null,
             {params:{id: admin.id, pw: admin.pw, grade: 9}}
         ).then(json =>{
-            if(json.data.chk==0)
+            if(json.data.chk===0)
                 router.push("/admin/login");
             else{
+                setCookie('id', json.data.admin.id, {maxAge: 60*60*24});
                 router.push("/admin/main");
             }
         })

@@ -3,10 +3,15 @@ import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
 import Admin_Sidebar from '../../com/Admin_Sidebar';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
+
 
 const Edit = dynamic(()=> import('../../com/Admin_Editor'), {ssr:false});
 
 export default function write(){
+
+
+
 
     return(
 
