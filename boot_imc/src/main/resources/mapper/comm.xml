@@ -8,7 +8,7 @@
 	<select id="commList" resultType="com.iamcamper.boot_imc.VO.CommVO"
 	parameterType="String">
 		SELECT * FROM comment
-		WHERE b_idx = #{b_idx}
+		WHERE b_idx = #{b_idx} AND status = 0
 	</select>
 	
 	<!-- 댓글 저장 -->

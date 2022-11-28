@@ -22,8 +22,6 @@ public class AdminLoginController {
     @RequestMapping("/chk")
     public Map<String, Object> login(String id, String pw, String grade){
 
-        System.out.println(id + "/" + pw);
-
         MemVO mvo = a_service.AdminLogin(id, pw, grade);
         int chk = 0;
         if(mvo != null) {
