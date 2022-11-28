@@ -7,7 +7,7 @@ export default function Admin_Sidebar(){
         <Box flex={1} p={2} xs={4} sx={{display:{xs:'none', sm:'block'}}}>
             <List>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" href="#home">
+                    <ListItemButton component="a" href="/admin/main">
                         <ListItemIcon>
                             <Home/>
                         </ListItemIcon>

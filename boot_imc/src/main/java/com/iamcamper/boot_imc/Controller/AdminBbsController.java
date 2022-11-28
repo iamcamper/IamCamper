@@ -33,8 +33,6 @@ public class AdminBbsController {
 
         page.setTotalCount(totalCount);
 
-        System.out.println("123123123123123123123");
-
         if(cPage != null) {
             page.setNowPage(Integer.parseInt(cPage));
         } else {
@@ -53,6 +51,7 @@ public class AdminBbsController {
         }
 
         map.put("list", b_list);
+        map.put("totalPage", page.getTotalPage());
  
         return map;
         

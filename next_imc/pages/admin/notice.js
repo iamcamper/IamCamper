@@ -1,4 +1,4 @@
-import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@mui/material';
+import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button, Pagination} from '@mui/material';
 import { useRouter } from 'next/router';
 import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
@@ -10,19 +10,22 @@ import { useEffect, useState } from 'react';
 
 
 
+
 export default function notice(){
 
     const router = useRouter();
-    const API_URL = "/admin/notice/list";
+    const LIST_URL = "/admin/notice/list";
     const [list, setList] = useState([]);
     const [cPage, setCpage] = useState(1);
+    const [totalPage, setTotalPage] = useState();
+    
 
     function getList(){
-        console.log("123123123");
         Axios.post(
-            API_URL, null,
+            LIST_URL, null,
             {params:{bname:'ADNOTICE', cPage:cPage}}
         ).then(json =>{
+            setTotalPage(json.data.totalPage);
             setList(json.data.list);
         })
     }
@@ -30,6 +33,11 @@ export default function notice(){
     useEffect(()=>{
         getList()
     },[]);
+
+    function write(){
+        router.push("/admin/write?bname=ADNOTICE")
+    }
+
 
     return(
 
@@ -39,7 +47,7 @@ export default function notice(){
             <Admin_Sidebar/>
             <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
                 <h5>공지사항</h5>
-                <Button size="small" variant="contained" sx={{margin:"10px"}}>
+                <Button size="small" variant="contained" sx={{margin:"10px"}} onClick={write}>
                     글쓰기</Button>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -65,6 +73,9 @@ export default function notice(){
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <Stack spacing={2}>
+                        <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary' sx={{marginTop:'30px'}}/>
+                </Stack>
             </Box>
         </Stack>
         <Admin_Footer/>
