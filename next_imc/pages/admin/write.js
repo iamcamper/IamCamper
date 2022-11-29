@@ -20,10 +20,10 @@ export default function write(){
             <h5>글 작성하기</h5>
                 <Paper sx={{padding:"20px"}}>
                     <form>
-                        <label for="subject">글 제목 : </label>
+                        <label htmlFor="subject">글 제목 : </label>
                         <input type="text" name="subject" id="subject"/><br/>
-                        <label for="writer">작성자 : </label> <br/>
-                        <label for="content">글 내용 : </label>
+                        <label htmlFor="writer">작성자 : </label> <br/>
+                        <label htmlFor="content">글 내용 : </label>
                         <div id="editor">
                             <Edit/>
                         </div>
