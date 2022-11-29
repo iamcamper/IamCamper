@@ -4,7 +4,7 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main_Bottom from "../../com/Main_Bottom";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
-import { Button, Grid } from "@mui/material";
+import { Button, Fab, Grid } from "@mui/material";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -52,16 +52,14 @@ export default function free_bbs(){
           <div>
           <Paper sx={{width:'1600px', margin:'auto', textAlign:'center', height:'auto'}}>
             <Grid container my={8} style={{textAlign:'center', marginBottom:'15px'}}>
-                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={()=>router.push("/camping/imc_camping")} > 자유 게시판 </Button></Grid>
+                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={()=>router.push("/bbs/free_bbs")} > 자유 게시판 </Button></Grid>
                 <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} >후기 게시판</Button></Grid>
                 <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} > 맛집 게시판</Button></Grid>
-                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}}>중고 거래 게시판</Button></Grid>
+                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={()=>router.push("/bbs/buy_bbs")}>중고 거래 게시판</Button></Grid>
           </Grid>
-          <Grid item xs style={{textAlign:'right', marginTop:'0px'}}> 
-            <Button variant="contained" style={{marginRight:'15px'}} onClick={()=>router.push("/bbs/edit_bbs")} startIcon={<EditIcon/>}>글쓰기</Button>
-          </Grid>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+          
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
           <TableHead>
             <TableRow>
                 <TableCell>글번호</TableCell>
@@ -87,8 +85,12 @@ export default function free_bbs(){
         </Table>
       </TableContainer>
     </Paper>
-       </div> 
+       </div>
+       
        <div className="bottom-div">
+        <Grid item xs style={{width: '1600px', textAlign:'right', padding:'30px', float:'right'}}> 
+            <Fab color="secondary" aria-label="edit" onClick={()=>router.push("/bbs/edit_bbs")}><EditIcon/></Fab>
+        </Grid> 
           <form className="search-form">
             <input type="text" placeholder="Search" className="search-input"/>
             <button type="submit" className="search-button">
