@@ -10,9 +10,6 @@ const Edit = dynamic(()=> import('../../com/Admin_Editor'), {ssr:false});
 
 export default function write(){
 
-
-
-
     return(
 
         <Box>
