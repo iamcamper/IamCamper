@@ -9,6 +9,7 @@ export default function logout(){
 
     function delCookie(){
         deleteCookie("id");
+        deleteCookie("nickname");
         router.push("/admin/login");
     }
     

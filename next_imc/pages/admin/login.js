@@ -35,6 +35,7 @@ export default function login () {
                 router.push("/admin/login");
             else{
                 setCookie('id', json.data.admin.id, {maxAge: 60*60*24});
+                setCookie('nickname', json.data.admin.nickname, {maxAge: 60*60*24});
                 router.push("/admin/main");
             }
         })
