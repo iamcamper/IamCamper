@@ -9,6 +9,7 @@ import { hasCookie, getCookie } from 'cookies-next';
 import Axios from 'axios';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
+import { textAlign } from '@mui/system';
 
 
 
@@ -22,24 +23,31 @@ export default function write(){
     const WRITE_URL = "/admin/writeok";
     const router = useRouter();
     const bname = router.query.bname;
+    const bbs = router.query.bbs;
+    const formData = new FormData();
 
     function changeSubject(e){
         setSubject(e.target.value);
+    }
+    
+    function changeFile(e){
+        formData.append('file', e.target.files[0]);
     }
 
     function writeOk(){
 
         Axios.post(
-            WRITE_URL, null,
+            WRITE_URL, formData,
             {params:{nickname:nickname, 
                 subject:subject, 
                 content:editorRef.current?.getInstance().getHTML(),
                 bname:bname,
                 cPage:1,
-            }}
-        ).then({
-
-        });
+            },
+            headers:{'Content-Type': 'multipart/form-data',},},
+        ).then(
+            router.push('/admin/'+bbs)
+        );
     }
 
     return(
@@ -55,25 +63,33 @@ export default function write(){
                         <table>
                             <tbody>
                                 <tr>
-                                    <td style={{padding:'20px'}}>
+                                    <th style={{padding:'20px', textAlign:'left'}}>
                                         <label htmlFor='subject'>제목</label>
-                                    </td>
+                                    </th>
                                     <td>
                                         <Input placeholder='제목' sx={{width:'450px'}} onChange={changeSubject}/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style={{padding:'20px'}}>
+                                    <th style={{padding:'20px', textAlign:'left'}}>
                                         <label htmlFor='writer'>글쓴이</label>
-                                    </td>
+                                    </th>
                                     <td>
                                         {nickname}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style={{padding:'20px'}}>
-                                        <label htmlFor='content'>내용</label>
+                                    <th style={{padding:'20px', textAlign:'left'}}>
+                                        <label htmlFor='file'>첨부 파일</label>
+                                    </th>
+                                    <td>
+                                        <input type='file' id='file' onChange={changeFile}/>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <th style={{padding:'20px', textAlign:'left'}}>
+                                        <label htmlFor='content'>내용</label>
+                                    </th>
                                     <td>
                                     <div id="editor">
                                         <Edit editorRef={editorRef}/>

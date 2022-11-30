@@ -32,6 +32,7 @@ public class AdminBbsController {
     private HttpServletRequest req;
 
     String img_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_img";
+    String file_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_file";
     
     /*
      * 공지사항 리스트 불러오기
@@ -101,9 +102,24 @@ public class AdminBbsController {
      * 게시글 저장하기
      */
     @RequestMapping("/writeok")
-    public Map<String, Object> writeOk(String nickname, String subject, String content, String bname){
+    public Map<String, Object> writeOk(String nickname, String subject, String content, String bname, 
+                @RequestPart(value="file", required = true) MultipartFile file){
 
         Map<String, Object> map = new HashMap<String, Object>();
+
+        String ori_name = null;
+        String file_name = null;
+
+        if(file.getSize() > 0){
+            ori_name = file.getOriginalFilename();
+            file_name = FileRenameUtil.checkSameFileName(ori_name, file_path);
+
+            try{
+                file.transferTo(new File(file_path, file_name));
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
 
         BbsVO vo = new BbsVO();
 
@@ -112,6 +128,8 @@ public class AdminBbsController {
         vo.setNickname(nickname);
         vo.setContent(content);
         vo.setBname(bname);
+        vo.setOri_name(ori_name);
+        vo.setFile_name(file_name);
 
         a_service.write(vo);
 

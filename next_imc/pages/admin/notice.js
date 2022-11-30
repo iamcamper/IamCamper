@@ -38,7 +38,7 @@ export default function notice(){
     function write(){
         router.push({
             pathname:'/admin/write',
-            query: {bname:'ADNOTICE'},
+            query: {bname:'ADNOTICE', bbs:'notice'},
         });
     }
 
