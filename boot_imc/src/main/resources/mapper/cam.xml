@@ -4,7 +4,10 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iamcamper.boot_imc.mapper.CamMapper">
     <insert id="AddData" parameterType="com.iamcamper.boot_imc.VO.CamVO">
-		INSERT INTO `iamcamper`.`camping` ( `title`, `category`, `mapX`, `mapY`, `addr`, `explain`, `minutely`, `lunchtime`, `facilities`, `manner`, `animal`, `image`, `tel`, `page`) 
-		VALUES(#{title},#{category},#{addr},#{mapY},#{mapX},#{explain},#{minutely},#{lunchtime},#{facilities},#{manner},#{animal},#{image},#{tel},#{page})
+		INSERT INTO `iamcamper`.`camping` ( `title`, `category`, `mapX`, `mapY`, `addr`, `explain`, `minutely`, `lunchtime`, `facilities`, `manner`, `animal`, `image`, `tel`, `page`,`cname`) 
+		VALUES(#{title},#{category},#{addr},#{mapY},#{mapX},#{explain},#{minutely},#{lunchtime},#{facilities},#{manner},#{animal},#{image},#{tel},#{page},#{cname})
 	</insert>
+  <delete id="del" parameterType="String">
+    DELETE FROM camping Where cname= #{cname};
+  </delete>
 </mapper>

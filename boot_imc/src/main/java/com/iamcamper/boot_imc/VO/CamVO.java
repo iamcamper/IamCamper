@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CamVO {
     private String idx, title, category, mapX, mapY, addr, explain, minutely, lunchtime, facilities, manner, animal,
-            image, tel, page;
+            image, tel, page, cname;
 }

@@ -13,7 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-
+import Axios from "axios";
 import { useEffect ,useState} from 'react';
 import Grid from '@mui/material/Grid';
 import { borderRadius, width } from "@mui/system";
@@ -161,6 +161,18 @@ function setId(e){
 
 }
 
+function getData(){
+  Axios.post(
+    "http://localhost:8080/cam/getData",null,
+    { params: { "addr1":addr, "category":list }}
+    ).then((json)=>{
+      console.log(json);
+  }).catch((Error)=>{
+
+  });
+
+}
+
 
 
     return(
@@ -198,8 +210,8 @@ function setId(e){
                       label="찾을지역"
                       onChange={handleChange}
                     >
-                       {category.map((item) => (  
-                          <MenuItem value={item}>{item}</MenuItem>          
+                       {category.map((item,index) => (  
+                          <MenuItem value={index}>{item}</MenuItem>          
                         ))}
                     </Select>
                   </FormControl>  
@@ -237,7 +249,7 @@ function setId(e){
                   <span className="name">약국</span>
                   </div>
                   <div style={{position:'absolute',left:'170px',top:'360px' ,width:'370px',height:'60px'}}>
-                    <Button variant="contained" style={{width:'100%',height:"100%"}} >go Camping</Button>
+                    <Button variant="contained" style={{width:'100%',height:"100%"}} onClick={getData } >go Camping</Button>
                   </div>
               </div>
             </Grid>

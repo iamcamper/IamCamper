@@ -22,4 +22,11 @@ public class CamService {
         return chk;
     }
 
+    public boolean del(String cname) {
+
+        boolean i = mapper.del(cname);
+
+        return i;
+    }
+
 }

@@ -6,4 +6,6 @@ public interface CamMapper {
 
     int AddData(CamVO vo);
 
+    Boolean del(String cname);
+
 }
