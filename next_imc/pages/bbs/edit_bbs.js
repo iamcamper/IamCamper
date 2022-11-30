@@ -11,8 +11,10 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
+import { Stack } from '@mui/material';
 
-const Editbbs = dynamic(()=> import('../../com/Admin_Editor'), {ssr:false});
+const Editbbs = dynamic(()=> import('./editor'), {ssr:false});
+
 export default function edit_bbs(){
     const editorRef = useRef(null);
 
@@ -40,11 +42,12 @@ export default function edit_bbs(){
             <Main1_top/>
             <Main1/>
             <Main1_Menu/>
-         <Paper sx={{width:'1600px', margin:'auto', textAlign:'center', height:'auto'}}>
-                <h1> 게시글 작성 </h1>
-            <div style={{textAlign:"left", margin:"30px"}}>
-            <FormControl sx={{ m: 5, minWidth: 300 }} size="small">
-                <InputLabel id="demo-select-small">게시판</InputLabel>
+         <Paper sx={{width:'1600px', margin:'0 auto', textAlign:'center', height:'auto'}}>
+            <h1> 게시글 작성 </h1>
+            <Stack spacing={2} sx={{textAlign:'left', marginBottom:'50px'}}>
+            <Stack items sx={{width:'200px'}}>
+            <FormControl sx={{ marginLeft:'25px', minWidth: 300 }} size="small">
+                <InputLabel id="demo-select-small" sx={{}}>게시판</InputLabel>
                 <Select
                     labelId="demo-select-small"
                     id="demo-select-small"
@@ -60,14 +63,8 @@ export default function edit_bbs(){
                     <MenuItem value={3}>중고거래 게시판</MenuItem>
                 </Select>
             </FormControl>
-            <br/>
-                <TextField
-                    id="standard-textarea"
-                    label="제목"
-                    placeholder="제목을 입력하세요"
-                    multiline
-                    variant="standard"
-                /><br/>
+            </Stack>
+            <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
                 <TextField
                     id="standard-textarea"
                     label="제목"
@@ -75,11 +72,19 @@ export default function edit_bbs(){
                     multiline
                     variant="standard"
                 />
-            </div>
+            </Stack>
+            <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
+                <TextField
+                    id="standard-textarea"
+                    label="제목"
+                    placeholder="제목을 입력하세요"
+                    multiline
+                    variant="standard"
+                />
+            </Stack>
+            </Stack>
              <Editbbs
              />
-            
-            <button onClick={log}>Log editor content</button>
             </Paper>
           <div> 
             <Main_Bottom/>

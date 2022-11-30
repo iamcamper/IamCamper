@@ -47,7 +47,7 @@ export default function Admin_Sidebar(){
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" href="#logout">
+                    <ListItemButton component="a" href="/admin/logout">
                         <ListItemIcon>
                             <Logout/>
                         </ListItemIcon>

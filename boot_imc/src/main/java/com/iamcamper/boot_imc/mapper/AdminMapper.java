@@ -19,5 +19,8 @@ public interface AdminMapper {
     // 페이징 기법을 적용해 게시글 가져오기
     List<BbsVO> list(@Param("bname") String bname, @Param("begin") String begin, @Param("end") String end);
 
+    // 글쓰기
+    void write(BbsVO vo);
+
 
 }

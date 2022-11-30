@@ -3,7 +3,7 @@
 */
   .search-form {
     position: relative;
-    top: 50%;
+    top: 20%;
     left: 50%;
     width: 600px;
     height: 40px;
@@ -47,10 +47,10 @@
 
   .bottom-div {
     text-align: center;
-    width: 1200px;
-    height: 250px;
+    width: 1600px;
+    height: 300px;
     margin: auto;
-  }
+    }
 
   /*
   페이징
@@ -59,7 +59,8 @@
   .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 135px;
+    margin: 80px;
+    padding-bottom: 50px;
   }
   
   ul {
@@ -110,4 +111,3 @@
     height: 30px;
     color: #337ab7;
   }
- 
