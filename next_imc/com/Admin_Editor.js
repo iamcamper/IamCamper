@@ -3,9 +3,9 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { useRef, useState } from 'react';
 import Axios from 'axios';
 
-export default function Admin_Editor(){
+export default function Admin_Editor(props){
 
-    const editorRef = useRef();
+    const {editorRef} = props;
     const [fileName, setFileName] = useState([]);
 
     const addImage = async(blob, callback) => {

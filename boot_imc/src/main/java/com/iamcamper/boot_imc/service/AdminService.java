@@ -43,6 +43,13 @@ public class AdminService {
 
     }
 
+    //어드민 작성한 글 등록하기
+    public void write(BbsVO vo){
+
+        mapper.write(vo);
+        
+    }
+
 
     
 }

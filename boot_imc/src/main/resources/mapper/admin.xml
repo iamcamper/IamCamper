@@ -31,5 +31,9 @@
       ) a
     WHERE rownum BETWEEN #{begin} AND #{end}
     </select>
-    
+<!-- 게시글 등록 -->
+    <select id="write" parameterType="com.iamcamper.boot_imc.VO.BbsVO">
+    INSERT INTO bbs(nickname ,subject, content, file_name, ori_name, thum_img, write_date, ip, bname)
+    VALUES (#{nickname}, #{subject}, #{content}, #{file_name}, #{ori_name}, #{thum_img}, NOW(), #{ip}, #{bname})
+    </select>
 </mapper>

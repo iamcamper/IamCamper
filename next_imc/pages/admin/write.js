@@ -1,4 +1,5 @@
-import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button, Input } from '@mui/material';
+import { Box, Stack, Paper, Button, Input, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Close } from '@mui/icons-material';
 import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
 import Admin_Sidebar from '../../com/Admin_Sidebar';
@@ -7,6 +8,8 @@ import { useState } from 'react';
 import { hasCookie, getCookie } from 'cookies-next';
 import Axios from 'axios';
 import { useRef } from 'react';
+import { useRouter } from 'next/router';
+
 
 
 const Edit = dynamic(()=> import('../../com/Admin_Editor'), {ssr:false});
@@ -14,11 +17,29 @@ const Edit = dynamic(()=> import('../../com/Admin_Editor'), {ssr:false});
 export default function write(){
     
     const nickname = getCookie("nickname");
+    const editorRef = useRef();
+    const [subject, setSubject] = useState();
+    const WRITE_URL = "/admin/writeok";
+    const router = useRouter();
+    const bname = router.query.bname;
 
-    const editorRef = useRef<any>(null);
+    function changeSubject(e){
+        setSubject(e.target.value);
+    }
 
     function writeOk(){
-        console.log(editRef.current?.getInstance().getHTML());
+
+        Axios.post(
+            WRITE_URL, null,
+            {params:{nickname:nickname, 
+                subject:subject, 
+                content:editorRef.current?.getInstance().getHTML(),
+                bname:bname,
+                cPage:1,
+            }}
+        ).then({
+
+        });
     }
 
     return(
@@ -38,7 +59,7 @@ export default function write(){
                                         <label htmlFor='subject'>제목</label>
                                     </td>
                                     <td>
-                                        <Input placeholder='제목' sx={{width:'450px'}}/>
+                                        <Input placeholder='제목' sx={{width:'450px'}} onChange={changeSubject}/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -71,7 +92,6 @@ export default function write(){
         </Stack>
         <Admin_Footer/>
     </Box>
-
 
         );
     }

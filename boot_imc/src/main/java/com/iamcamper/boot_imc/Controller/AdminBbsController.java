@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +28,14 @@ public class AdminBbsController {
     @Autowired
     private AdminService a_service;
 
+    @Autowired
+    private HttpServletRequest req;
+
     String img_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_img";
     
+    /*
+     * 공지사항 리스트 불러오기
+     */
     @RequestMapping("/notice/list")
     public Map<String, Object> noticeList(@RequestParam("bname") String bname, @RequestParam("cPage") String cPage){
 
@@ -63,6 +71,10 @@ public class AdminBbsController {
         
     }
 
+
+    /*
+     * 비동기식 통신으로 에디터에 이미지 업로드하기
+     */
     @RequestMapping("/upload_img")
     public Map<String, Object> uploadImg(@RequestPart(value="file", required = true) MultipartFile file){
 
@@ -83,5 +95,27 @@ public class AdminBbsController {
         map.put("fname", fname);
         
         return map;
+    }
+
+    /*
+     * 게시글 저장하기
+     */
+    @RequestMapping("/writeok")
+    public Map<String, Object> writeOk(String nickname, String subject, String content, String bname){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        BbsVO vo = new BbsVO();
+
+        vo.setIp(req.getRemoteAddr());
+        vo.setSubject(subject);
+        vo.setNickname(nickname);
+        vo.setContent(content);
+        vo.setBname(bname);
+
+        a_service.write(vo);
+
+        return map;
+
     }
 }

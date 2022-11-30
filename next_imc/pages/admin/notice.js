@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 
 
 
+
 export default function notice(){
 
     const router = useRouter();
@@ -35,7 +36,10 @@ export default function notice(){
     },[]);
 
     function write(){
-        router.push("/admin/write?bname=ADNOTICE")
+        router.push({
+            pathname:'/admin/write',
+            query: {bname:'ADNOTICE'},
+        });
     }
 
 
