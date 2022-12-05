@@ -16,7 +16,7 @@ export default function login () {
         pw: '',
     });
     
-    const API_URL = "/admin/login/chk";
+    const LOGIN_URL = "/admin/login/chk";
     
     function changeAdmin(e){
     
@@ -28,7 +28,7 @@ export default function login () {
 
     function LoginChk(){
         Axios.post(
-            API_URL, null,
+            LOGIN_URL, null,
             {params:{id: admin.id, pw: admin.pw, grade: 9}}
         ).then(json =>{
             if(json.data.chk===0)
