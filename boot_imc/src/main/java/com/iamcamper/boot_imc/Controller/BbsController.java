@@ -30,8 +30,6 @@ public class BbsController {
         Map<String, Object> map = new HashMap<>();
         map.put("bbs_list", ar);
 
-        System.out.println(map);
-
         return map;
     }
 
@@ -45,5 +43,11 @@ public class BbsController {
         map.put("ulist", ar2);
 
         return map;
+    }
+
+    @RequestMapping("/add")
+    public Map<String, Object> addbbs() {
+        Map<String, Object> map = new HashMap<String, Object>();
+
     }
 }

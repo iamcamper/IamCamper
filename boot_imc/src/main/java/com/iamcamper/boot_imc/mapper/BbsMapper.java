@@ -10,4 +10,6 @@ public interface BbsMapper {
     List<BbsVO> list(@Param("begin") String begin, @Param("end") String end);
 
     List<BbsVO> blist(String bname);
+
+    void add(BbsVO vo);
 }
