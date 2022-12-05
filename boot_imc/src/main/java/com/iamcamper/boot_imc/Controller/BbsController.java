@@ -49,7 +49,5 @@ public class BbsController {
     public Map<String, Object> addbbs() {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        return map;
-
     }
 }
