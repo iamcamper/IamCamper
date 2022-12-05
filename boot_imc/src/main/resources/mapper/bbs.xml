@@ -26,7 +26,7 @@
 	<!-- 원글 검색 -->
 	<select id="view" resultMap="map1" parameterType="String">
 		SELECT * FROM bbs
-		WHERE b_idx = #{idx}
+		WHERE b_idx = #{b_idx}
 	</select>
 	
 	<!-- 원글 수정 -->
@@ -60,4 +60,9 @@
 					WHERE status = 0 AND bname= #{bname} ORDER BY hit DESC) b, (SELECT @RN:=0) r) a
 			WHERE rownnum BETWEEN '1' AND '10'
 	</select>
+
+	<select id="totalCount" resultType="int" parameterType="String">
+    SELECT COUNT(*) FROM bbs
+    WHERE bname = #{bname} AND status = 0
+    </select>
 </mapper>

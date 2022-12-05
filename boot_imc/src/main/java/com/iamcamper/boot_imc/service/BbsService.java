@@ -13,14 +13,19 @@ public class BbsService {
     @Autowired
     private BbsMapper mapper;
 
-    public BbsVO[] list(String begin, String end) {
-        List<BbsVO> list = mapper.list(begin, end);
-        BbsVO[] ar = null;
-        if (list != null && list.size() > 0) {
-            ar = new BbsVO[list.size()];
-            list.toArray(ar);
-        }
-        return ar;
+    public List<BbsVO> list(String bname, String begin, String end) {
+
+        List<BbsVO> list = mapper.list(bname, begin, end);
+
+        return list;
+
+    }
+
+    public BbsVO view(String b_idx) {
+
+        BbsVO view = mapper.view(b_idx);
+
+        return view;
     }
 
     public BbsVO[] blist(String bname) {
@@ -35,6 +40,14 @@ public class BbsService {
 
     public void add(BbsVO vo) {
         mapper.add(vo);
+    }
+
+    public int totalCount(String bname) {
+
+        int totalCount = mapper.totalCount(bname);
+
+        return totalCount;
+
     }
 
 }

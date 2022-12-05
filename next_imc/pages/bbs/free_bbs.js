@@ -4,7 +4,7 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main_Bottom from "../../com/Main_Bottom";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
-import { Button, Fab, Grid } from "@mui/material";
+import { Button, Fab, Grid, Pagination } from "@mui/material";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,37 +12,46 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-
+import { useRouter } from 'next/router';
+import Link from "next/Link";
 import EditIcon from '@mui/icons-material/Edit';
-import router from "next/router";
-import Pagination from "react-js-pagination";
 import Axios from "axios";
 import { useState, useEffect } from "react";
 import Banner from "./banner";
+import { useHistory } from "react-router-dom";
 
 
-export default function free_bbs(){ 
-  const [page, setPage] = useState(1);
-  const [list, setList] = useState([]);
-
-  const handlePageChange = (page) => {
-    setPage(page);
-  };
-  const API_URL = "http://localhost:8080/bbs/free"
+export default function free_bbs(b_idx){ 
+    const [list, setList] = useState([]);
+    const [cPage, setCpage] = useState(1);
+    const [totalPage, setTotalPage] = useState();
+    const API_URL = "/bbs/free";
+    const API_VIEW = "/bbs/view";
+    const router = useRouter();
+  
+  
 
 
   function getList(){
-    Axios.get(
-        API_URL
-      ).then((res) =>{
-        console.log(res.data.bbs_list);
-        setList(res.data.bbs_list);
+    Axios.post(
+        API_URL, null,
+        {params:{bname:'후기게시판', cPage:cPage}}
+      ).then((json) =>{
+        setTotalPage(json.data.totalPage);
+        console.log(json.data.list);
+        setList(json.data.list);
       });
   }
 
+  function edit(){
+    router.push({
+        pathname:'/bbs/edit_bbs',
+    });
+}
+
 
   useEffect(() => { //최초 한번만 호출하기 위해 사용함!
-    getList();
+    getList()
   },[]);
   
     return(
@@ -75,10 +84,11 @@ export default function free_bbs(){
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{ width: '1600px', height: 'auto' }}>
-                  {list.map((bbs) => (
-                    <TableRow>
+                  {list.map((bbs, index) => (
+                    <TableRow key={index}>
                       <TableCell>{bbs.b_idx}</TableCell>
-                      <TableCell>{bbs.bname}</TableCell>
+                      <TableCell onClick={() => router.push('/bbs/view_bbs?b_idx='+bbs.b_idx)}>
+                     {bbs.bname}</TableCell>
                       <TableCell>{bbs.nickname}</TableCell>
                       <TableCell>{bbs.write_date}</TableCell>
                       <TableCell>{bbs.like}</TableCell>
@@ -93,7 +103,7 @@ export default function free_bbs(){
 
         <div className="bottom-div">
           <Grid item xs style={{ width: '1600px', textAlign: 'right', padding: '30px', float: 'right' }}>
-            <Fab color="secondary" aria-label="edit" onClick={() => router.push("/bbs/edit_bbs")}><EditIcon /></Fab>
+            <Fab color="secondary" aria-label="edit" onClick={edit}><EditIcon /></Fab>
           </Grid>
           <form className="search-form">
             <input type="text" placeholder="Search" className="search-input" />
@@ -101,14 +111,7 @@ export default function free_bbs(){
               <img src={'/images/search_icon.png'} />
             </button>
           </form>
-          <Pagination
-            activePage={page}
-            itemsCountPerPage={5}
-            totalItemsCount={450}
-            pageRangeDisplayed={5}
-            prevPageText={"‹"}
-            nextPageText={"›"}
-            onChange={handlePageChange} />
+          <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary' />
         </div>
         <div>
           <Main_Bottom />

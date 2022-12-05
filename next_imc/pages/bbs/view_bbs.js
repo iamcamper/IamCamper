@@ -3,9 +3,47 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
 import Main_Bottom from "../../com/Main_Bottom";
-import { Box, Grid, Input, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Box, Grid, Input, listItemAvatarClasses, Paper, Stack, TextField, Typography } from "@mui/material";
 import { Container, textAlign } from "@mui/system";
+import Axios from "axios";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
+
+
+
 export default function view_bbs(){
+
+  const router = useRouter();
+  const [b_idx, setBidx] = useState();
+  const [list, setList] = useState();
+  const API_VIEW = "/bbs/view";
+  console.log(list);
+  console.log(router.query.b_idx);
+  const idx = router.query;
+  console.log(b_idx);
+  
+  function getidx(){
+    setBidx(idx);
+  }
+
+  function getList(){
+    
+    Axios.post(
+      API_VIEW,null,
+      {params:{b_idx: idx}}
+    ).then((json) => {
+        setList(json.data.list);
+        console.log(json.data.list);
+    })
+  }
+
+  useEffect(() => {
+    if(!router.isReady) return;
+    console.log(idx,'🙆‍♀️ 콘솔에 쿼리 찍힘!')
+    getList();
+  },[router.isReady]);
+
    return( 
    <div className= {styles.container}>  
             <Main1_top/>
@@ -26,47 +64,25 @@ export default function view_bbs(){
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                글 제목
-              </Typography>
               <Typography variant="body2" gutterBottom>
-                닉네임
+                 asd
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                작성일자
-              </Typography>
+                  asd
+              </Typography> 
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-              aterial-UI에서 제공하는 컴포넌트의 종류는 도큐먼트들을 다 읽어보기 힘들 정도로 많다.
-
-                  크게 Layout, Inputs, Navigation, Surfaces, Feedback, Data Display, Utils, Lab로 나눌 수 있고,
-
-                  세부적으로 다 다루기보다 활용해서 적응할 수 있게끔 대표적인 예시를 들어가며 배우면 좋다.
-
-                  
-
-                  Layout
-                  
-
-                  먼저, 레이아웃에는 Box, Container, Grid, Hidden, Image List가 있다. 
-
-                  Box는 div를 대체하는 강력하고 편리한 컴포넌트로 tailwind CSS 방식이고
-
-                  Container는 레이아웃을 잡을 때 좌우 간격, 중앙 위치시킬 때 사용하며
-
-                  최대 너비 제한 fluid모드와 동일 너비 강제 fixed 모드가 있다.
-
-                  Grid는 Container 안의 레이아웃을 핸들링해주고 반응형으로 배치시켜야 하는 경우 유용하다.
+                asd
               </Typography>
             </Grid>
           </Grid>
           <Grid item>
             <Typography variant="subtitle1" component="div">
-              게시판 이름
+              asd
             </Typography>
             <Typography variant="subtitle1" component="div">
-              추천수
+              asd
             </Typography>
           </Grid>
         </Grid>
