@@ -83,7 +83,7 @@ public class BbsController {
     }
 
     @RequestMapping("/addbbs")
-    public Map<String, Object> writeOk(String nickname, String subject, String content, String bname,
+    public Map<String, Object> addBbs(String nickname, String subject, String content, String bname,
             @RequestPart(value = "file", required = true) MultipartFile file) {
 
         Map<String, Object> map = new HashMap<String, Object>();
@@ -120,7 +120,6 @@ public class BbsController {
 
     @RequestMapping("/upload_img")
     public Map<String, Object> uploadImg(@RequestPart(value = "file", required = true) MultipartFile file) {
-
         Map<String, Object> map = new HashMap<String, Object>();
 
         String fname = null;

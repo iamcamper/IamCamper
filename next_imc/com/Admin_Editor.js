@@ -9,6 +9,7 @@ export default function Admin_Editor(props){
     const [fileName, setFileName] = useState([]);
 
     const addImage = async(blob, callback) => {
+        console.log(blob);
        const frm = new FormData();
        frm.append('file', blob);
         try{

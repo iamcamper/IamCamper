@@ -9,7 +9,6 @@ import { hasCookie, getCookie } from 'cookies-next';
 import Axios from 'axios';
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
-import { textAlign } from '@mui/system';
 
 
 

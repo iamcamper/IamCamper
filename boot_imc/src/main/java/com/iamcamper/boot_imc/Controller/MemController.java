@@ -22,19 +22,7 @@ public class MemController {
     @Autowired
     private MemService m_Service;
 
-    @RequestMapping("/login")
-    public Map<String, Object> login(String id, String pw) {
-        MemVO mvo = m_Service.login(id, pw);
-        int chk = 0;
-        if (mvo != null)
-            chk = 1;
-        Map<String, Object> resMap = new HashMap<>();
-        resMap.put("chk", chk);
-        resMap.put("user", mvo);
-
-        return resMap;
-    }
-
+    
     @ResponseBody
     @GetMapping("/kakaologin")
     public void kakaoCall(@RequestParam String code) {

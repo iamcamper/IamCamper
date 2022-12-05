@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iamcamper.boot_imc.service.MemService;
 
+
 @CrossOrigin(originPatterns = "http://localhost:3000")
 @RestController
 @RequestMapping("/sns")
@@ -186,4 +187,5 @@ public class SnsController {
     }
     // --------------------------------네이버 로그인 오류 처리 ------------------------------
 
+    
 }
