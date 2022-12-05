@@ -2,7 +2,9 @@ package com.iamcamper.boot_imc.Controller;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -24,14 +26,19 @@ public class CampingController {
     private CamService service;
 
     @RequestMapping("/getData")
-    public String getData(String addr1, Object category) {
+    public Map<String, CamVO[]> getData(String addr, String category) {
 
-        System.out.println("여기-" + category + "------------------------------------" + addr1);
-        if (category != null) {
-            System.out.println("category도 넘어 오긴 함 ");
+        Map<String, CamVO[]> map = new HashMap<String, CamVO[]>();
+        System.out.println(addr + "/" + category);
+
+        CamVO[] vo = service.getList(addr, category);
+
+        map.put("vo", vo);
+        if (vo == null) {
+            System.out.println("null");
         }
 
-        return "왔어요";
+        return map;
     }
 
     @RequestMapping("/update1")

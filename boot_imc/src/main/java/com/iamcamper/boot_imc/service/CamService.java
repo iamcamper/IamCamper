@@ -1,5 +1,9 @@
 package com.iamcamper.boot_imc.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +31,31 @@ public class CamService {
         boolean i = mapper.del(cname);
 
         return i;
+    }
+
+    public CamVO[] getList(String addr, String category) {
+        Map<String, String> map = new HashMap<String, String>();
+        List<CamVO> list = null;
+
+        map.put("addr", addr);
+        map.put("category", category);
+
+        if (category.equals("애완동물")) {
+            list = mapper.alist(addr);
+        } else if (category.equals("전체보기")) {
+
+            list = mapper.allList(addr);
+        } else {
+            list = mapper.clist(map);
+        }
+
+        CamVO[] vo = null;
+
+        if (list != null && list.size() > 0) {
+            vo = new CamVO[list.size()];
+            list.toArray(vo);
+        }
+        return vo;
     }
 
 }
