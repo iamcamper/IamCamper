@@ -6,9 +6,10 @@
     <resultMap type="com.iamcamper.boot_imc.VO.BbsVO" id="map1">
 		<id property="b_idx" column="b_idx"/>
 		<collection property="c_list" ofType="com.iamcamper.boot_imc.VO.CommVO"
-				select="comm.commList" column="b_idx"/>
+				select="com.iamcamper.boot_imc.mapper.CommMapper.commList" column="b_idx"/>
 	</resultMap>
-	<select id="list" resultType="com.iamcamper.boot_imc.VO.BbsVO" 
+	
+	<select id="list" resultMap="map1" 
 		parameterType="Map">
 		SELECT a.* FROM(
 			SELECT @RN:=@RN+1 AS rownnum, b.* 
@@ -17,11 +18,9 @@
 		) a
 		WHERE rownnum BETWEEN #{begin} AND #{end}
 	</select>
-    <insert id="add" parameterType="java.util.Map">
-		INSERT INTO bbs(subject, writer, content, file_name, ori_name,
-			ip, write_date, hit, status)
-		VALUES(#{subject}, #{writer}, #{content}, #{file_name}, #{ori_name},
-			#{ip}, NOW(), 0, 0)
+    <insert id="add" parameterType="com.iamcamper.boot_imc.VO.BbsVO">
+		INSERT INTO bbs(subject, nickname, content, file_name, ori_name, thum_img, write_date, ip, bname)
+   		VALUES (#{subject}, #{nickname}, #{content}, #{file_name}, #{ori_name}, #{thum_img}, NOW(), #{ip}, #{bname})
 	</insert>
 	
 	<!-- 원글 검색 -->
