@@ -48,6 +48,6 @@ public class BbsController {
     @RequestMapping("/add")
     public Map<String, Object> addbbs() {
         Map<String, Object> map = new HashMap<String, Object>();
-
+        
     }
 }
