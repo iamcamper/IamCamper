@@ -10,4 +10,18 @@
   <delete id="del" parameterType="String">
     DELETE FROM camping Where cname= #{cname};
   </delete>
+
+
+  <select id="clist" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="Map">
+		SELECT a.* FROM (SELECT * FROM camping where addr LIKE CONCAT(#{addr}, '%')) a
+       where category  LIKE CONCAT('%', #{category}, '%') 
+	</select>
+  <select id="alist" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="String">
+		SELECT a.* FROM (SELECT * FROM camping where addr LIKE CONCAT(#{addr}, '%')) a
+    where animal LIKE CONCAT('가능', '%')
+	</select>
+  <select id="allList" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="String">
+		SELECT a.* FROM (SELECT * FROM camping where addr LIKE CONCAT(#{addr}, '%')) a
+	</select>
+
 </mapper>
