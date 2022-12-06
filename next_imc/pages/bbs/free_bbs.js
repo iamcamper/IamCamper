@@ -14,19 +14,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useRouter } from 'next/router';
 import Link from "next/Link";
+
 import EditIcon from '@mui/icons-material/Edit';
 import Axios from "axios";
 import { useState, useEffect } from "react";
 import Banner from "./banner";
-import { useHistory } from "react-router-dom";
 
 
-export default function free_bbs(b_idx){ 
+export default function free_bbs(){ 
     const [list, setList] = useState([]);
     const [cPage, setCpage] = useState(1);
     const [totalPage, setTotalPage] = useState();
     const API_URL = "/bbs/free";
-    const API_VIEW = "/bbs/view";
     const router = useRouter();
   
   
@@ -87,8 +86,13 @@ export default function free_bbs(b_idx){
                   {list.map((bbs, index) => (
                     <TableRow key={index}>
                       <TableCell>{bbs.b_idx}</TableCell>
-                      <TableCell onClick={() => router.push('/bbs/view_bbs?b_idx='+bbs.b_idx)}>
-                     {bbs.bname}</TableCell>
+                      <TableCell>
+                      <Link
+                       href={{
+                        pathname: '/bbs/view_bbs',
+                        query: { idx: bbs.b_idx },
+                       }}
+                      >{bbs.bname}</Link></TableCell>
                       <TableCell>{bbs.nickname}</TableCell>
                       <TableCell>{bbs.write_date}</TableCell>
                       <TableCell>{bbs.like}</TableCell>

@@ -32,7 +32,7 @@ public class AdminBbsController {
     @Autowired
     private HttpServletRequest req;
 
-    String img_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_img";
+    String img_path = "/ProJect/IamCamper/IamCamper/next_imc/public/upload_img";
     String file_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_file";
 
     /*

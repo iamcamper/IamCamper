@@ -141,8 +141,9 @@ public class BbsController {
 
     @RequestMapping("/view")
     public BbsVO viewBbs(String b_idx) {
-
+        System.out.println(b_idx);
         BbsVO vo = b_Service.view(b_idx);
+        System.out.println(vo);
 
         return vo;
     }

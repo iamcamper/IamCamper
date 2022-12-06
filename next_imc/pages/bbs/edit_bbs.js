@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import Main1 from '../../com/Main1';
 import Main1_Menu from '../../com/Main1_Menu';
 import Main_Bottom from '../../com/Main_Bottom';
@@ -19,17 +20,18 @@ import Axios from 'axios';
 const Editbbs = dynamic(()=> import('./editor'), {ssr:false});
 
 export default function edit_bbs(){
-
+    
     const nickname = 'testnick'; //getCookie("nickname");
     const editorRef = useRef();
-    const [subject, setSubject] = useState();
+    const [subject, setSubject] = useState({});
     const WRITE_URL = "/bbs/addbbs";
     const router = useRouter();
     const formData = new FormData();
 
    const [bname, setBname] = useState('');
+   const [price, setPrice] = useState('');
 
-
+    
     const BnameChange = (e) => {
         setBname(e.target.value);
         console.log(bname);
@@ -38,12 +40,15 @@ export default function edit_bbs(){
         setSubject(e.target.value);
         console.log(subject);
     }
+    const changePrice = (e) => {
+        setPrice(e.target.value);
+        console.log(price);
+    }
     function changeFile(e){
         formData.append('file', e.target.files[0]);
     }
 
     function submit(){
-
         Axios.post(
             WRITE_URL, formData,
             {params:{nickname:nickname, 
@@ -105,6 +110,22 @@ export default function edit_bbs(){
                                     </td>
                                 </tr>
                 </Stack> 
+                {
+                    (function() {
+                        if (bname === '중고거래게시판') return (
+                    <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
+                         <tr>
+                            <th style={{padding:'20px', textAlign:'left'}}>
+                                <label htmlFor='price'>금액</label>
+                            </th>
+                            <td>
+                                <Input placeholder='금액' sx={{width:'450px'}} onChange={changePrice}/>
+                            </td>
+                        </tr>
+                   </Stack>
+                            );
+                    })()
+                    }
                 <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
                          <th style={{padding:'20px', textAlign:'left'}}>
                                         <label htmlFor='file'>첨부 파일</label>

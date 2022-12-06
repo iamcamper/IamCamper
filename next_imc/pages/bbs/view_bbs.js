@@ -1,48 +1,39 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
 import Main1 from "../../com/Main1";
 import Main1_Menu from "../../com/Main1_Menu";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
 import Main_Bottom from "../../com/Main_Bottom";
-import { Box, Grid, Input, listItemAvatarClasses, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Input, Paper, Stack, TextField, Typography } from "@mui/material";
 import { Container, textAlign } from "@mui/system";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-
-
-
+import  ViewList  from "../../com/viewList";
 
 export default function view_bbs(){
 
   const router = useRouter();
-  const [b_idx, setBidx] = useState();
-  const [list, setList] = useState();
-  const API_VIEW = "/bbs/view";
-  console.log(list);
-  console.log(router.query.b_idx);
-  const idx = router.query;
-  console.log(b_idx);
+  const [list, setList] = useState([]);
+  const b_idx = router.query.idx;
+  const API_VIEW = "/bbs/view?b_idx="+b_idx;
   
-  function getidx(){
-    setBidx(idx);
-  }
+  
+  console.log(b_idx);
+  console.log(list);
 
   function getList(){
-    
-    Axios.post(
-      API_VIEW,null,
-      {params:{b_idx: idx}}
-    ).then((json) => {
-        setList(json.data.list);
-        console.log(json.data.list);
+    Axios.get(
+      API_VIEW
+    ).then((res) => {
+        setList(res.data);
     })
   }
 
   useEffect(() => {
-    if(!router.isReady) return;
-    console.log(idx,'🙆‍♀️ 콘솔에 쿼리 찍힘!')
     getList();
-  },[router.isReady]);
+     },[]);
 
    return( 
    <div className= {styles.container}>  
@@ -60,34 +51,15 @@ export default function view_bbs(){
           theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
       }}
     >
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography variant="body2" gutterBottom>
-                 asd
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                  asd
-              </Typography> 
-            </Grid>
-            <Grid item>
-              <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                asd
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              asd
-            </Typography>
-            <Typography variant="subtitle1" component="div">
-              asd
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
+      <ViewList list={list}/>
       </Paper>
+      <Grid item xs style={{ width: '1400px', textAlign: 'right', padding: '30px', margin: 'auto' }}>
+          <Stack spacing={2} direction="row" justifyContent="flex-end">
+              <Button variant="contained" size="large" onClick={() => router.back()}>목록</Button>
+              <Button variant="contained" size="large" >수정</Button>
+              <Button variant="contained" size="large">삭제</Button>
+              </Stack>
+          </Grid>
       <Paper
         sx={{
           my: 3,
@@ -109,7 +81,7 @@ export default function view_bbs(){
           </Grid>
         </Grid>
       </Paper>
-     <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, width:'1000px', marginLeft:'400px'}}>
+     <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, width:'1200px', marginLeft:'450px'}}>
       <Paper
         sx={{
           my: 4,
@@ -124,8 +96,9 @@ export default function view_bbs(){
           <Grid item xs zeroMinWidth>
             <Typography noWrap>댓글</Typography>
           </Grid>
-        </Grid>
+        </Grid> 
       </Paper>
+       
       <Paper
         sx={{
           my: 4,
