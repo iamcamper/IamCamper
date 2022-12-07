@@ -3,9 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iamcamper.boot_imc.mapper.MemMapper">
+  <!-- 로컬 로그인 -->
   <select id="login" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Map">
     select * from member
     WHERE id = #{id} AND pw = #{pw} AND grade = 0
+  </select>
+  <!-- 회원 가입 아이디 중복확인 -->
+  <select id="idChk" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="String">
+    SELECT * FROM member
+    WHERE id = #{id}
+  </select>
+  <!-- 회원 가입 닉네임 중복확인-->
+  <select id="nicknameChk" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="String">
+    SELECT * FROM member
+    WHERE nickname = #{nickname}
   </select>
   <select id="kakaologin" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Object">
     select * from member

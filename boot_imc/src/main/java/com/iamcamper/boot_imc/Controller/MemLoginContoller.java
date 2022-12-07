@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("/mem")
+@RequestMapping("/member")
 public class MemLoginContoller {
 
     @Autowired
@@ -37,5 +37,43 @@ public class MemLoginContoller {
         
         return map;
 
+    }
+
+    @RequestMapping("/id/chk")
+    public Map<String, Object> idChk(String id){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        MemVO mvo = m_service.idChk(id);
+        int chk = 0;
+
+        if(mvo != null){
+            // 아이디가 중복되었다면 1 반환
+            chk = 1;
+        }
+
+        map.put("chk", chk);
+
+        return map;
+    }
+
+    /*
+     * 닉네임 중복 체크
+     */
+    @RequestMapping("/nickname/chk")
+    public Map<String, Object> nicknameChk(String nickname){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        MemVO mvo = m_service.nicknameChk(nickname);
+        int chk = 0;
+
+        if(mvo != null){
+            chk = 1;
+        }
+
+        map.put("chk", chk);
+
+        return map;
     }
 }

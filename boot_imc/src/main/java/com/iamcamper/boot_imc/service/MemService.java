@@ -22,6 +22,9 @@ public class MemService {
     @Autowired
     private MemMapper mapper;
 
+    /*
+     * 회원(local) 로그인
+     */
     public MemVO login(String id, String pw) {
         return mapper.login(id, pw);
     }
@@ -169,5 +172,23 @@ public class MemService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /*
+     * 회원가입 아이디 중복 체크
+     */
+    public MemVO idChk(String id){
+
+        return mapper.idChk(id);
+        
+    }
+
+    /*
+     * 회원가입 닉네임 중복 체크
+     */
+    public MemVO nicknameChk(String nickname){
+
+        return mapper.nicknameChk(nickname);
+        
     }
 }

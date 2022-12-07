@@ -12,4 +12,8 @@ public interface MemMapper {
     MemVO kakaologin(Object snsId);
 
     int kakaoinsert(Map<String, Object> userInfo);
+
+    MemVO idChk(@Param("id") String id); // 회원가입 아이디 중복 확인
+
+    MemVO nicknameChk(@Param("nickname") String nickname); //회원가입 닉네임 중복 확인
 }
