@@ -1,0 +1,9 @@
+.table table {
+    margin-top: 50px;
+}
+.table th {
+    width: 180px;
+}
+.table tr {
+    height: 50px;
+}

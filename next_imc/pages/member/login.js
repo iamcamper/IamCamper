@@ -17,7 +17,7 @@ export default function login(){
     const [naverURL,setNaverURL] = useState("");
 
     //local login
-    const LOGIN_URL = "/mem/login/chk";
+    const LOGIN_URL = "/member/login/chk";
     const [id, setId] = useState();
     const [pw, setPw] = useState();
 
@@ -97,7 +97,7 @@ export default function login(){
                             <Button variant="contained" fullWidth onClick={localLogin}>로그인</Button>
                         </Stack>
                     </FormControl>
-                    <p>회원 가입</p>
+                    <Link href={"/member/registration"}><p>회원 가입</p></Link>
                 </Paper>
                 <Paper elevation={2} sx={{width:'500px' , height:'280px', margin:'auto', padding:'10px', marginTop:'10px', marginBottom:'50px'}}>
                     <h2>간편 소셜 로그인</h2>
