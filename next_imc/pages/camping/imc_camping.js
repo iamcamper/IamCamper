@@ -4,7 +4,7 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main_Bottom from "../../com/Main_Bottom";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
-import { Box, Container, Paper, FormControl, Stack, TextField, Button ,InputLabel,Select,MenuItem} from '@mui/material';
+import { Box, Container, Paper, FormControl, Stack, TextField, Button ,InputLabel,Select,MenuItem, Link} from '@mui/material';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -39,6 +39,8 @@ import { request } from "http";
 //-------------------------import ---------------------------
 export default function imc_camping(){
   const [camlist,setCamlist] = useState([]);
+  const [plist,setPlist] = useState([]);
+
   const [ count , setCount] = useState();
 
     
@@ -74,7 +76,6 @@ export default function imc_camping(){
           x = camlist[0].mapY;
           y = camlist[0].mapX;
         } 
-        console.log(x+"/"+y);
         const options = { 
           center: new kakao.maps.LatLng(x, y), //검색 할 지역 위도 경도 
           level: 8
@@ -84,18 +85,43 @@ export default function imc_camping(){
        //------------------------ 마커 ----------------------------- json 문서 반복문 마커 모양은 변경 예정
        if(camlist.length>0){
        camlist.map((vo)=>{
-        const markerPosition = new kakao.maps.LatLng(vo.mapY, vo.mapX); 
-        const marker = new kakao.maps.Marker({ 
-          position: markerPosition
-        }); 
-        marker.setMap(map); 
+        var marker = new kakao.maps.Marker({
+          map: map, 
+          position: new kakao.maps.LatLng(vo.mapY , vo.mapX)
+      });
+      
+      // 커스텀 오버레이에 표시할 컨텐츠 입니다
+      // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
+      // 별도의 이벤트 메소드를 제공하지 않습니다 
+      var content = '<div class="wrap">' +'<div class="info">' + '<div class="title">' + vo.title + '</div>' + 
+                  '<div class="body">' + '<div class="img">' +' <img src="'+vo.image+ '" width="73" height="70">' +
+                  '</div>' + '<div class="desc">' + '<div class="ellipsis">'+ vo.addr +'</div>' + 
+                  '<div><a href='+vo.page +'target="_blank" class="link">홈페이지</a></div>' + 
+                  '</div>' + 
+                  '</div>' + 
+                  '</div>' +    
+                  '</div>';
+      
+      // 마커 위에 커스텀오버레이를 표시합니다
+      // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+      var overlay = new kakao.maps.CustomOverlay({
+          content: content,
+          map: map,
+          position: marker.getPosition()       
+      });
+      
+      // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+      kakao.maps.event.addListener(marker, 'click', function() {
+          overlay.setMap(map);
+      });
        });
       }
         //------------------------ 마커 ----------------------------- 
       });   
     }); 
   }
-  
+  // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+
   useEffect(() => { 
     addmap();
   },[]); 
@@ -135,32 +161,37 @@ function setTag (name) {
 const [page, setPage] = React.useState(1);
 const PageChange = (event, value) => {
     setPage(value);
-    console.log(value);
+    getData();
   };
 
 function getData(){
   Axios.post(
     "http://localhost:8080/cam/getData",null,
-    { params: { "addr":addr, "category":value }}
+    { params: { "addr":addr, "category":value ,"cPage":page}}
     ).then((json)=>{
-      console.log(json.data.vo.length);
       setCamlist(json.data.vo);
       setCount(Math.ceil(json.data.vo.length/3));
+      setPlist(json.data.pvo)
     }).catch((Error)=>{
     });
 }
+
+
 
 const [value, setValue] = React.useState(0);
 const getCategory = (event, newValue) => {
         setValue(newValue);
         console.log(value);
  };
+
+
+ //---------------------------------------
     return(
       <>
     
     <div className={styles.container}>
       
-
+    
       <Main1_top/>
       <Main1/>
       <Main1_Menu/>
@@ -237,7 +268,7 @@ const getCategory = (event, newValue) => {
                       value="약국" 
                       icon={<MedicationIcon  />} />
                   </BottomNavigation> 
-                  <Button variant="contained" style={{width:'100%',height:"100%"}} onClick={getData} ><span onClick={addmap()} >go Camping</span></Button>  
+                  <Button variant="contained" style={{width:'100%',height:"100%"}} onClick={getData} ><span onClick={addmap()} >go Camping</span></Button> 
                 </div>
               </div>
             </Grid>
@@ -253,52 +284,44 @@ const getCategory = (event, newValue) => {
                 <TableCell style={{width:"70%" ,textAlign:"center"}} >소개</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {camlist.map((item,index)=>(
-              <TableRow>
+              <TableBody>
                 
-              <TableCell style={{height:"250px"}}> 
-                  <div style={{width:"300px",height:"200px",margin:"auto"}}> 
+                {plist.map((item,index)=>(
+                <TableRow>
+                  <TableCell style={{height:"250px"}}> 
+                      <div style={{width:"300px",height:"200px",margin:"auto"}}> 
 
-                  <img 
-                    src={item.image}
-                    style={{width:"300px",height:"200px"}}
-                  />
-                </div>             
-              </TableCell>
-              <TableCell styles={{heigth:"250px"}}>
-                <div>
-                  <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>업체명 : </span>
-                  <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.title}</span>
-                  <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>카테고리 : </span>
-                  <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.category}</span>    
-                </div>
-                <div>
-                  <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>주소 :</span>
-                  <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.addr}</span>
-                </div>
-
-                {item.tel !== null?
-                <div>
-                  <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>전화번호 :</span>
-                  <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.tel}</span>
-                </div>
-                  :
-                <div>
-                  <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>전화번호 :</span>
-                  <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>없음</span>
-                </div>
-                }
-                <div>
-                  <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>예약방법 :</span>
-                  <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.manner}</span>
-                </div>
-                <div>
-                  <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>애완동물 :</span>
-                  <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px",borderBottom:"1px solid #dcdcdc"}}>{item.animal}</span>
-                </div>
-              </TableCell>
-            </TableRow>
+                      <img 
+                        src={item.image}
+                        style={{width:"300px",height:"200px"}}
+                      />
+                    </div>             
+                  </TableCell>
+                  <TableCell styles={{heigth:"250px"}}>
+                    <div style={{borderBottom:"1px solid #dcdcdc"}}>
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>업체명 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.title}</span>
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>카테고리 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.category}</span>    
+                    </div>
+                    <div style={{borderBottom:"1px solid #dcdcdc"}}>
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>주소 :</span>
+                      <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.addr}</span>
+                    </div>
+                    <div style={{borderBottom:"1px solid #dcdcdc"}}>
+                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>전화번호 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.tel}</span>
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>예약방법 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.manner}</span> 
+                    </div>
+                    <div style={{borderBottom:"1px solid #dcdcdc"}}>
+                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>애완동물 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.animal}</span>
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>홈페이지 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}><Button variant="text" style={{width:'150px',height:"50px",color:"black",border:"1px solid gray"}} href={item.page} >페이지 이동</Button></span>   
+                    </div>
+                  </TableCell>
+                </TableRow>
               ))}
 
               
@@ -310,13 +333,12 @@ const getCategory = (event, newValue) => {
                 </TableCell>
               </TableRow>
               
-            </TableBody>
+              </TableBody>
           </Table>             
 
           </Grid>
       </Box>
     </div>
-    <Main_Bottom />
 
     </>
     );

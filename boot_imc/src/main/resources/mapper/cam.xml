@@ -24,4 +24,13 @@
 		SELECT a.* FROM (SELECT * FROM camping where addr LIKE CONCAT(#{addr}, '%')) a
 	</select>
 
+  <select id="P_clist" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="String">
+    SELECT a.* FROM (
+      SELECT @RN:=@RN+1 AS rownum, b.* FROM(
+        SELECT * FROM camping WHERE addr LIKE CONCAT(#{addr}, '%') AND category  LIKE CONCAT('%', #{category}, '%')) b,
+        (SELECT @RN:=0) r
+      ) a
+    WHERE rownum BETWEEN #{begin} AND #{end}
+  </select>
+
 </mapper>

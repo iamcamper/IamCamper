@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iamcamper.boot_imc.VO.CamVO;
 import com.iamcamper.boot_imc.service.CamService;
+import com.iamcamper.boot_imc.util.Paging;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/cam")
@@ -25,18 +26,34 @@ public class CampingController {
     @Autowired
     private CamService service;
 
+    Paging page = new Paging();
+
     @RequestMapping("/getData")
-    public Map<String, CamVO[]> getData(String addr, String category) {
+    public Map<String, CamVO[]> getData(String addr, String category, String cPage) {
 
         Map<String, CamVO[]> map = new HashMap<String, CamVO[]>();
-        System.out.println(addr + "/" + category);
 
-        CamVO[] vo = service.getList(addr, category);
+        CamVO[] m_vo = service.getList(addr, category);
 
-        map.put("vo", vo);
-        if (vo == null) {
-            System.out.println("null");
+        int totalCount = m_vo.length;
+
+        page.setTotalCount(totalCount);
+
+        page.setNumPerPage(3);
+
+        if (cPage != null) {
+            page.setNowPage(Integer.parseInt(cPage));
+        } else {
+            page.setNowPage(1);
         }
+
+        String begin = String.valueOf(page.getBegin());
+        String end = String.valueOf(page.getEnd());
+
+        CamVO[] p_vo = service.getP_list(addr, category, begin, end);
+
+        map.put("vo", m_vo);
+        map.put("pvo", p_vo);
 
         return map;
     }
@@ -95,7 +112,7 @@ public class CampingController {
                 String explain = item.getChildText("lineIntro");
                 String minutely = item.getChildText("intro");
                 String facilities = item.getChildText("sbrsCl");
-                String manner = item.getChildText("resveCL");
+                String manner = item.getChildText("resveCl");
                 String animal = item.getChildText("animalCmgCl");
                 String image = item.getChildText("firstImageUrl");
                 String tel = item.getChildText("tel");

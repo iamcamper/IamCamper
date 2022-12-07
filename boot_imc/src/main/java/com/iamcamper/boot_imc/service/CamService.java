@@ -58,4 +58,23 @@ public class CamService {
         return vo;
     }
 
+    public CamVO[] getP_list(String addr, String category, String begin, String end) {
+        Map<String, String> map = new HashMap<String, String>();
+        List<CamVO> list = null;
+
+        map.put("addr", addr);
+        map.put("category", category);
+        map.put("begin", begin);
+        map.put("end", end);
+
+        list = mapper.P_clist(map);
+        CamVO[] vo = null;
+
+        if (list != null && list.size() > 0) {
+            vo = new CamVO[list.size()];
+            list.toArray(vo);
+        }
+        return vo;
+    }
+
 }

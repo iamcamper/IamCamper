@@ -17,4 +17,6 @@ public interface CamMapper {
 
     List<CamVO> allList(String addr);
 
+    List<CamVO> P_clist(Map<String, String> map);
+
 }
