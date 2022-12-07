@@ -11,6 +11,7 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import  ViewList  from "../../com/viewList";
+import Link from "next/Link";
 
 export default function view_bbs(){
 
@@ -22,6 +23,13 @@ export default function view_bbs(){
   
   console.log(b_idx);
   console.log(list);
+
+  function fixAction(){
+    router.push({
+      pathname: "/bbs/fix_bbs",
+      query: { list: list },
+    }, '/bbs/fix_bbs');
+  };
 
   function getList(){
     Axios.get(
@@ -56,7 +64,10 @@ export default function view_bbs(){
       <Grid item xs style={{ width: '1400px', textAlign: 'right', padding: '30px', margin: 'auto' }}>
           <Stack spacing={2} direction="row" justifyContent="flex-end">
               <Button variant="contained" size="large" onClick={() => router.back()}>목록</Button>
-              <Button variant="contained" size="large" >수정</Button>
+              <Button variant="contained" size="large" ><Link href={{
+                            pathname: '/bbs/fix_bbs',
+                            query: { list: JSON.stringify(list) },
+                          }}>수정</Link></Button>
               <Button variant="contained" size="large">삭제</Button>
               </Stack>
           </Grid>

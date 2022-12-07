@@ -147,4 +147,9 @@ public class BbsController {
 
         return vo;
     }
+
+    @RequestMapping("/fixbbs")
+    public void fixBbs() {
+
+    }
 }
