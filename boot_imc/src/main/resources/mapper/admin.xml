@@ -17,11 +17,13 @@
     SELECT * FROM member
     WHERE id = #{id} AND pw = #{pw} AND grade = #{grade}
     </select>
+
 <!-- 전체 게시글의 수 반환 -->
     <select id="totalCount" resultType="int" parameterType="String">
     SELECT COUNT(*) FROM bbs
     WHERE bname = #{bname} AND status = 0
     </select>
+
 <!-- 해당 게시글 페이징 기법으로 반환 -->
     <select id="list" resultMap="listMap" parameterType="Map">
     SELECT a.* FROM (
@@ -31,9 +33,32 @@
       ) a
     WHERE rownum BETWEEN #{begin} AND #{end}
     </select>
+
 <!-- 게시글 등록 -->
     <insert id="write" parameterType="com.iamcamper.boot_imc.VO.BbsVO">
     INSERT INTO bbs(nickname ,subject, content, file_name, ori_name, thum_img, write_date, ip, bname)
     VALUES (#{nickname}, #{subject}, #{content}, #{file_name}, #{ori_name}, #{thum_img}, NOW(), #{ip}, #{bname})
     </insert>
+
+<!-- 배너 게시판 카운트 -->
+<select id="bannerCount" parameterType="Map" resultType="int">
+    SELECT COUNT(*) FROM bbs
+    WHERE bname IN (#{bname1}, #{bname2}) AND status = 0
+</select>
+
+<!-- 배너 게시판 게시글 리스트 불러오기 -->
+    <select id="bannerList" parameterType="Map" resultMap="listMap">
+    SELECT a.* FROM (
+      SELECT @RN:=@RN+1 AS rownum, b.* FROM(
+        SELECT * FROM bbs WHERE bname IN (#{bname1}, #{bname2}) AND status = 0 ORDER BY b_idx DESC) b,
+        (SELECT @RN:=0) r
+      ) a
+    WHERE rownum BETWEEN #{begin} AND #{end}
+    </select>
+
+<!-- 클릭한 게시글 불러오기 -->
+  <select id="views" parameterType="String" resultMap="listMap">
+    SELECT * FROM bbs
+    WHERE b_idx = #{b_idx}
+  </select>
 </mapper>

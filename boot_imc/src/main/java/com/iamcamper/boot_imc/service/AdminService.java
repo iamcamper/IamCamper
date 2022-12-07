@@ -50,6 +50,28 @@ public class AdminService {
         
     }
 
+    //어드민 배너 토탈 카운트 불러오기
+    public int bannerCount(String bname1, String bname2){
+
+        int count = mapper.bannerCount(bname1, bname2);
+
+        return count;
+    }
+
+    //어드민 배너 전체 리스트 불러오기
+    public List<BbsVO> bannerList(String begin, String end, String bname1, String bname2){
+
+        return mapper.bannerList(begin, end, bname1, bname2);
+        
+    }
+
+    //어드민 클릭한 게시글 불러오기
+    public BbsVO views(String b_idx){
+
+        return mapper.views(b_idx);
+        
+    }
+
 
     
 }

@@ -4,20 +4,15 @@ import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
 import Admin_Sidebar from '../../com/Admin_Sidebar';
 import Axios from 'axios';
-import { useEffect, useState } from 'react';
-
-
-
-
-
-
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function notice(){
 
     const router = useRouter();
     const LIST_URL = "/admin/notice/list";
     const [list, setList] = useState([]);
-    const [cPage, setCpage] = useState(1);
+    const [cPage, setCPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
     
 
@@ -29,6 +24,11 @@ export default function notice(){
             setTotalPage(json.data.totalPage);
             setList(json.data.list);
         })
+    }
+
+    function pageChange(e){
+        setCPage(e.target.value);
+        console.log(cPage);
     }
 
     useEffect(()=>{
@@ -68,7 +68,14 @@ export default function notice(){
                             {list.map((data, index)=> 
                                 <TableRow key={index}>
                                 <TableCell>{data.b_idx}</TableCell>
-                                <TableCell>{data.subject}</TableCell>
+                                    <TableCell>
+                                        <Link href={{
+                                            pathname: "/admin/views",
+                                            query: {b_idx: data.b_idx, cPage: cPage},
+                                        }}>
+                                            {data.subject}
+                                        </Link>
+                                    </TableCell>
                                 <TableCell align="right">{data.nickname}</TableCell>
                                 <TableCell align="right">{data.write_date}</TableCell>
                                 <TableCell align="right">{data.hit}</TableCell>
@@ -78,12 +85,17 @@ export default function notice(){
                     </Table>
                 </TableContainer>
                 <Stack spacing={2}>
-                        <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary' sx={{marginTop:'30px'}}/>
+                        <Pagination count={totalPage} 
+                            variant="outlined" 
+                            shape="rounded" 
+                            color='primary' 
+                            sx={{marginTop:'30px'}}
+                            page={cPage}
+                            onChange={pageChange}/>
                 </Stack>
             </Box>
         </Stack>
         <Admin_Footer/>
-
     </Box>
 
     );

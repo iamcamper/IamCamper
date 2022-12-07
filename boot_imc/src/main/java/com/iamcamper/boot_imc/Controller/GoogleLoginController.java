@@ -6,17 +6,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpConnection;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,13 +79,13 @@ public class GoogleLoginController {
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuffer sb = new StringBuffer();
             sb.append("grant_type=authorization_code");
-	        sb.append("&client_id=");
+            sb.append("&client_id=");
             sb.append(clientId);
-	        sb.append("&client_secret=");
+            sb.append("&client_secret=");
             sb.append(secret);
-	        sb.append("&redirect_uri=");
+            sb.append("&redirect_uri=");
             sb.append(redirectUri);
-	        sb.append("&code="+code);
+            sb.append("&code="+code);
             bw.write(sb.toString());
             bw.flush();
 
