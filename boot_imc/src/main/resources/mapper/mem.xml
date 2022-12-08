@@ -18,6 +18,11 @@
     SELECT * FROM member
     WHERE nickname = #{nickname}
   </select>
+  <!-- 회원 가입 -->
+  <insert id="reg" parameterType="Map">
+    INSERT INTO member (id, pw, nickname, name, email, birth, phone, manner_point, activate, grade)
+    VALUES (#{id}, #{pw}, #{nickname}, #{name}, #{email}, #{birth}, #{phone}, 0, 0, 0)
+  </insert>
   <select id="kakaologin" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Object">
     select * from member
     WHERE snsId = #{snsId}

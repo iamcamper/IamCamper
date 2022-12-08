@@ -16,4 +16,8 @@ public interface MemMapper {
     MemVO idChk(@Param("id") String id); // 회원가입 아이디 중복 확인
 
     MemVO nicknameChk(@Param("nickname") String nickname); //회원가입 닉네임 중복 확인
+
+    void reg(@Param("id") String id, @Param("pw") String pw, @Param("nickname") String nickname, 
+        @Param("name") String name, @Param("email") String email, @Param("birth") String birth, @Param("phone") String phone); //회원 가입
+
 }

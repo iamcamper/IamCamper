@@ -189,6 +189,16 @@ public class MemService {
     public MemVO nicknameChk(String nickname){
 
         return mapper.nicknameChk(nickname);
-        
+
+    }
+
+    /*
+     * 회원가입
+     */
+    public void reg(String id, String pw, String nickname,
+        String name, String email, String birth, String phone){
+
+            mapper.reg(id, pw, nickname, name, email, birth, phone);
+
     }
 }

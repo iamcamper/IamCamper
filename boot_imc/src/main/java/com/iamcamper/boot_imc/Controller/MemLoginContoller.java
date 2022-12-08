@@ -76,4 +76,25 @@ public class MemLoginContoller {
 
         return map;
     }
+
+    @RequestMapping("/reg/ok")
+    public Map<String, Object> registration(String id, String pw, String nickname, 
+            String name, String email, String phone, String birth){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        
+        m_service.reg(id, pw, nickname, name, email, birth, phone);
+
+        MemVO mvo = m_service.idChk(id);
+
+        int chk = 0;
+
+        if(mvo == null){
+            chk = 1;
+        }
+
+        map.put("chk", chk);
+
+        return map;
+    }
 }
