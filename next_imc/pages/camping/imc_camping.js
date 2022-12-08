@@ -23,9 +23,8 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
 import Typography from '@mui/material/Typography';
 import Axios from "axios";
-import { useEffect ,useState,useCallback } from 'react';
+import { useEffect ,useState } from 'react';
 import Grid from '@mui/material/Grid';
-import { borderRadius, width } from "@mui/system";
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import MedicationIcon from '@mui/icons-material/Medication';
@@ -38,12 +37,16 @@ import Pagination from '@mui/material/Pagination';
 import { request } from "http";
 //-------------------------import ---------------------------
 export default function imc_camping(){
-  const [camlist,setCamlist] = useState([]);
-  const [plist,setPlist] = useState([]);
 
-  const [ count , setCount] = useState();
+  //변수 ---------------------------------------------
+  const [camlist,setCamlist] = useState([]); //캠핑장 데이터
+  const [plist,setPlist] = useState([]); // 캠핑장 소개 리스트
+  const [ count , setCount] = useState();  // 데이터 수
+  const [addr,setAddr] = useState(null);//검색 지역
+  const category= ['서울','부산','대구','인천','광주','울산','경기','강원도','충청남도','경상북도','경상남도','전라북도','전라남도','제주','세종']; //지역 
+  const [page, setPage] = useState(1); //cPage
+  const [value, setValue] = useState(null); //검색 카테고리
 
-    
 //-------------------------지도-------------------------------------------------------
   const new_script = src => { 
     return new Promise((resolve, reject) => { 
@@ -78,7 +81,7 @@ export default function imc_camping(){
         } 
         const options = { 
           center: new kakao.maps.LatLng(x, y), //검색 할 지역 위도 경도 
-          level: 8
+          level: 12
         };
         
         const map = new kakao.maps.Map(mapContainer, options); 
@@ -90,9 +93,6 @@ export default function imc_camping(){
           position: new kakao.maps.LatLng(vo.mapY , vo.mapX)
       });
       
-      // 커스텀 오버레이에 표시할 컨텐츠 입니다
-      // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
-      // 별도의 이벤트 메소드를 제공하지 않습니다 
       var content = '<div class="wrap">' +'<div class="info">' + '<div class="title">' + vo.title + '</div>' + 
                   '<div class="body">' + '<div class="img">' +' <img src="'+vo.image+ '" width="73" height="70">' +
                   '</div>' + '<div class="desc">' + '<div class="ellipsis">'+ vo.addr +'</div>' + 
@@ -101,16 +101,13 @@ export default function imc_camping(){
                   '</div>' + 
                   '</div>' +    
                   '</div>';
-      
-      // 마커 위에 커스텀오버레이를 표시합니다
-      // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+
       var overlay = new kakao.maps.CustomOverlay({
           content: content,
           map: map,
           position: marker.getPosition()       
       });
-      
-      // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+
       kakao.maps.event.addListener(marker, 'click', function() {
           overlay.setMap(map);
       });
@@ -127,17 +124,12 @@ export default function imc_camping(){
   },[]); 
 //-------------------------지도-------------------------------------------------------
 
-const [addr,setAddr] = useState('');
-const [title,setTitle] = useState([list]);
-var list =[""];
-
-const category= ['서울','부산','대구','인천','광주','울산','경기','강원도','충청남도','경상북도','경상남도','전라북도','전라남도','제주','세종'];
-
+//지역 변경 함수
 const handleChange = (event) => {
     setAddr(event.target.value);
-    //console.log(addr+'/'+title);
 };
 
+//삭제 예정
 function setTag (name) {
   var chk = true;
   var i = 0;
@@ -158,27 +150,37 @@ function setTag (name) {
 
   
 };
-const [page, setPage] = React.useState(1);
+
+//페이지 변경 시 사용하는 함수
 const PageChange = (event, value) => {
-    setPage(value);
-    getData();
+  setPage(value);
+  getData(value);
   };
 
-function getData(){
-  Axios.post(
-    "http://localhost:8080/cam/getData",null,
-    { params: { "addr":addr, "category":value ,"cPage":page}}
-    ).then((json)=>{
-      setCamlist(json.data.vo);
-      setCount(Math.ceil(json.data.vo.length/3));
-      setPlist(json.data.pvo)
-    }).catch((Error)=>{
-    });
+  useEffect(()=>{},[page]);
+
+
+//데이터 검색 하는 함수
+function getData(cPage){
+  if(addr == null){
+    alert("지역을 선택해 주세요!");
+  }
+  if(value==null){
+    alert("카테고리를 선택해 주세요!");
+  }
+
+  if(addr!=null && value != null){
+    Axios.post(
+      "/cam/getData",null,
+      { params: { "addr":addr, "category":value ,"cPage":cPage}}
+      ).then((json)=>{
+        setCamlist(json.data.vo);
+        setCount(Math.ceil(json.data.vo.length/3));
+        setPlist(json.data.pvo)
+      }).catch((Error)=>{});
+  }
 }
-
-
-
-const [value, setValue] = React.useState(0);
+//카테고리 변경 함수
 const getCategory = (event, newValue) => {
         setValue(newValue);
         console.log(value);
@@ -200,7 +202,7 @@ const getCategory = (event, newValue) => {
           <Grid item xs style={{height:"500px"}}>
               <div style={{margin:'0 auto',height:'1200px'}}>
                 <div id="map" className="map" style={{
-                    width: "600px",
+                    width: "700px",
                     height: "500px",
                     alignItems: "center",
                     justifyContent: "center",
@@ -268,7 +270,8 @@ const getCategory = (event, newValue) => {
                       value="약국" 
                       icon={<MedicationIcon  />} />
                   </BottomNavigation> 
-                  <Button variant="contained" style={{width:'100%',height:"100%"}} onClick={getData} ><span onClick={addmap()} >go Camping</span></Button> 
+                  <Button variant="contained" style={{width:'100%',height:"100%"}} onClick={(e)=>{getData(1)}} ><span onClick={addmap()}>go Camping</span></Button> 
+
                 </div>
               </div>
             </Grid>
@@ -300,25 +303,25 @@ const getCategory = (event, newValue) => {
                   <TableCell styles={{heigth:"250px"}}>
                     <div style={{borderBottom:"1px solid #dcdcdc"}}>
                       <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>업체명 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.title}</span>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>카테고리 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.category}</span>    
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.title}</span>
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>카테고리 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.category}</span>    
                     </div>
                     <div style={{borderBottom:"1px solid #dcdcdc"}}>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>주소 :</span>
-                      <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.addr}</span>
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>주소 :</span>
+                      <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',fontSize:"15px"}}>{item.addr}</span>
                     </div>
                     <div style={{borderBottom:"1px solid #dcdcdc"}}>
-                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>전화번호 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.tel}</span>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>예약방법 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.manner}</span> 
+                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>전화번호 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.tel}</span>
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>예약방법 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.manner}</span> 
                     </div>
                     <div style={{borderBottom:"1px solid #dcdcdc"}}>
-                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>애완동물 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>{item.animal}</span>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>홈페이지 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}><Button variant="text" style={{width:'150px',height:"50px",color:"black",border:"1px solid gray"}} href={item.page} >페이지 이동</Button></span>   
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>애완동물 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.animal}</span>
+                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>홈페이지 : </span>
+                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}><Button variant="text" style={{width:'150px',height:"80%",color:"black",border:"1px solid gray"}}  onClick={() => window.open(item.page, '_blank')}>페이지 이동</Button></span>   
                     </div>
                   </TableCell>
                 </TableRow>
@@ -332,10 +335,8 @@ const getCategory = (event, newValue) => {
                 </Stack>
                 </TableCell>
               </TableRow>
-              
               </TableBody>
           </Table>             
-
           </Grid>
       </Box>
     </div>

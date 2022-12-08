@@ -63,11 +63,17 @@ public class CamService {
         List<CamVO> list = null;
 
         map.put("addr", addr);
+
         map.put("category", category);
         map.put("begin", begin);
         map.put("end", end);
-
-        list = mapper.P_clist(map);
+        if (category.equals("애완동물")) {
+            list = mapper.P_alist(map);
+        } else if (category.equals("전체보기")) {
+            list = mapper.P_allList(map);
+        } else {
+            list = mapper.P_clist(map);
+        }
         CamVO[] vo = null;
 
         if (list != null && list.size() > 0) {
