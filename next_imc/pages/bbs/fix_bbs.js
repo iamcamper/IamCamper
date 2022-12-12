@@ -24,6 +24,7 @@ export default function fix_bbs(){
     const [subject, setSubject] = useState({});
     const WRITE_URL = "/bbs/fixbbs";
     const router = useRouter();
+    const content = router.query.content;
     const formData = new FormData();    
     const [fix, setFix] = useState([]);
     const editorRef = useRef();
@@ -33,7 +34,9 @@ export default function fix_bbs(){
     function getFixdata(){
         setFix(JSON.parse(router.query.list))
     };
-   const [bname, setBname] = useState('');
+
+
+   const [bname, setBname] = useState(router.query.bname);
    const [price, setPrice] = useState('');
 
     const BnameChange = (e) => {
@@ -52,7 +55,7 @@ export default function fix_bbs(){
         formData.append('file', e.target.files[0]);
     }
     const editSet = {
-        editorRef: {editorRef},
+        editorRef: {editorRef}, content: {content}
     }
 
     function submit(){
@@ -63,6 +66,7 @@ export default function fix_bbs(){
                 content:editorRef.current?.getInstance().getHTML(),
                 bname:bname,
                 cPage:1,
+                price:price,
                 b_idx:b_idx,
             },
             headers:{'Content-Type': 'multipart/form-data',},},
@@ -73,7 +77,6 @@ export default function fix_bbs(){
 
     useEffect(() => {
         getFixdata();
-        console.log(fix['content'])
          },[]);
     
     
@@ -87,11 +90,11 @@ export default function fix_bbs(){
         <Stack spacing={2} sx={{textAlign:'left', marginBottom:'50px'}}>
             <Stack items sx={{width:'200px'}}>
             <FormControl variant="filled" sx={{ marginLeft:'25px', minWidth: 300 }} size="small">
-                <InputLabel id="demo-select-small" sx={{}}>게시판</InputLabel>
+                <InputLabel id="demo-select-small" sx={{}}>{bname}</InputLabel>
                 <Select
                     labelId="demo-select-small"
                     id="demo-select-small"
-                    defaultValue={fix.bname}
+                    defaultValue={bname}
                     value={bname}
                     label="bbs"
                     onChange={BnameChange}
@@ -155,7 +158,7 @@ export default function fix_bbs(){
              />
             </Paper>
             <div style={{textAlign:'center', padding:'20px', margin:'10px'}}>
-                            <Button variant="contained" sx={{margin:"10px"}} onClick={submit}>글쓰기</Button>
+                            <Button variant="contained" sx={{margin:"10px"}} onClick={submit}>글수정</Button>
                             <Button variant="contained" sx={{margin:"10px"}}>취소</Button>
                         </div>
           <div> 

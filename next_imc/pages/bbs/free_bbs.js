@@ -25,7 +25,7 @@ export default function free_bbs(){
     const [list, setList] = useState([]);
     const [cPage, setCpage] = useState(1);
     const [totalPage, setTotalPage] = useState();
-    const API_URL = "/bbs/free";
+    const API_URL = "/bbs/list";
     const router = useRouter();
   
   
@@ -34,7 +34,7 @@ export default function free_bbs(){
   function getList(){
     Axios.post(
         API_URL, null,
-        {params:{bname:'후기게시판', cPage:cPage}}
+        {params:{bname:'자유게시판', cPage:cPage}}
       ).then((json) =>{
         setTotalPage(json.data.totalPage);
         console.log(json.data.list);
@@ -92,7 +92,7 @@ export default function free_bbs(){
                         pathname: '/bbs/view_bbs',
                         query: { idx: bbs.b_idx },
                        }}
-                      >{bbs.bname}</Link></TableCell>
+                      >{bbs.subject}</Link></TableCell>
                       <TableCell>{bbs.nickname}</TableCell>
                       <TableCell>{bbs.write_date}</TableCell>
                       <TableCell>{bbs.like}</TableCell>

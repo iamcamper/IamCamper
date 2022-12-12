@@ -27,6 +27,7 @@ export default function edit_bbs(){
     const WRITE_URL = "/bbs/addbbs";
     const router = useRouter();
     const formData = new FormData();
+    let file = null;
 
    const [bname, setBname] = useState('');
    const [price, setPrice] = useState('');
@@ -45,16 +46,21 @@ export default function edit_bbs(){
         console.log(price);
     }
     function changeFile(e){
-        formData.append('file', e.target.files[0]);
+        file = e.target.files[0];
     }
 
     function submit(){
+
+        formData.append("file", file);
+        formData.append("nickname", nickname);
+        formData.append("subject", subject);
+        
         Axios.post(
             WRITE_URL, formData,
-            {params:{nickname:nickname, 
-                subject:subject, 
+            {params:{
                 content:editorRef.current?.getInstance().getHTML(),
                 bname:bname,
+                price:price,
                 cPage:1,
             },
             headers:{'Content-Type': 'multipart/form-data',},},
@@ -92,7 +98,7 @@ export default function edit_bbs(){
             </Stack>
             <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
                 <tr>
-                    <th style={{padding:'20px', textAlign:'left'}}>
+                    <th style={{padding:'20px', textAlign:'left'}}> 
                          <label htmlFor='subject'>제목</label>
                     </th>
                     <td>
