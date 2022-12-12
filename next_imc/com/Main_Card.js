@@ -11,7 +11,7 @@ export default function Main_Card(){
     //------------------------------비동기식 통신으로 램덤 자료 3개 받을 곳!----------------------
     const [list,setList] =useState([]);
         
-    const API_URL ='https://apis.data.go.kr/B551011/GoCamping/searchList?serviceKey=wBQmzgiBACZ1O%2FJ79%2FmqTep2O%2BGJZiXE2%2BHacF5l2epi%2FT4f1uh270dxEAiIzwstnzWTF74b6C%2BRli%2BRL4UlTQ%3D%3D&numOfRows=3&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&keyword=%EC%95%BC%EC%98%81%EC%9E%A5'
+    const API_URL ='https://apis.data.go.kr/B551011/GoCamping/searchList?serviceKey=wBQmzgiBACZ1O%2FJ79%2FmqTep2O%2BGJZiXE2%2BHacF5l2epi%2FT4f1uh270dxEAiIzwstnzWTF74b6C%2BRli%2BRL4UlTQ%3D%3D&numOfRows=3&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&keyword=야영'
     
     function getData(){
         Axios.get(

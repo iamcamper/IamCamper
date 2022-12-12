@@ -7,6 +7,8 @@ import FolderIcon from '@mui/icons-material/Folder';
 import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import router from "next/router";
+import { setCookie } from "cookies-next";
 
 export default function test(){
     const API_URL = "/cam/update";
@@ -35,7 +37,11 @@ export default function test(){
         <Button onClick={Update} value="1">캠핑</Button>
         <Button onClick={Update} value="2">병원</Button>
         <Button onClick={Update} value="3">약국</Button>
-     
+        <Button  variant="text" style={{width:'100%',height:"100%"}} color="inherit"
+                        onClick={()=>{
+                          setCookie('u_name', "1", {maxAge: 60*60});
+                          router.push("/");
+                        }}>로그인</Button>
      
      
     <BottomNavigation style={{ width: "500px",margin:"0 auto" }} value={value} onChange={handleChange}>
