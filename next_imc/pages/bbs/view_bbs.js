@@ -66,7 +66,7 @@ export default function view_bbs(){
               <Button variant="contained" size="large" onClick={() => router.back()}>목록</Button>
               <Button variant="contained" size="large" ><Link href={{
                             pathname: '/bbs/fix_bbs',
-                            query: { list: JSON.stringify(list) },
+                            query: { list: JSON.stringify(list), bname:list.bname, content:list.content},
                           }}>수정</Link></Button>
               <Button variant="contained" size="large">삭제</Button>
               </Stack>

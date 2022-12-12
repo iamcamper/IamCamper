@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,10 +33,10 @@ public class BbsController {
     @Autowired
     private HttpServletRequest req;
 
-    String img_path = "/Users/cat01/upload_img";
-    String file_path = "/Users/cat01/upload_file";
+    String img_path = "C:/ProJect/IamCamper/IamCamper/next_imc/public/upload_img";
+    String file_path = "C:/ProJect/IamCamper/IamCamper/next_imc/public/upload_file";
 
-    @RequestMapping("/free")
+    @RequestMapping(value = "/list")
     public Map<String, Object> freeBbs(@RequestParam("bname") String bname, @RequestParam("cPage") String cPage) {
 
         Paging page = new Paging();
@@ -55,7 +56,7 @@ public class BbsController {
         String begin = String.valueOf(page.getBegin());
         String end = String.valueOf(page.getEnd());
 
-        List<BbsVO> list = b_Service.list(bname, begin, end);
+        List<BbsVO> list = b_Service.list(begin, end, bname);
 
         BbsVO[] b_list = null;
         if (list != null && list.size() > 0) {
@@ -83,22 +84,25 @@ public class BbsController {
     }
 
     @RequestMapping("/addbbs")
-    public Map<String, Object> addBbs(String nickname, String subject, String content, String bname,
+    public Map<String, Object> addBbs(String nickname, String subject, String content, String bname, String price,
             @RequestPart(value = "file", required = true) MultipartFile file) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
-        String ori_name = null;
-        String file_name = null;
+        if (file != null) {
 
-        if (file.getSize() > 0) {
-            ori_name = file.getOriginalFilename();
-            file_name = FileRenameUtil.checkSameFileName(ori_name, file_path);
+            String ori_name = null;
+            String file_name = null;
 
-            try {
-                file.transferTo(new File(file_path, file_name));
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (file.getSize() > 0) {
+                ori_name = file.getOriginalFilename();
+                file_name = FileRenameUtil.checkSameFileName(ori_name, file_path);
+
+                try {
+                    file.transferTo(new File(file_path, file_name));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -109,8 +113,7 @@ public class BbsController {
         vo.setNickname(nickname);
         vo.setContent(content);
         vo.setBname(bname);
-        vo.setOri_name(ori_name);
-        vo.setFile_name(file_name);
+        vo.setPrice(price);
 
         b_Service.add(vo);
 
@@ -141,9 +144,7 @@ public class BbsController {
 
     @RequestMapping("/view")
     public BbsVO viewBbs(String b_idx) {
-        System.out.println(b_idx);
         BbsVO vo = b_Service.view(b_idx);
-        System.out.println(vo);
 
         return vo;
     }
@@ -152,4 +153,5 @@ public class BbsController {
     public void fixBbs() {
 
     }
+
 }

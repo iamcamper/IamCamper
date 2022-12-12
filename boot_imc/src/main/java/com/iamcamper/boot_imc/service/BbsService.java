@@ -13,9 +13,9 @@ public class BbsService {
     @Autowired
     private BbsMapper mapper;
 
-    public List<BbsVO> list(String bname, String begin, String end) {
+    public List<BbsVO> list(String begin, String end, String bname) {
 
-        List<BbsVO> list = mapper.list(bname, begin, end);
+        List<BbsVO> list = mapper.list(begin, end, bname);
 
         return list;
 
@@ -48,6 +48,10 @@ public class BbsService {
 
         return totalCount;
 
+    }
+
+    public int ViewCount(String b_idx) {
+        return mapper.ViewCount(b_idx);
     }
 
 }

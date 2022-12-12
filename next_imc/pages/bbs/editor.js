@@ -1,13 +1,15 @@
 import {Editor} from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Axios from 'axios';
 
 export default function editor(props){
 
+    
     const [fileName, setFileName] = useState([]);
 
     const addImage = async(blob, callback) => {
+        console.log(blob);
        const frm = new FormData();
        frm.append('file', blob);
         try{
@@ -22,14 +24,17 @@ export default function editor(props){
 
         }
     }
+    
 
     return(
         <div>
            <Editor
                 ref = {props.editorRef}
+                placeholder="내용을 입력해 주세요!"
                 previewStyle="vertical" // 미리보기 스타일 지정
                 height="300px" // 에디터 창 높이
                 initialEditType="wysiwyg"
+                hideModeSwitch={true} 
                 hooks={{
                     addImageBlobHook: addImage
                 }}
