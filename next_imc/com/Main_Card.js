@@ -30,7 +30,6 @@ export default function Main_Card(){
         Axios.get(
             API_URL2
         ).then((json)=>{
-            console.log(json.data);
             if(json.data.blist != null){
                 setBlist(json.data.blist);
                 setUlist(json.data.ulist);
@@ -51,11 +50,9 @@ export default function Main_Card(){
            
         });
     }
-
-
     useEffect(() => { 
-        getBlist();
         getData();
+        getBlist();
 
     },[]);
 
@@ -69,13 +66,13 @@ export default function Main_Card(){
             
             <Stack spacing={25} direction='row'>
                 <Grid container>
-                    <Grid item xs>
+                    <Grid item xs={4}>
                         <Box className="box">
                                     <Typography variant='h5' component='div' textAlign='left' marginBottom='20px'>
                                     오늘의 추천 Pick
                                     </Typography>
-                                    {list.map((item) => (
-                                         <Grid container marginTop='10px' borderBottom="1px solid #d3d3d3" paddingBottom='10px'>
+                                    {list.map((item,index) => (
+                                         <Grid container marginTop='10px' borderBottom="1px solid #d3d3d3" paddingBottom='10px'key={index}>
                                              <Grid item xs={4}>
                                                  <CardMedia 
                                                      component='img'
@@ -100,13 +97,13 @@ export default function Main_Card(){
                                     ))}
                         </Box>
                     </Grid>
-                    <Grid item xs>
+                    <Grid item xs={4}>
                         <Box className="box">
                                     <Typography variant='h5' component='div' textAlign='left' marginBottom='10px'>
                                     I am Camper 중고거래
                                     </Typography>
-                            {ulist.map((item) => (
-                                <Grid container className="bbsbox" >
+                            {ulist.map((item,index) => (
+                                <Grid container className="bbsbox" key={index}>
                                  <Grid item xs={3}>
                                      <Typography variant='body1' color='text.secondary' className="bbscategory">
                                      [{item.bname ==="USED"?"중고거래":"오류"}]
@@ -121,13 +118,13 @@ export default function Main_Card(){
                             ))}
                         </Box>
                     </Grid>
-                    <Grid item xs>
-                        <Box className="box">
+                    <Grid item xs={4}>
+                        <Box className="box" >
                                     <Typography variant='h5' component='div' textAlign='left' marginBottom='10px'>
                                     I am Camper 오늘의 화제
                                     </Typography> 
-                            {blist.map((item) => (
-                                <Grid container className="bbsbox">
+                            {blist.map((item,index) => (
+                                <Grid container className="bbsbox" key={index}>
                                 <Grid item xs={3}>
                                 <Typography variant='body1' color='text.secondary' className="bbscategory">
                                     [{item.bname ==="BBS"?"자유게시판":"오류"}]

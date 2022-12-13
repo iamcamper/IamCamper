@@ -199,7 +199,7 @@ const getCategory = (event, newValue) => {
       <Main1_Menu/>
       <Box  div style={{width:'1600px', margin:'0 auto' ,height:"500px"}}>
         <Grid container  style={{textAlign:'center'}}>
-          <Grid item xs style={{height:"500px"}}>
+          <Grid item xs style={{height:"500px"}} >
               <div style={{margin:'0 auto',height:'1200px'}}>
                 <div id="map" className="map" style={{
                     width: "700px",
@@ -211,7 +211,7 @@ const getCategory = (event, newValue) => {
                   }}/>
               </div>
             </Grid>
-            <Grid  item xs style={{height:"500px"}}>
+            <Grid  item xs style={{height:"500px"}} >
               <div style={{position:'relative'}}>
                 <div style={{position:'absolute',left:'170px',top:'70px' ,width:'500px',height:'60px'}}>
                   <FormControl fullWidth >
@@ -223,8 +223,8 @@ const getCategory = (event, newValue) => {
                       label="찾을지역"
                       onChange={handleChange}
                     >
-                       {category.map((item) => (  
-                          <MenuItem value={item}>{item}</MenuItem>          
+                       {category.map((item,index) => (  
+                          <MenuItem value={item} key={index}>{item}</MenuItem>          
                         ))}
                     </Select>
                   </FormControl> 
@@ -232,12 +232,12 @@ const getCategory = (event, newValue) => {
                     <BottomNavigationAction
                       label="전체보기"
                       value="전체보기"
-                      icon={<FitScreenIcon  />}
+                      icon={<FitScreenIcon/>}
                     />
                     <BottomNavigationAction
                       label="애완동물"
                       value="애완동물"
-                      icon={<PetsSharpIcon  />}
+                      icon={<PetsSharpIcon/>}
                     />
                     <BottomNavigationAction
                       label="카라반"
@@ -290,38 +290,41 @@ const getCategory = (event, newValue) => {
               <TableBody>
                 
                 {plist.map((item,index)=>(
-                <TableRow>
-                  <TableCell style={{height:"250px"}}> 
-                      <div style={{width:"300px",height:"200px",margin:"auto"}}> 
+                <TableRow key={index}>
+                  <TableCell style={{height:"250px"}} key={index}> 
+                      <div style={{width:"300px",height:"200px",margin:"auto"}} key={index}> 
 
                       <img 
+                        key={index}
                         src={item.image}
                         style={{width:"300px",height:"200px"}}
                       />
                     </div>             
                   </TableCell>
-                  <TableCell styles={{heigth:"250px"}}>
-                    <div style={{borderBottom:"1px solid #dcdcdc"}}>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>업체명 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.title}</span>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>카테고리 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.category}</span>    
+                  <TableCell styles={{heigth:"250px"}} key={index}>
+                    <div style={{borderBottom:"1px solid #dcdcdc"}} key={index}>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',paddingBottom:'20px',fontSize:"15px"}}>업체명 : </span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.title}</span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>카테고리 : </span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.category}</span>    
                     </div>
-                    <div style={{borderBottom:"1px solid #dcdcdc"}}>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>주소 :</span>
-                      <span style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',fontSize:"15px"}}>{item.addr}</span>
+                    <div style={{borderBottom:"1px solid #dcdcdc"}} key={index}>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>주소 :</span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"90%",paddingTop:'20px',fontSize:"15px"}}>{item.addr}</span>
                     </div>
-                    <div style={{borderBottom:"1px solid #dcdcdc"}}>
-                    <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>전화번호 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.tel}</span>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>예약방법 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.manner}</span> 
+                    <div style={{borderBottom:"1px solid #dcdcdc"}} key={index}>
+                    <span key={index} style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>전화번호 : </span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.tel}</span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>예약방법 : </span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.manner}</span> 
                     </div>
-                    <div style={{borderBottom:"1px solid #dcdcdc"}}>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>애완동물 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.animal}</span>
-                      <span style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>홈페이지 : </span>
-                      <span style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}><Button variant="text" style={{width:'150px',height:"80%",color:"black",border:"1px solid gray"}}  onClick={() => window.open(item.page, '_blank')}>페이지 이동</Button></span>   
+                    <div style={{borderBottom:"1px solid #dcdcdc"}} key={index}>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>애완동물 : </span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>{item.animal}</span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"10%",paddingTop:'20px',fontSize:"15px"}}>홈페이지 : </span>
+                      <span key={index} style={{display:"inline-block",height:"60px",width:"40%",paddingTop:'20px',fontSize:"15px"}}>
+                        <Button key={index} variant="text" style={{width:'150px',height:"80%",color:"black",border:"1px solid gray"}}  onClick={() => window.open(item.page, '_blank')}>페이지 이동</Button>
+                      </span>   
                     </div>
                   </TableCell>
                 </TableRow>

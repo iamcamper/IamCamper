@@ -46,6 +46,8 @@ export default function login(){
                 setCookie("id", json.data.id);
                 setCookie("nickname", json.data.nickname);
                 router.push("/");
+                {maxAge: 60*60}
+
             }
         })
     }
