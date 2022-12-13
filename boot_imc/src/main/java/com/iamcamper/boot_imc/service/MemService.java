@@ -201,4 +201,35 @@ public class MemService {
             mapper.reg(id, pw, nickname, name, email, birth, phone);
 
     }
+
+    /*
+     * 구글 로그인 체크
+     */
+    public MemVO googleChk(String snsId, String auth){
+
+        MemVO mvo = mapper.googleChk(snsId, auth);
+
+        return mvo;
+
+    }
+
+    /*
+     * 구글 로그인 초기 DB 저장
+     */
+    public void googleReg(String snsId, String snsAuth, String email, String name){
+
+        mapper.googleReg(snsId, snsAuth, name, email);
+
+    }
+
+    /*
+     * 구글 로그인 grade가 9이고 닉네임이 입력 안 된 db검색
+     */
+    public MemVO googleRegChk(String snsId, String snsAuth){
+
+        MemVO mvo = mapper.googleRegChk(snsId, snsAuth);
+
+        return mvo;
+
+    }
 }

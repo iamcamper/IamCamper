@@ -125,7 +125,7 @@ public class SnsController {
                 System.out.println(id + "/" + email + "/" + mobile);
 
             }
-
+            
             // DB저장 후 페이지 이동 추후 저장 방법 논의 후에 추가 예정
             response.sendRedirect("http://localhost:3000/");
         } catch (Exception e) {

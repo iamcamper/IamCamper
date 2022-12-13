@@ -31,4 +31,20 @@
     INSERT INTO member(id, snsId, snsNickname, snsByear, email, snsAuth)
     VALUES(#{snsId}, #{snsId}, #{snsNickname}, 1, #{email}, "kakao")
   </insert>
-</mapper>
+
+  <!-- 구글 로그인 중복 체크 -->
+  <select id="googleChk" parameterType="Map" resultType="com.iamcamper.boot_imc.VO.MemVO">
+    SELECT * FROM member
+    WHERE snsId = #{snsId} AND snsAuth = #{auth} AND grade = 0
+  </select>
+  <!-- 구글 로그인 닉네임 전 DB 저장 -->
+  <insert id="googleReg" parameterType="Map">
+    INSERT INTO member (name, snsId, email, snsAuth, grade, activate, manner_point)
+    VALUES (#{name}, #{snsId}, #{email}, #{snsAuth}, 1, 0, 0)
+  </insert>
+  <!-- m_idx를 받아오기 위해 닉네임이 저장되지 않은 아이디 검색 -->
+  <select id="googleRegChk" parameterType="Map" resultType="com.iamcamper.boot_imc.VO.MemVO">
+    SELECT * FROM member
+    WHERE snsId = #{snsId} AND snsAuth = #{snsAuth} AND grade = 1
+  </select>
+</mapper> 

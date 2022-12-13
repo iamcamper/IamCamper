@@ -26,6 +26,7 @@ export default function login(){
     const [googleLoginURL, setGoogleLoginURL] = useState("");
     
 
+
     function changeId(e){
         setId(e.target.value);
     }
@@ -46,8 +47,6 @@ export default function login(){
                 setCookie("id", json.data.id);
                 setCookie("nickname", json.data.nickname);
                 router.push("/");
-                {maxAge: 60*60}
-
             }
         })
     }
@@ -73,7 +72,6 @@ export default function login(){
     useEffect(() => { 
         getURL();
         getGoogleURL();
-
     },[]);
 
 
@@ -116,11 +114,10 @@ export default function login(){
                         <Link href={googleLoginURL}>
                             <img src="../images/google_login.png" alt="googlelogin" width="183px" height="45px"/>
                         </Link>
-                    </div>
+                    </div>   
                 </Paper>
              </Box>
         </Container>
-        
       </div>
 
       <Main_Bottom/>
