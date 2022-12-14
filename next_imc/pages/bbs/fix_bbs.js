@@ -19,8 +19,7 @@ const Editbbs = dynamic(()=> import('./editor'), {ssr:false});
 
 export default function fix_bbs(){
     
-    const nickname = 'testnick'; //getCookie("nickname");
-    
+    const nickname = getCookie("nickname");
     const [subject, setSubject] = useState({});
     const WRITE_URL = "/bbs/fixbbs";
     const router = useRouter();
@@ -30,7 +29,7 @@ export default function fix_bbs(){
     const editorRef = useRef();
     
     console.log(fix);
-    
+    console.log(content);
     function getFixdata(){
         setFix(JSON.parse(router.query.list))
     };
@@ -53,9 +52,6 @@ export default function fix_bbs(){
     }
     function changeFile(e){
         formData.append('file', e.target.files[0]);
-    }
-    const editSet = {
-        editorRef: {editorRef}, content: {content}
     }
 
     function submit(){
@@ -154,8 +150,8 @@ export default function fix_bbs(){
 
                 </Stack>
             </Stack>
-             <Editbbs {...editSet}
-             />
+             <Editbbs editorRef={editorRef} content={content}
+             /> 
             </Paper>
             <div style={{textAlign:'center', padding:'20px', margin:'10px'}}>
                             <Button variant="contained" sx={{margin:"10px"}} onClick={submit}>글수정</Button>

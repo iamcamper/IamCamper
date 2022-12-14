@@ -76,7 +76,7 @@ export default function notice(){
                                     <TableCell>
                                         <Link href={{
                                             pathname: "/admin/views",
-                                            query: {b_idx: data.b_idx, cPage: cPage},
+                                            query: {b_idx: data.b_idx, cPage: cPage, bname:'ADNOTICE', bbs:'notice'},
                                         }}>
                                             {data.subject}
                                         </Link>

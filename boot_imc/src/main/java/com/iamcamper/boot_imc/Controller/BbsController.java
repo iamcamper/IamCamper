@@ -85,12 +85,13 @@ public class BbsController {
 
     @RequestMapping("/addbbs")
     public Map<String, Object> addBbs(String nickname, String subject, String content, String bname, String price,
-            @RequestPart(value = "file", required = true) MultipartFile file) {
+            @RequestPart(value = "file", required = false) MultipartFile file, String thum_img) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
-        if (file != null) {
+        BbsVO vo = new BbsVO();
 
+        if (file != null) {
             String ori_name = null;
             String file_name = null;
 
@@ -103,10 +104,11 @@ public class BbsController {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                vo.setOri_name(ori_name);
+                vo.setFile_name(file_name);
+                vo.setThum_img(file_name);
             }
         }
-
-        BbsVO vo = new BbsVO();
 
         vo.setIp(req.getRemoteAddr());
         vo.setSubject(subject);
@@ -122,7 +124,7 @@ public class BbsController {
     }
 
     @RequestMapping("/upload_img")
-    public Map<String, Object> uploadImg(@RequestPart(value = "file", required = true) MultipartFile file) {
+    public Map<String, Object> uploadImg(@RequestPart(value = "file", required = false) MultipartFile file) {
         Map<String, Object> map = new HashMap<String, Object>();
 
         String fname = null;
