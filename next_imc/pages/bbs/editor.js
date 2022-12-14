@@ -5,7 +5,8 @@ import Axios from 'axios';
 
 export default function editor(props){
 
-    
+    const ref = props.editorRef;
+    const con = props.content;
     const [fileName, setFileName] = useState([]);
 
     const addImage = async(blob, callback) => {
@@ -29,11 +30,12 @@ export default function editor(props){
     return(
         <div>
            <Editor
-                ref = {props.editorRef}
+                ref = {ref}
                 placeholder="내용을 입력해 주세요!"
                 previewStyle="vertical" // 미리보기 스타일 지정
                 height="300px" // 에디터 창 높이
                 initialEditType="wysiwyg"
+                initialValue={con}
                 hideModeSwitch={true} 
                 hooks={{
                     addImageBlobHook: addImage
