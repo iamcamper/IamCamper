@@ -16,8 +16,8 @@ import Link from "next/Link";
 export default function view_bbs(){
 
   const router = useRouter();
-  const [list, setList] = useState([]);
   const b_idx = router.query.idx;
+  const [list, setList] = useState([]);
   const API_VIEW = "/bbs/view?b_idx="+b_idx;
   
   
