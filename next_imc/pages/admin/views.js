@@ -16,6 +16,8 @@ export default function views(){
     const router = useRouter();
     const cPage = router.query.cPage;
     const b_idx = router.query.b_idx;
+    const bname = router.query.bname;
+    const bbs = router.query.bbs;
     const DATA_URL = "/admin/views/data"
     const [data, setData] = useState({});
 
@@ -34,6 +36,13 @@ export default function views(){
         router.push({
             pathname:'/admin/notice',
             query: {cPage: cPage},
+        });
+    }
+
+    function edit(){
+        router.push({
+            pathname:'/admin/edit',
+            query:{cPage: cPage, b_idx: b_idx, bname: bname, bbs:bbs}
         });
     }
 
@@ -82,6 +91,7 @@ export default function views(){
                             </tbody>
                         </table>
                        <Button size="small" variant="contained" sx={{margin:'10px'}} onClick={goList}>목록</Button>
+                       <Button size="small" variant="contained" sx={{margin:'10px'}} onClick={edit}>수정</Button>
                     </Paper>
                 </Box>
             </Stack>

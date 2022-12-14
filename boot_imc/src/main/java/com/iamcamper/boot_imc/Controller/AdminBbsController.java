@@ -195,6 +195,39 @@ public class AdminBbsController {
         return map;
 
     }
+    /*
+     * 어드민 글 수정하기 전 원 내용 불러오기
+     */
+    @RequestMapping("/edit/data")
+    public Map<String, Object> editData(String b_idx){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        BbsVO bvo = a_service.views(b_idx);
+
+        map.put("data", bvo);
+
+        return map;
+
+    }
+
+    /*
+     * 게시글 수정
+     */
+    @RequestMapping("/edit/ok")
+    public Map<String, Object> editOk(@RequestPart(value = "subject") String subject, String content,
+        @RequestPart(value="file", required=false) MultipartFile file, String b_idx){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        System.out.println(b_idx);
+        System.out.println(subject);
+        System.out.println(content);
+        
+
+
+        return map;
+    }
 
 }
 

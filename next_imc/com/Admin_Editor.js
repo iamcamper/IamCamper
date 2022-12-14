@@ -5,8 +5,12 @@ import Axios from 'axios';
 
 export default function Admin_Editor(props){
 
-    const {editorRef} = props;
+    const {editorRef} = props.editorRef;
     const [fileName, setFileName] = useState([]);
+    const con = props.content;
+
+    console.log(con);
+
 
     const addImage = async(blob, callback) => {
         console.log(blob);
@@ -33,6 +37,7 @@ export default function Admin_Editor(props){
                 previewStyle="vertical" // 미리보기 스타일 지정
                 height="300px" // 에디터 창 높이
                 initialEditType="wysiwyg"
+                initialValue={con}
                 hooks={{
                     addImageBlobHook: addImage
                 }}

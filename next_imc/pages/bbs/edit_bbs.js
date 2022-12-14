@@ -21,7 +21,6 @@ const Editbbs = dynamic(()=> import('./editor'), {ssr:false});
 
 export default function edit_bbs(){
     
-    const nickname = 'testnick'; //getCookie("nickname");
     const editorRef = useRef();
     const [subject, setSubject] = useState({});
     const WRITE_URL = "/bbs/addbbs";
