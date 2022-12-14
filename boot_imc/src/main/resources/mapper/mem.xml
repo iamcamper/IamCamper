@@ -23,14 +23,18 @@
     INSERT INTO member (id, pw, nickname, name, email, birth, phone, manner_point, activate, grade)
     VALUES (#{id}, #{pw}, #{nickname}, #{name}, #{email}, #{birth}, #{phone}, 0, 0, 0)
   </insert>
-  <select id="kakaologin" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Object">
+  <select id="kakaologin" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Map">
     select * from member
-    WHERE snsId = #{snsId}
+    WHERE snsId = #{snsId} AND snsAuth = #{auth} AND grade = 0
   </select>
   <insert id="kakaoinsert" parameterType="Map">
-    INSERT INTO member(id, snsId, snsNickname, snsByear, email, snsAuth)
-    VALUES(#{snsId}, #{snsId}, #{snsNickname}, 1, #{email}, "kakao")
+    INSERT INTO member (name, snsId, email, snsAuth, grade, activate, manner_point)
+    VALUES (#{name}, #{snsId}, #{email}, #{snsAuth}, 1, 0, 0)
   </insert>
+  <select id="kakaoChk" parameterType="Map" resultType="com.iamcamper.boot_imc.VO.MemVO">
+    SELECT * FROM member
+    WHERE snsId = #{snsId} AND snsAuth = #{snsAuth} AND grade = 1
+  </select>
 
   <!-- 구글 로그인 중복 체크 -->
   <select id="googleChk" parameterType="Map" resultType="com.iamcamper.boot_imc.VO.MemVO">

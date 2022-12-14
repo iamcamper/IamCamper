@@ -62,34 +62,34 @@ public class GoogleLoginController {
     @Autowired
     private HttpServletResponse response;
 
-
     // 구글 로그인 페이지로 이동
     @RequestMapping("/sns/googlelogin")
     @ResponseBody
-    public String getGoogleAuthUrl(HttpServletRequest req){
+    public String getGoogleAuthUrl(HttpServletRequest req) {
 
-        String reqUrl = loginBaseUrl + 
-        "/o/oauth2/v2/auth?client_id=" + clientId + 
-        "&redirect_uri=" + redirectUri +
-        "&response_type=code" +
-        "&scope=email%20profile%20openid" +
-        "&access_type=offline";
+        String reqUrl = loginBaseUrl +
+                "/o/oauth2/v2/auth?client_id=" + clientId +
+                "&redirect_uri=" + redirectUri +
+                "&response_type=code" +
+                "&scope=email%20profile%20openid" +
+                "&access_type=offline";
 
         return reqUrl;
     }
 
-    @RequestMapping(value="/sns/googlelogin/callback")
-    public void googleLogin(@RequestParam(value="code") String code, HttpServletResponse res, RedirectAttributes redirect) throws Exception {
+    @RequestMapping(value = "/sns/googlelogin/callback")
+    public void googleLogin(@RequestParam(value = "code") String code, HttpServletResponse res,
+            RedirectAttributes redirect) throws Exception {
 
-        Map <String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<String, Object>();
 
         String access_Token = "";
 
-        try{
+        try {
             URL url = new URL(authUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            //post로 요청하기
+            // post로 요청하기
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
@@ -101,18 +101,18 @@ public class GoogleLoginController {
             sb.append(secret);
             sb.append("&redirect_uri=");
             sb.append(redirectUri);
-            sb.append("&code="+code);
+            sb.append("&code=" + code);
             bw.write(sb.toString());
             bw.flush();
 
             int responseCode = conn.getResponseCode();
-            
-            if(responseCode == 200){
+
+            if (responseCode == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String line = "";
                 String result = "";
 
-                while ((line = br.readLine()) != null){
+                while ((line = br.readLine()) != null) {
                     result += line;
                 }
 
@@ -124,70 +124,70 @@ public class GoogleLoginController {
                 br.close();
                 bw.close();
 
-                try{
+                try {
 
                     String reqUrl = "https://www.googleapis.com/oauth2/v1/userinfo";
-                    
 
                     URL rUrl = new URL(reqUrl);
                     HttpURLConnection rconn = (HttpURLConnection) rUrl.openConnection();
                     rconn.setRequestProperty("Authorization", "Bearer " + access_Token);
                     rconn.setRequestMethod("GET");
                     rconn.setDoOutput(true);
-                
+
                     int resCode = rconn.getResponseCode();
-                        
-                    if(resCode == 200){
+
+                    if (resCode == 200) {
                         BufferedReader br2 = new BufferedReader(new InputStreamReader(rconn.getInputStream()));
                         String line2 = "";
                         String result2 = "";
 
-                        while((line2 = br2.readLine())!=null){
+                        while ((line2 = br2.readLine()) != null) {
                             result2 += line2;
                         }
 
                         JSONParser pars = new JSONParser();
-                        Object obj2 = (Object)pars.parse(result2);
+                        Object obj2 = (Object) pars.parse(result2);
                         JSONObject jobj2 = (JSONObject) obj2;
 
-                        String snsId = (String)jobj2.get("id");
-                        String email = (String)jobj2.get("email");
-                        String name = (String)jobj2.get("name");
+                        String snsId = (String) jobj2.get("id");
+                        String email = (String) jobj2.get("email");
+                        String name = (String) jobj2.get("name");
                         String snsAuth = "google";
 
-                        MemVO mvo = m_service.googleChk(snsId, "google"); //가입이 되어있는 경우
-                        MemVO mvo2 = m_service.googleRegChk(snsId, snsAuth); //닉네임을 못 받은 경우
+                        MemVO mvo = m_service.googleChk(snsId, "google"); // 가입이 되어있는 경우
+                        MemVO mvo2 = m_service.googleRegChk(snsId, snsAuth); // 닉네임을 못 받은 경우
                         int chk = 1;
 
-                        if(mvo != null){
+                        if (mvo != null) {
 
                             String nickname = URLEncoder.encode(mvo.getNickname(), "UTF-8");
 
-                            response.sendRedirect("http://localhost:3000/member/login?id="+mvo.getSnsId()+"&nickname="+nickname);
+                            response.sendRedirect("http://localhost:3000/member/login?id=" + mvo.getSnsId()
+                                    + "&nickname=" + nickname);
 
-                        } else if(mvo2 != null) {
+                        } else if (mvo2 != null) {
 
-                            response.sendRedirect("http://localhost:3000/member/snsreg?m_idx="+mvo2.getM_idx());
-                            
+                            response.sendRedirect("http://localhost:3000/member/snsreg?m_idx=" + mvo2.getM_idx());
+
                         } else {
 
                             m_service.googleReg(snsId, snsAuth, email, name);
 
                             MemVO vo = m_service.googleRegChk(snsId, snsAuth);
-                            
+
                             StringBuffer buffer = new StringBuffer("http://localhost:3000/member/snsreg?b_idx=");
                             buffer.append(vo.getM_idx());
 
-                            response.sendRedirect("http://localhost:3000/member/snsreg?m_idx="+vo.getM_idx());
+                            response.sendRedirect("http://localhost:3000/member/snsreg?m_idx=" + vo.getM_idx());
                         }
-                     
+
                     }
 
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -195,7 +195,7 @@ public class GoogleLoginController {
     }
 
     @RequestMapping("/snsreg/add")
-    public Map<String, Object> snsRegNicknameAdd(String m_idx, String nickname){
+    public Map<String, Object> snsRegNicknameAdd(String m_idx, String nickname) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -203,9 +203,9 @@ public class GoogleLoginController {
 
         MemVO mvo = m_service.nicknameChk(nickname);
 
-        int chk = 1; //chk가 1이면 저장이 잘 된 것
+        int chk = 1; // chk가 1이면 저장이 잘 된 것
 
-        if(mvo == null)
+        if (mvo == null)
             chk = 0;
 
         map.put("chk", chk);
@@ -214,6 +214,5 @@ public class GoogleLoginController {
 
         return map;
     }
-    
-    
+
 }
