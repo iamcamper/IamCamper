@@ -38,13 +38,15 @@ export default function login(){
     }
 
     function localLogin(){
-        //유효성 검사
+        
         Axios.post(
             LOGIN_URL, null,
             {params: {id:id, pw:pw}},
         ).then(json =>{
-            if(json.data.chk === 0)
+            if(json.data.chk === 0){
+                alert("아이디 또는 비밀번호가 일치하지 않습니다.");
                 router.push("/member/login");
+            }
             else{
                 setCookie("id", json.data.id);
                 setCookie("nickname", json.data.nickname);
