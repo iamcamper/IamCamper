@@ -1,4 +1,4 @@
-import { Announcement, Campaign, Description, Event, Home, Logout, Person } from "@mui/icons-material";
+import { Announcement, Campaign, Description, Event, Home, Logout, Person, Upgrade } from "@mui/icons-material";
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 
 export default function Admin_Sidebar(){
@@ -44,6 +44,14 @@ export default function Admin_Sidebar(){
                             <Person/>
                         </ListItemIcon>
                         <ListItemText primary="회원 관리"/>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton component="a" href="#">
+                        <ListItemIcon>
+                            <Upgrade/>
+                        </ListItemIcon>
+                        <ListItemText primary="Data Update"/>
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>

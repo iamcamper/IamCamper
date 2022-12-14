@@ -14,8 +14,11 @@ export default function notice(){
     const [list, setList] = useState([]);
     const [cPage, setCPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
-    
 
+    const pageChange = (event, value) => {
+        setCPage(value);
+      };
+    
     function getList(){
         Axios.post(
             LIST_URL, null,
@@ -26,21 +29,23 @@ export default function notice(){
         })
     }
 
-    function pageChange(e){
-        setCPage(e.target.value);
-        console.log(cPage);
-    }
-
-    useEffect(()=>{
-        getList()
-    },[]);
-
     function write(){
         router.push({
             pathname:'/admin/write',
             query: {bname:'ADNOTICE', bbs:'notice'},
         });
     }
+
+    useEffect(()=>{
+        if(router.query.cPage != null){
+            setCPage(router.query.cPage);
+        }
+        getList()
+    },[]);
+
+    useEffect(()=>{
+        getList()
+    },[cPage]);
 
 
     return(
