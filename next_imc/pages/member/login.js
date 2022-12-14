@@ -25,6 +25,8 @@ export default function login(){
     const googleURL = "/sns/googlelogin"
     const [googleLoginURL, setGoogleLoginURL] = useState("");
     
+    const snsId = router.query.id;
+    const nickname = router.query.nickname;
 
 
     function changeId(e){
@@ -73,6 +75,15 @@ export default function login(){
         getURL();
         getGoogleURL();
     },[]);
+
+    useEffect(() => {
+        if(!router.isReady) return;
+        if(snsId != undefined || nickname != undefined){
+            setCookie("id", snsId);
+            setCookie("nickname", nickname);
+            router.push("/");
+        }
+    }, [router.isReady]);
 
 
 

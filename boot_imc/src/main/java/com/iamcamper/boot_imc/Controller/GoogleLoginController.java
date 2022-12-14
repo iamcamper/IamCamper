@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpHeaders;
 import java.util.HashMap;
@@ -77,7 +78,7 @@ public class GoogleLoginController {
         return reqUrl;
     }
 
-    @RequestMapping("/sns/googlelogin/callback")
+    @RequestMapping(value="/sns/googlelogin/callback")
     public void googleLogin(@RequestParam(value="code") String code, HttpServletResponse res, RedirectAttributes redirect) throws Exception {
 
         Map <String, Object> map = new HashMap<String, Object>();
@@ -160,11 +161,9 @@ public class GoogleLoginController {
 
                         if(mvo != null){
 
-                            StringBuffer buffer = new StringBuffer("http://localhost:3000/member/login?id=");
-                            buffer.append(mvo.getSnsId());
-                            buffer.append("&nickname=");
-                            buffer.append(mvo.getNickname());
-                            response.sendRedirect("http://localhost:3000/member/login?id="+mvo.getId()+"&nickname="+mvo.getNickname());
+                            String nickname = URLEncoder.encode(mvo.getNickname(), "UTF-8");
+
+                            response.sendRedirect("http://localhost:3000/member/login?id="+mvo.getSnsId()+"&nickname="+nickname);
 
                         } else if(mvo2 != null) {
 
@@ -193,6 +192,27 @@ public class GoogleLoginController {
             e.printStackTrace();
         }
 
+    }
+
+    @RequestMapping("/snsreg/add")
+    public Map<String, Object> snsRegNicknameAdd(String m_idx, String nickname){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        m_service.snsRegAdd(m_idx, nickname);
+
+        MemVO mvo = m_service.nicknameChk(nickname);
+
+        int chk = 1; //chk가 1이면 저장이 잘 된 것
+
+        if(mvo == null)
+            chk = 0;
+
+        map.put("chk", chk);
+        map.put("nickname", mvo.getNickname());
+        map.put("id", mvo.getId());
+
+        return map;
     }
     
     

@@ -232,4 +232,13 @@ public class MemService {
         return mvo;
 
     }
+
+    /*
+     * 구글 로그인 닉네임 업데이트문
+     */
+    public void snsRegAdd(String m_idx, String nickname){
+
+        mapper.snsRegAdd(m_idx, nickname);
+        
+    }
 }

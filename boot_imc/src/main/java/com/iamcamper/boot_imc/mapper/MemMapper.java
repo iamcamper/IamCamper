@@ -27,5 +27,7 @@ public interface MemMapper {
         @Param("name") String name, @Param("email") String email); //구글 로그인 닉네임 받기 전 초기 db 저장
 
     MemVO googleRegChk(@Param("snsId") String snsId, @Param("snsAuth") String snsAuth); //닉네임이 저장 안 된 grade가 9인 레코드 검색
+
+    void snsRegAdd(@Param("m_idx") String m_idx, @Param("nickname") String nickname); //닉네임 업데이트문
 }
 

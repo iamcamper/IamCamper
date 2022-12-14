@@ -9,6 +9,7 @@ import styles from '../../styles/Home.module.css';
 import Axios from "axios";
 import { useRouter } from 'next/router';
 import regStyles from '../member/reg.module.css';
+import { setCookie } from 'cookies-next';
 
 export default function snsreg(){
 
@@ -18,6 +19,7 @@ export default function snsreg(){
     const ADD_NICKNAME_URL = "/snsreg/add";
     const [nickname, setNickname] = useState("");
     const [nicknameChkValue, setNicknameChkValue] = useState("");
+    const [saveNicknameChk, setSaveNicknameChk] = useState("");
 
     const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"\s]/g;
 
@@ -51,7 +53,14 @@ export default function snsreg(){
             ADD_NICKNAME_URL, null,
             {params:{m_idx:m_idx, nickname:nickname}},
         ).then(json=>{
-            
+            if(json.data.chk === 1){
+                setCookie("id", json.data.id);
+                setCookie("nickname", json.data.nickname);
+                router.push("/");
+            }else{
+                alert("닉네임 저장에 실패했습니다. 다시 시도해 주세요!");
+                router.push("/member/login");
+            }
         })
         
     }
