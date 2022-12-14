@@ -1,6 +1,8 @@
 package com.iamcamper.boot_imc.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,21 @@ public class BbsService {
         return ar;
     }
 
+    public BbsVO[] blist2(String bname,String bname2,String bname3) {
+        Map<String,String> map = new HashMap<>();
+
+        map.put("bname1", bname);
+        map.put("bname2", bname2);
+        map.put("bname3", bname3);
+
+        List<BbsVO> list = mapper.blist2(map);
+        BbsVO[] ar = null;
+        if (list != null && list.size() > 0) {
+            ar = new BbsVO[list.size()];
+            list.toArray(ar);
+        }
+        return ar;
+    }
     public void add(BbsVO vo) {
         mapper.add(vo);
     }

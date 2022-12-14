@@ -52,12 +52,20 @@
 		WHERE b_idx = #{b_idx}
 	</update>
 	
-	<!-- 베스트 글 불러오기 -->
+	<!-- 베스트 중고거래 글 불러오기 -->
 	<select id="blist" resultType="com.iamcamper.boot_imc.VO.BbsVO"  parameterType="String">
 		SELECT a.* FROM(
 			SELECT @RN:=@RN+1 AS rownnum, b.* 
 			FROM (SELECT * FROM bbs
 					WHERE status = 0 AND bname= #{bname} ORDER BY hit DESC) b, (SELECT @RN:=0) r) a
+			WHERE rownnum BETWEEN '1' AND '10'
+	</select>
+	<!-- 베스트 글 불러오기 -->
+	<select id="blist2" resultType="com.iamcamper.boot_imc.VO.BbsVO"  parameterType="java.util.Map">
+		SELECT a.* FROM(
+			SELECT @RN:=@RN+1 AS rownnum, b.* 
+			FROM (SELECT * FROM bbs
+					WHERE status = 0 AND bname = #{bname1} or bname = #{bname2} or bname = #{bname3} ORDER BY hit DESC) b, (SELECT @RN:=0) r) a
 			WHERE rownnum BETWEEN '1' AND '10'
 	</select>
 

@@ -1,6 +1,7 @@
 package com.iamcamper.boot_imc.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -10,6 +11,8 @@ public interface BbsMapper {
     List<BbsVO> list(@Param("begin") String begin, @Param("end") String end, @Param("bname") String bname);
 
     List<BbsVO> blist(String bname);
+
+    List<BbsVO> blist2(Map<String,String> map);
 
     BbsVO view(String b_idx);
 

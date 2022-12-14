@@ -45,7 +45,7 @@ export default function Main1_top(){
                         {ck && (
                         <Button  variant="text" style={{display:"inline-block",widows:"100px%"}} color="inherit"
                         onClick={()=>
-                            router.push("/camping/test2")
+                            router.push("/member/information ")
                         }>MyPage</Button>
                         )}
                     </Grid>

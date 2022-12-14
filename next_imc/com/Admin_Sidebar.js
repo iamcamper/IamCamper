@@ -1,7 +1,20 @@
 import { Announcement, Campaign, Description, Event, Home, Logout, Person, Upgrade } from "@mui/icons-material";
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import Axios from "axios";
 
 export default function Admin_Sidebar(){
+
+    const API_URL = "/cam/update1";
+
+    function Update(){
+        alert("업데이트 완료까지 약 5분 입니다.");
+
+        Axios.get(
+            API_URL,
+        ).then((json)=>{
+            console.log(json);
+        }).catch((Error)=>{});
+    }
 
     return(
         <Box flex={1} p={2} xs={4} sx={{display:{xs:'none', sm:'block'}}}>
@@ -51,7 +64,7 @@ export default function Admin_Sidebar(){
                         <ListItemIcon>
                             <Upgrade/>
                         </ListItemIcon>
-                        <ListItemText primary="Data Update"/>
+                        <ListItemText primary="Data Update"   onClick={Update}/>
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>

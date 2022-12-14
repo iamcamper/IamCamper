@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.iamcamper.boot_imc.VO.MemVO;
 import com.iamcamper.boot_imc.service.MemService;
 
 
@@ -77,9 +78,9 @@ public class SnsController {
         String accessToken = "";
         String refresh_token = "";
 
-        String id = null;
+        String snsId = null;
         String email = null;
-        String mobile = null;
+        String name = null;
         try {
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -119,15 +120,40 @@ public class SnsController {
                 Object obj2 = pars.parse(responseBody);
                 jobj = (JSONObject) obj2;
                 JSONObject jobj2 = (JSONObject) jobj.get("response");
-                id = (String) jobj2.get("id");
+                snsId = (String) jobj2.get("id");
                 email = (String) jobj2.get("email");
-                mobile = (String) jobj2.get("mobile");
-                System.out.println(id + "/" + email + "/" + mobile);
+                name = (String) jobj2.get("nickname");
+                
+                String snsAuth = "naver";
+
+                MemVO mvo = m_Service.googleChk(snsId, "naver"); // 가입이 되어있는 경우
+                MemVO mvo2 = m_Service.googleRegChk(snsId, snsAuth); // 닉네임을 못 받은 경우
+                int chk = 1;
+
+                if (mvo != null) {
+
+                    String nickname = URLEncoder.encode(mvo.getNickname(), "UTF-8");
+
+                    response.sendRedirect("http://localhost:3000/member/login?id=" + mvo.getSnsId()
+                            + "&nickname=" + nickname);
+
+                } else if (mvo2 != null) {
+
+                     response.sendRedirect("http://localhost:3000/member/snsreg?m_idx=" + mvo2.getM_idx());
+
+                } else {
+
+                    m_Service.googleReg(snsId, snsAuth, email, name);
+
+                    MemVO vo = m_Service.googleRegChk(snsId, snsAuth);
+
+                    StringBuffer buffer = new StringBuffer("http://localhost:3000/member/snsreg?b_idx=");
+                    buffer.append(vo.getM_idx());
+
+                    response.sendRedirect("http://localhost:3000/member/snsreg?m_idx=" + vo.getM_idx());
+                }
 
             }
-            
-            // DB저장 후 페이지 이동 추후 저장 방법 논의 후에 추가 예정
-            response.sendRedirect("http://localhost:3000/");
         } catch (Exception e) {
             e.printStackTrace();
         }
