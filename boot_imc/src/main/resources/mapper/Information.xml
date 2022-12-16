@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iamcamper.boot_imc.mapper.InformationMapper">
+
+
+<!-- 변경 할 회원 정보 -->
+<select id="Information" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="String">
+    select * from member
+    WHERE m_idx = #{m_idx} AND grade = 0
+</select>
+
+<!-- 닉네임 변경-->
+  <update id="c_nickname" parameterType="Map">
+    UPDATE member SET nickname = #{nickname}
+    WHERE m_idx = #{m_idx}
+  </update>
+<!--이메일 변경-->
+  <update id="c_email" parameterType="Map">
+    UPDATE member SET email = #{email}
+    WHERE m_idx = #{m_idx}
+  </update>
+<!--전화번호 변경-->
+  <update id="c_phone" parameterType="Map">
+    UPDATE member SET phone = #{phone}
+    WHERE m_idx = #{m_idx}
+  </update>
+<!-- 비밀번호 확인 -->
+<select id="chk_pw" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Map">
+    select * from member
+    WHERE m_idx = #{m_idx} AND pw = #{pw} AND grade = 0
+</select>
+
+<!--비밀번호 변경-->
+  <update id="c_pw" parameterType="Map">
+    UPDATE member SET pw = #{pw}
+    WHERE m_idx = #{m_idx}
+  </update>
+
+  <!--회원탈퇴-->
+  <update id="leave" parameterType="String">
+    UPDATE member SET grade = 1
+    WHERE m_idx = #{m_idx}
+  </update>
+  
+</mapper>

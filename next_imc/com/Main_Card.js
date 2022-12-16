@@ -1,5 +1,5 @@
 
-import { Card,CardContent,CardMedia,CardActions,Typography,Button,Box,Stack} from "@mui/material";
+import { Card,CardContent,CardMedia,CardActions,Typography,Button,Box,Stack, Link} from "@mui/material";
 import Grid from '@mui/material/Grid';
 import { margin } from '@mui/system';
 import Axios from 'axios';
@@ -30,6 +30,7 @@ export default function Main_Card(){
         Axios.get(
             API_URL2
         ).then((json)=>{
+            console.log(json);
             if(json.data.blist != null){
                 setBlist(json.data.blist);
                 setUlist(json.data.ulist);
@@ -106,12 +107,18 @@ export default function Main_Card(){
                                 <Grid container className="bbsbox" key={index}>
                                  <Grid item xs={3}>
                                      <Typography variant='body1' color='text.secondary' className="bbscategory">
-                                     [{item.bname ==="USED"?"중고거래":"오류"}]
+                                     [{item.bname ==="RESELL"?"중고거래":"오류"}]
                                       </Typography>
                                  </Grid>
                                  <Grid item xs={9}>
                                     <Typography variant='body1' color='text.secondary'className='bbstitle'>
-                                    {item.subject}
+                                    <Link
+                                    href={{
+                                        pathname: '/bbs/view_bbs',
+                                        query: { idx: item.b_idx },
+                                    }}
+                                    >{item.subject}</Link>
+                                        
                                    </Typography>
                                  </Grid>
                                 </Grid>       
@@ -127,11 +134,16 @@ export default function Main_Card(){
                                 <Grid container className="bbsbox" key={index}>
                                 <Grid item xs={3}>
                                 <Typography variant='body1' color='text.secondary' className="bbscategory">
-                                    [{item.bname ==="BBS"?"자유게시판":"오류"}]
+                                    [{item.bname !=="RESELL"?"자유게시판":"오류"}]
                                  </Typography>
                                 </Grid>
                                <Grid item xs={9}>
-                                    <Typography variant='body1' color='text.secondary' className='bbstitle' >
+                                    <Typography variant='body1' color='text.secondary' className='bbstitle' 
+                                     href={{
+                                        pathname: '/bbs/view_bbs',
+                                        query: { idx: item.b_idx },
+                                       }}
+                                 >
                                       {item.subject}
                                    </Typography>
                                </Grid>

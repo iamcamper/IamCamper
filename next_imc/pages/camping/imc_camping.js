@@ -243,11 +243,7 @@ const getCategory = (event, newValue) => {
                       label="카라반"
                       value="카라반"
                       icon={<AirportShuttleIcon  />}
-                    />
-                    <BottomNavigationAction 
-                      label="자동차" 
-                      value="자동차" 
-                      icon={<DriveEtaIcon  />} />
+                    />   
                   </BottomNavigation>
                   <BottomNavigation style={{ width: "500px",marginTop:"10px",marginBottom:"20px" }} value={value} onChange={getCategory}>
                     <BottomNavigationAction
@@ -260,15 +256,11 @@ const getCategory = (event, newValue) => {
                       value="야영장"
                       icon={<LocalFireDepartmentIcon  />}
                     />
-                    <BottomNavigationAction
-                      label="병원"
-                      value="병원"
-                      icon={<MedicalServicesIcon  />}
-                    />
                     <BottomNavigationAction 
-                      label="약국" 
-                      value="약국" 
-                      icon={<MedicationIcon  />} />
+                      label="자동차" 
+                      value="자동차" 
+                      icon={<DriveEtaIcon  />} />
+
                   </BottomNavigation> 
                   <Button variant="contained" style={{width:'100%',height:"100%"}} onClick={(e)=>{getData(1)}} ><span onClick={addmap()}>go Camping</span></Button> 
 

@@ -2,12 +2,12 @@
 import { Stack ,Button,Box} from "@mui/material";
 import Grid from '@mui/material/Grid';
 import router from "next/router";
-import { hasCookie, deleteCookie } from 'cookies-next';
+import { hasCookie, deleteCookie, getCookie } from 'cookies-next';
 import { useEffect, useState } from "react";
 
 export default function Main1_top(){
 
-    const [ck,setCk] = useState(true);
+    const [ck,setCk] = useState(false);
 
     useEffect(() => { 
         if(hasCookie("id")){
@@ -15,7 +15,6 @@ export default function Main1_top(){
         }else{
             setCk(false);
         }
-        
     },[]);
 
     return(

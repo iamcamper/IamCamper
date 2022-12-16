@@ -73,8 +73,7 @@ public class BbsController {
 
     @RequestMapping("/blist")
     public Map<String, Object> blist() {
-        // 게시판 bname 정해지면 수정 할 곳!
-        BbsVO[] ar = b_Service.blist2("CAMREVIEW","TSREVIEW","RESTREVIEW");
+        BbsVO[] ar = b_Service.blist2("CAMREVIEW", "TSREVIEW", "RESTREVIEW");
         BbsVO[] ar2 = b_Service.blist("RESELL");
         Map<String, Object> map = new HashMap<>();
         map.put("blist", ar);
