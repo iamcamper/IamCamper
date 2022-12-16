@@ -9,242 +9,40 @@ import regStyles from '../member/reg.module.css';
 import Axios from "axios";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { getCookie } from "cookies-next";
+import { getCookie, hasCookie } from "cookies-next";
+import router from "next/router";
 
 
 
 export default function information(){
 
-    const [LoginID,setLoginID] = useState(getCookie("id"));
-
     useEffect(()=>{
-
-        console.log(LoginID);
-    },[])
-
-    const useDidMountEffect = (func, deps) => {
-        const didMount = useRef(false);
-
-        useEffect(()=>{
-            if(didMount.current) func();
-            else didMount.current = true;
-        }, deps);
-    };
-
-    const router = useRouter(); 
-
-    const REG_URL = "/member/reg/ok";
-
-    const [id, setId] = useState('');
-    const ID_CHK_URL = "/member/id/chk"
-    const [idChkValue, setIdChkValue] = useState();
-
-    const [pw, setPw] = useState('');
-    const [chkPw, setChkPw] = useState('');
-    const [pwChkValue, setPwChkValue] = useState(0);
-
-    const [nickname, setNickname] = useState('');
-    const NICKNAME_CHK_URL = "/member/nickname/chk";
-    const [nicknameChkValue, setNicknameChkValue] = useState('');
-
-    const [name, setName] = useState();
-
-    const [email1, setEmail1] = useState('');
-    const [email2, setEmail2] = useState('');
-
-    const [phone1, setPhone1] = useState('');
-    const [phone2, setPhone2] = useState('');
-    const [phone3, setPhone3] = useState('');
-
-    const [birth, setBirth] = useState();
-
-    //특수문자 체크
-    const regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"\s]/g;
-
-    //숫자 체크
-    const numExp = /[0-9]/g;
-
-    //이메일 체크
-    const emailExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-    function resetId(e){
-
-        if(regExp.test(e.target.value)){
-            alert("아이디에는 특수문자 또는 공백을 사용할 수 없습니다.");
-            e.target.value = '';
-            return;
+        if(!hasCookie("m_idx")){
+            router.push("/");
+        }else{
+        setSnschk(false);
+        getData();
         }
-        setId(e.target.value);
-    }
+    },[]);
 
-    function idChk(){
+    const [snschk,setSnschk] = useState(false);
 
-        if(id.length > 0) {
-
-            Axios.post(
-                ID_CHK_URL, null,
-                {params: {id:id}},
-            ).then(json => {
-                setIdChkValue(json.data.chk);
-            })
-
-        } else {
-            alert("아이디를 입력해 주세요.");
-            return;
-        }
-    }
-
-    function resetNickname(e){
-
-        if(regExp.test(e.target.value)){
-            alert("닉네임에는 특수문자 및 공백을 사용할 수 없습니다.");
-            e.target.value = '';
-            return;
-        }
-        setNickname(e.target.value);
-    }
-
-    function nicknameChk(){
-
-        if(nickname.length > 0) {
-
-            Axios.post(
-                NICKNAME_CHK_URL, null,
-                {params: {nickname:nickname}}
-            ).then(json => {
-                setNicknameChkValue(json.data.chk);
-            })
-
-        } else {
-            alert("닉네임을 입력해 주세요.");
-            return;
-        }
-    }
-
-    function resetPw(e){
-        setPw(e.target.value);
-    }
-
-    function pwChk(e){
-        setChkPw(e.target.value);
-    }
-
-    function resetName(e){
-
-        if(regExp.test(e.target.value)){
-            alert("이름에는 특수문자 또는 공백을 사용할 수 없습니다.");
-            e.target.value = '';
-            return;
-        }
-        setName(e.target.value);
-
-    }
-
-    function resetEmail1(e){
-        setEmail1(e.target.value);
-    }
-
-    function resetEmail2(e){
-        setEmail2(e.target.value);
-    }
-
-    function resetPhone1(e){
-
-        if(!numExp.test(e.target.value)){
-            alert("전화번호는 숫자만 입력 가능합니다.");
-            e.target.value = '';
-            return;
-        }
-        setPhone1(e.target.value);
-    }
-
-    function resetPhone2(e){
-
-        if(!numExp.test(e.target.value)){
-            alert("전화번호는 숫자만 입력 가능합니다.");
-            e.target.value = '';
-            return;
-        }
-        setPhone2(e.target.value);
-    }
-
-    function resetPhone3(e){
-
-        if(!numExp.test(e.target.value)){
-            alert("전화번호는 숫자만 입력 가능합니다.");
-            e.target.value = '';
-            return;
-        }
-        setPhone3(e.target.value);
-    }
-
-    function resetBirth(e){
-        setBirth(e.target.value);
-    }
-
-    function submit(){
-
-        let email = null;
-        let phone = null;
-
-        if(!emailExp.test(email1+"@"+email2)){
-            alert("올바른 이메일 형식이 아닙니다.");
-            return;
-        }
-
-        if(id.length < 1 && idChkValue === 1 ){
-            alert("아이디를 다시 확인해 주세요.");
-            return;
-        }
-
-        if(pw < 0 || chkPw < 0 || pwChkValue === 1){
-            alert("비밀번호를 다시 확인해 주세요.");
-            return;
-        }
-
-        if(nickname.length < 1){
-            alert("닉네임을 입력해 주세요.");
-            return;
-        }
-
-        if(email1.length > 0 && email2.length > 0) {
-            email = email1 + "@" + email2;
-        }
-
-        if(phone1.length > 0 && phone2.length > 0 && phone3.length > 0){
-            phone = phone1 + "-" + phone2 + "-" + phone3;
-        }
-
-        Axios.post(
-            REG_URL, null,
-            {params:{
-                id: id,
-                pw: pw,
-                nickname: nickname,
-                name: name,
-                phone: phone,
-                birth: birth,
-                email: email,
-            }},
-        ).then(json => {
-            if(json.data.chk === 1){
-                alert("회원 가입에 실패했습니다.");
-            } else {
-                alert("정상적으로 가입되셨습니다!");
-                router.push("/member/login");
-            }
-        })
-
-
-    }
-
-
-    useDidMountEffect(() => {
-        if(pw != chkPw)
-            setPwChkValue(1);
-        else
-            setPwChkValue(2);
-    }, [chkPw]);
+    const [data,setData] = useState({});
+    
+    
+    function getData(){
+          Axios.post(
+            "http://localhost:8080/member/Information",null,
+            { params: { m_idx:getCookie("m_idx")}}
+            ).then((json)=>{
+                setData(json.data.vo);
+                const sns = data.snsAuth
+                console.log();
+                if(json.data.vo.snsAuth =="naver" || json.data.vo.snsAuth =="kakao" || json.data.vo.snsAuth == "google"){
+                    setSnschk(true);
+                }
+            }).catch((Error)=>{});
+      }
 
     return (
 
@@ -263,130 +61,81 @@ export default function information(){
                                 <Stack direction="column" alignItems="center" spacing={1}>
                                     <table style={{textAlign: 'left'}} className={regStyles.table}>
                                         <tbody>
+                                            {!snschk &&(
                                             <tr>
                                                 <th>
-                                                    <label>* 아이디</label>
+                                                    <label> 아이디</label>
                                                 </th>
                                                 <td>
-                                                    <TextField name="id" size="small" variant="standard" placeholder="ID" sx={{width:'220px'}} onChange={resetId}/>
-                                                    <Button variant="outlined" size="small" sx={{marginLeft:'10px'}} onClick={idChk}>중복 확인</Button>
+                                                    <span style={{display:"inline-block",width:"200px"}}>{data.id}</span>
                                                 </td>
                                             </tr>
-                                            {(idChkValue === 0) && (
-                                                <tr>
-                                                    <th></th>
-                                                    <td>
-                                                        <Alert severity="success">사용 가능한 아이디입니다!</Alert>
-                                                    </td>
-                                                </tr>
                                             )}
-                                            {(idChkValue === 1) && (
-                                                <tr>
-                                                    <th></th>
-                                                    <td>
-                                                        <Alert severity="error">사용할 수 없는 아이디입니다!</Alert>
-                                                    </td>
-                                                </tr>
-                                            )}
+                                            {!snschk &&(
                                             <tr>
                                                 <th>
                                                     <label>* 비밀번호</label>
                                                 </th>
                                                 <td>
-                                                    <TextField name="pw" type="password" size="small" variant="standard" placeholder="password" sx={{width:'220px'}} onChange={resetPw}/>
+                                                    <span  style={{display:"inline-block",width:"200px"}}>**********</span>
+                                                    <Button variant="outlined" size="small" sx={{marginLeft:'10px'}}  onClick={()=>router.push("/member/change/pwd")}>변경</Button>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <th>
-                                                    <label>* 비밀번호 확인</label>
-                                                </th>
-                                                <td>
-                                                    <TextField name="pwChk" type="password" size="small" variant="standard" placeholder="password" sx={{width:'220px'}} onChange={pwChk}/>
-                                                </td>
-                                            </tr>
-                                            {(pwChkValue === 1) && (
-                                                <tr>
-                                                    <th></th>
-                                                    <td>
-                                                        <Alert severity="error">비밀번호가 일치하지 않습니다!</Alert>
-                                                    </td>
-                                                </tr>
                                             )}
+                                            
                                             <tr>
                                                 <th>
                                                     <label>* 닉네임</label>
                                                 </th>
                                                 <td>
-                                                    <TextField name="nickname" size="small" variant="standard" placeholder="nickname" sx={{width:'220px'}} onChange={resetNickname}/>
-                                                    <Button variant="outlined" size="small" sx={{marginLeft:'10px'}} onClick={nicknameChk}>중복 확인</Button>
+                                                    <span style={{display:"inline-block",width:"200px"}}>{data.nickname}</span>
+                                                    <Button variant="outlined" size="small" sx={{marginLeft:'10px'}} onClick={()=>router.push("/member/change/nickname")} >변경</Button>
                                                 </td>
                                             </tr>
-                                            {(nicknameChkValue === 0) && (
-                                                <tr>
-                                                    <th></th>
-                                                    <td>
-                                                        <Alert severity="success">사용 가능한 닉네임입니다!</Alert>
-                                                    </td>
-                                                </tr>
-                                            )}
-                                             {(nicknameChkValue === 1) && (
-                                                <tr>
-                                                    <th></th>
-                                                    <td>
-                                                        <Alert severity="error">중복된 닉네임입니다!</Alert>
-                                                    </td>
-                                                </tr>
-                                            )}
                                             <tr>
                                                 <th>
                                                     <label>이름</label>
                                                 </th>
                                                 <td>
-                                                    <TextField name="name" size="small" variant="standard" placeholder="name" sx={{width:'220px'}} onChange={resetName}/>
+                                                    <span style={{display:"inline-block",width:"200px"}}>{data.name}</span>
                                                 </td>
                                             </tr>
+                                            
+                                            {!snschk &&(
                                             <tr>
                                                 <th>
                                                     <label>생년월일</label>
                                                 </th>
                                                 <td>
-                                                <TextField
-                                                    name="birth"
-                                                    label="Birthday"
-                                                    type="date"
-                                                    defaultValue="2017-05-24"
-                                                    sx={{ width: 220 }}
-                                                    InputLabelProps={{
-                                                    shrink: true,
-                                                    }}
-                                                    size="small"
-                                                    onChange={resetBirth}
-                                                />
+                                                    <span style={{display:"inline-block",width:"200px"}}>{data.birth}</span>
                                                 </td>
                                             </tr>
+                                            )}
                                             <tr>
                                                 <th>
-                                                    <label>* 이메일</label>
+                                                    <label style={{display:"inline-block",width:"200px"}} >* 이메일</label>
                                                 </th>
                                                 <td>
-                                                    <TextField name="email1" size="small" variant="standard" sx={{width:'80px'}} onChange={resetEmail1}/>@
-                                                    <TextField name="email2" size="small" variant="standard" sx={{width:'130px'}} onChange={resetEmail2}/>
+                                                    <span style={{display:"inline-block",width:"200px"}}>{data.email}</span>
+                                                    <Button variant="outlined" size="small" sx={{marginLeft:'10px'}}  onClick={()=>router.push("/member/change/email")}>변경</Button>
                                                 </td>
                                             </tr>
+                                            {!snschk &&(
                                             <tr>
                                                 <th>
-                                                    <label>전화번호</label>
+                                                    <label>* 전화번호</label>
                                                 </th>
                                                 <td>
-                                                    <TextField name="phone1" size="small" variant="standard" sx={{width:'50px'}} onChange={resetPhone1}/>-
-                                                    <TextField name="phone2" size="small" variant="standard" sx={{width:'80px'}} onChange={resetPhone2}/>-
-                                                    <TextField name="phone3" size="small" variant="standard" sx={{width:'80px'}} onChange={resetPhone3}/>
+                                                <span style={{display:"inline-block",width:"200px"}}>{data.phone}</span>
+                                                <Button variant="outlined" size="small" sx={{marginLeft:'10px'}} onClick={()=>router.push("/member/change/phone")}>변경</Button>
                                                 </td>
                                             </tr>
+                                            )}
                                         </tbody>
                                     </table>
                                     <div style={{marginTop:'30px'}}>
-                                        <Button variant="contained" sx={{width:'150px'}} onClick={submit}>회원 가입</Button>
+                                        <Button variant="contained" sx={{width:'150px',marginRight:'50px'}} onClick={()=>router.push("/")}>뒤로 가기</Button>
+                                        <Button variant="contained" sx={{width:'150px'}} onClick={()=>router.push("/member/change/leave")}>회원 탈퇴</Button>
                                     </div>
                                 </Stack>
                             </FormControl>

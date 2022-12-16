@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +33,9 @@ public class AdminBbsController {
 
     @Autowired
     private HttpServletRequest req;
+
+    @Autowired
+    private HttpServletResponse res;
 
     String img_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_img";
     String file_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_file";
@@ -190,6 +196,8 @@ public class AdminBbsController {
 
         BbsVO bvo = a_service.views(b_idx);
 
+        readCount(req, b_idx, res);
+
         map.put("data", bvo);
 
         return map;
@@ -220,14 +228,63 @@ public class AdminBbsController {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
-        System.out.println(b_idx);
-        System.out.println(subject);
-        System.out.println(content);
+        String ori_name = null;
+        String file_name = null;
+
+            if(file != null){
+                ori_name = file.getOriginalFilename();
+                file_name = FileRenameUtil.checkSameFileName(ori_name, file_path);
+
+                try{
+                    file.transferTo(new File(file_path, file_name));
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
         
-
-
-        return map;
     }
+    
+    a_service.bbsEdit(b_idx, subject, content, file_name, ori_name);
 
+    return map;
+        
 }
 
+    /*
+     * 조회수 중복 방지 메서드
+     */
+
+    public void readCount(HttpServletRequest req, String b_idx, HttpServletResponse res){
+
+        Cookie cookies[] = req.getCookies();
+        Cookie oldCookie = null;
+
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("view")){
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+            if(!oldCookie.getValue().contains("["+b_idx+"]")){
+                System.out.println("132123123123123123123");
+                a_service.viewCount(b_idx);
+                oldCookie.setValue(oldCookie.getValue()+"_["+b_idx+"]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60*60*24);
+                res.addCookie(oldCookie);
+            }
+        } else {
+            a_service.viewCount(b_idx);
+            Cookie newCookie = new Cookie("view","["+b_idx+"]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60*60*24);
+            res.addCookie(newCookie);
+        }
+
+        
+    }
+
+
+}

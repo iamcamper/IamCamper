@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iamcamper.boot_imc.VO.MemVO;
 import com.iamcamper.boot_imc.service.MemService;
 
-
 @CrossOrigin(originPatterns = "http://localhost:3000")
 @RestController
 @RequestMapping("/sns")
@@ -122,24 +121,24 @@ public class SnsController {
                 JSONObject jobj2 = (JSONObject) jobj.get("response");
                 snsId = (String) jobj2.get("id");
                 email = (String) jobj2.get("email");
-                name = (String) jobj2.get("nickname");
-                
+                name = (String) jobj2.get("name");
+
                 String snsAuth = "naver";
 
                 MemVO mvo = m_Service.googleChk(snsId, "naver"); // 가입이 되어있는 경우
                 MemVO mvo2 = m_Service.googleRegChk(snsId, snsAuth); // 닉네임을 못 받은 경우
                 int chk = 1;
-
                 if (mvo != null) {
 
                     String nickname = URLEncoder.encode(mvo.getNickname(), "UTF-8");
+                    String m_idx = mvo.getM_idx();
 
                     response.sendRedirect("http://localhost:3000/member/login?id=" + mvo.getSnsId()
-                            + "&nickname=" + nickname);
+                            + "&nickname=" + nickname + "&m_idx=" + m_idx);
 
                 } else if (mvo2 != null) {
 
-                     response.sendRedirect("http://localhost:3000/member/snsreg?m_idx=" + mvo2.getM_idx());
+                    response.sendRedirect("http://localhost:3000/member/snsreg?m_idx=" + mvo2.getM_idx());
 
                 } else {
 
@@ -213,5 +212,4 @@ public class SnsController {
     }
     // --------------------------------네이버 로그인 오류 처리 ------------------------------
 
-    
 }

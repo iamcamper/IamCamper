@@ -46,10 +46,10 @@ public class BbsService {
         return ar;
     }
 
-    public BbsVO[] blist2(String bname, String bname2, String bname3) {
+    public BbsVO[] blist2(String bname1, String bname2, String bname3) {
         Map<String, String> map = new HashMap<>();
 
-        map.put("bname1", bname);
+        map.put("bname1", bname1);
         map.put("bname2", bname2);
         map.put("bname3", bname3);
 

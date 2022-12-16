@@ -17,7 +17,6 @@ import { getCookie } from "cookies-next";
 
 export default function view_bbs(){
 
-  const [nickname, setNickname] = useState("testnick");
   const router = useRouter();
   const b_idx = router.query.idx;
   const [list, setList] = useState([]);

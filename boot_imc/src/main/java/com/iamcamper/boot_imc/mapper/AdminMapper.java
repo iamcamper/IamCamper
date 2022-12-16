@@ -30,4 +30,11 @@ public interface AdminMapper {
 
     // 클릭한 게시글 가져오기
     BbsVO views(@Param("b_idx") String b_idx);
+
+    // 글 수정
+    void bbsEdit(@Param("b_idx") String b_idx, @Param("subject") String subject, @Param("content") String content, 
+        @Param("file_name") String file_name, @Param("ori_name") String ori_name);
+
+    //조회수 증가
+    void viewCount(@Param("b_idx") String b_idx);
 }

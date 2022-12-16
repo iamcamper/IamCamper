@@ -44,7 +44,7 @@ export default function Admin_Sidebar(){
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" href="#bbs">
+                    <ListItemButton component="a" href="/admin/dataupdate">
                         <ListItemIcon>
                             <Description/>
                         </ListItemIcon>

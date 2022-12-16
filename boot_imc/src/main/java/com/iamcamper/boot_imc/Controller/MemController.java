@@ -84,7 +84,8 @@ public class MemController {
                 String nickname = URLEncoder.encode(mvo.getNickname(), "UTF-8");
 
                 response.sendRedirect(
-                        "http://localhost:3000/member/login?id=" + mvo.getSnsId() + "&nickname=" + nickname);
+                        "http://localhost:3000/member/login?id=" + mvo.getSnsId() + "&nickname=" + nickname + "&m_idx="
+                                + mvo.getM_idx());
 
             } else if (mvo2 != null) {
 
