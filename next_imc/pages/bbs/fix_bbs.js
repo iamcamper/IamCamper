@@ -60,10 +60,10 @@ export default function fix_bbs(){
             {params:{nickname:nickname, 
                 subject:subject, 
                 content:editorRef.current?.getInstance().getHTML(),
-                bname:bname,
+                bname:bname,    
                 cPage:1,
                 price:price,
-                b_idx:b_idx,
+                b_idx:fix.b_idx,
             },
             headers:{'Content-Type': 'multipart/form-data',},},
         ).then(
@@ -145,7 +145,7 @@ export default function fix_bbs(){
                                         <label htmlFor='file'>첨부 파일</label>
                                     </th>
                                     <td>
-                                        <input type='file' id='file' onChange={changeFile} value={fix.fname}/>
+                                        <input type='file' id='file' onChange={changeFile} defaultValue={fix.fname}/>
                          </td>
 
                 </Stack>
@@ -155,7 +155,7 @@ export default function fix_bbs(){
             </Paper>
             <div style={{textAlign:'center', padding:'20px', margin:'10px'}}>
                             <Button variant="contained" sx={{margin:"10px"}} onClick={submit}>글수정</Button>
-                            <Button variant="contained" sx={{margin:"10px"}}>취소</Button>
+                            <Button variant="contained" sx={{margin:"10px"}} onClick={() => router.back()}>취소</Button>
                         </div>
           <div> 
             <Main_Bottom/>
