@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.iamcamper.boot_imc.VO.BbsVO;
+import com.iamcamper.boot_imc.VO.CommVO;
 import com.iamcamper.boot_imc.service.BbsService;
+import com.iamcamper.boot_imc.service.CommService;
 import com.iamcamper.boot_imc.util.FileRenameUtil;
 import com.iamcamper.boot_imc.util.Paging;
 
@@ -26,6 +28,9 @@ import com.iamcamper.boot_imc.util.Paging;
 @RestController
 @RequestMapping("/bbs")
 public class BbsController {
+
+    @Autowired
+    private CommService c_Service;
 
     @Autowired
     private BbsService b_Service;
@@ -71,10 +76,45 @@ public class BbsController {
 
     }
 
+    @RequestMapping("/commList")
+    public Map<String, Object> freeComm(@RequestParam String b_idx) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        List<CommVO> list = c_Service.list(b_idx);
+
+        CommVO[] c_list = null;
+        if (list != null && list.size() > 0) {
+            c_list = new CommVO[list.size()];
+            list.toArray(c_list);
+        }
+        map.put("clist", c_list);
+
+        return map;
+    }
+
+    @RequestMapping("/commAdd")
+    public Map<String, Object> addComm(String nickname, String content, String b_idx) {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        System.out.println(nickname);
+        System.out.println(content);
+        System.out.println(b_idx);
+        CommVO vo = new CommVO();
+
+        vo.setIp(req.getRemoteAddr());
+        vo.setNickname(nickname);
+        vo.setContent(content);
+        vo.setB_idx(b_idx);
+
+        c_Service.addAns(vo);
+
+        return map;
+    }
+
     @RequestMapping("/blist")
     public Map<String, Object> blist() {
         // 게시판 bname 정해지면 수정 할 곳!
-        BbsVO[] ar = b_Service.blist2("CAMREVIEW","TSREVIEW","RESTREVIEW");
+        BbsVO[] ar = b_Service.blist2("CAMREVIEW", "TSREVIEW", "RESTREVIEW");
         BbsVO[] ar2 = b_Service.blist("RESELL");
         Map<String, Object> map = new HashMap<>();
         map.put("blist", ar);
@@ -106,7 +146,7 @@ public class BbsController {
                 }
                 vo.setOri_name(ori_name);
                 vo.setFile_name(file_name);
-                vo.setThum_img(file_name);
+                vo.setThum_img(file_path);
             }
         }
 
@@ -128,6 +168,7 @@ public class BbsController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         String fname = null;
+
         if (file.getSize() > 0) {
             fname = file.getOriginalFilename();
             fname = FileRenameUtil.checkSameFileName(fname, img_path);
@@ -140,6 +181,7 @@ public class BbsController {
         }
 
         map.put("fname", fname);
+        map.put("thum_img", fname);
 
         return map;
     }
@@ -154,6 +196,13 @@ public class BbsController {
     @RequestMapping("/fixbbs")
     public void fixBbs() {
 
+    }
+
+    @RequestMapping("/del")
+    public BbsVO delBbs(String b_idx) {
+        BbsVO vo = b_Service.del(b_idx);
+
+        return vo;
     }
 
 }

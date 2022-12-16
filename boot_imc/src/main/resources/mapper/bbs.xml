@@ -16,7 +16,7 @@
 			FROM (SELECT * FROM bbs
 					WHERE status = 0 ORDER BY b_idx DESC) b, (SELECT @RN:=0) r
 		) a
-		WHERE (rownnum BETWEEN #{begin} AND #{end}) AND bname = #{bname}
+		WHERE (rownnum BETWEEN #{begin} AND #{end}) AND bname = #{bname} AND status=0
 	</select>
     <insert id="add" parameterType="com.iamcamper.boot_imc.VO.BbsVO">
 		INSERT INTO bbs(subject, nickname, content, file_name, ori_name, thum_img, write_date, ip, bname, price)
@@ -31,19 +31,8 @@
 	
 	<!-- 원글 수정 -->
 	<update id="edit" parameterType="java.util.Map">
-		UPDATE bbs
-		<trim prefix="SET" suffixOverrides=",">
-			<if test="subject != null">
-				subject = #{subject},
-			</if>
-			<if test="content != null">
-				content = #{content},
-			</if>
-			<if test="fname != null">
-				file_name = #{file_name},
-				ori_name = #{ori_name},
-			</if>
-		</trim>
+		UPDATE bbs 
+		SET subject = #{subject}, content = #{content}, file_name = #{file_name}, ori_name = #{ori_name}, bname=#{bname}, price=#{price}
 		WHERE b_idx = #{b_idx}
 	</update>
 	<update id="del" parameterType="String">

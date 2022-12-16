@@ -30,6 +30,12 @@ public class BbsService {
         return view;
     }
 
+    public BbsVO del(String b_idx) {
+        BbsVO del = mapper.del(b_idx);
+
+        return del;
+    }
+
     public BbsVO[] blist(String bname) {
         List<BbsVO> list = mapper.blist(bname);
         BbsVO[] ar = null;
@@ -40,8 +46,8 @@ public class BbsService {
         return ar;
     }
 
-    public BbsVO[] blist2(String bname,String bname2,String bname3) {
-        Map<String,String> map = new HashMap<>();
+    public BbsVO[] blist2(String bname, String bname2, String bname3) {
+        Map<String, String> map = new HashMap<>();
 
         map.put("bname1", bname);
         map.put("bname2", bname2);
@@ -55,6 +61,7 @@ public class BbsService {
         }
         return ar;
     }
+
     public void add(BbsVO vo) {
         mapper.add(vo);
     }

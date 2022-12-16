@@ -12,7 +12,9 @@ public interface BbsMapper {
 
     List<BbsVO> blist(String bname);
 
-    List<BbsVO> blist2(Map<String,String> map);
+    List<BbsVO> blist2(Map<String, String> map);
+
+    BbsVO del(String b_idx);
 
     BbsVO view(String b_idx);
 

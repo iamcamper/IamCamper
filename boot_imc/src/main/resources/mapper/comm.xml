@@ -13,8 +13,8 @@
 	
 	<!-- 댓글 저장 -->
 	<insert id="addAns" parameterType="com.iamcamper.boot_imc.VO.CommVO">
-		INSERT INTO comment(writer, content, write_date, ip, pwd, b_idx)
-		VALUES(#{writer}, #{content}, NOW(), #{ip}, #{pwd}, #{b_idx})
+		INSERT INTO comment(nickname, content, write_date, ip, b_idx)
+		VALUES(#{nickname}, #{content}, NOW(), #{ip}, #{b_idx})
 	</insert>
 
 </mapper>

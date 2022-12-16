@@ -8,4 +8,6 @@ public interface CommMapper {
 
     List<CommVO> commList(String b_idx);
 
+    void addAns(CommVO vo);
+
 }

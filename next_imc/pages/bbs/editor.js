@@ -2,12 +2,18 @@ import {Editor} from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { useEffect, useRef, useState } from 'react';
 import Axios from 'axios';
+import { Button } from '@mui/material';
 
 export default function editor(props){
 
     const ref = props.editorRef;
     const con = props.content;
-    const [fileName, setFileName] = useState([]);
+    const [thum_img, setThumimg] = useState();
+
+   function check(){
+            console.log(ref.current().Instance());
+        }
+   
 
     const addImage = async(blob, callback) => {
         console.log(blob);
@@ -20,10 +26,13 @@ export default function editor(props){
             },
         }).then(json => {
             callback("http://localhost:3000/upload_img/" + json.data.fname);
+            setThumimg("http://localhost:3000/upload_img/" + json.data.fname);
         })
         } catch {
 
         }
+
+        
     }
     
 
@@ -41,6 +50,7 @@ export default function editor(props){
                     addImageBlobHook: addImage
                 }}
             />
+             <Button variant="contained" sx={{margin:"10px"}} onclick={check}>확인</Button>
         </div>
     );
 }

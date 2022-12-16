@@ -13,7 +13,7 @@ import Select from '@mui/material/Select';
 import Paper from '@mui/material/Paper';
 import dynamic from 'next/dynamic';
 import { Button, Input, Stack } from '@mui/material';
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import Axios from 'axios';
 
@@ -21,6 +21,7 @@ const Editbbs = dynamic(()=> import('./editor'), {ssr:false});
 
 export default function edit_bbs(){
     
+    const nickname = "testnick";
     const editorRef = useRef();
     const [subject, setSubject] = useState({});
     const WRITE_URL = "/bbs/addbbs";
@@ -47,12 +48,12 @@ export default function edit_bbs(){
     function changeFile(e){
         file = e.target.files[0];
     }
-
     function submit(){
 
         formData.append("file", file);
         formData.append("nickname", nickname);
         formData.append("subject", subject);
+        
         
         Axios.post(
             WRITE_URL, formData,
@@ -148,6 +149,7 @@ export default function edit_bbs(){
                             <Button variant="contained" sx={{margin:"10px"}} onClick={submit}>글쓰기</Button>
                             <Button variant="contained" sx={{margin:"10px"}}>취소</Button>
                         </div>
+                        
           <div> 
             <Main_Bottom/>
           </div>

@@ -12,15 +12,24 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import  ViewList  from "../../com/viewList";
 import Link from "next/Link";
+import SendIcon from '@mui/icons-material/Send';
+import { getCookie } from "cookies-next";
 
 export default function view_bbs(){
 
+  const [nickname, setNickname] = useState("testnick");
   const router = useRouter();
   const b_idx = router.query.idx;
   const [list, setList] = useState([]);
-  const API_VIEW = "/bbs/view?b_idx="+b_idx;
-  
-  
+  const API_VIEW = "/bbs/view?b_idx="+b_idx; 
+  const API_DEL = "/bbs/del?b_idx="+b_idx;
+  const API_Comm = "/bbs/commList?b_idx="+b_idx;
+  const API_Submit = "/bbs/commAdd";
+  const [comm, setComm] = useState([]);
+  const [commin, setCommin] = useState('');
+ 
+
+  console.log(commin);
   console.log(b_idx);
   console.log(list);
 
@@ -31,6 +40,10 @@ export default function view_bbs(){
     }, '/bbs/fix_bbs');
   };
 
+  function changeComm(e){
+    setCommin(e.target.value);
+    console.log(commin);
+  }
   function getList(){
     Axios.get(
       API_VIEW
@@ -38,9 +51,35 @@ export default function view_bbs(){
         setList(res.data);
     })
   }
+  function getComm(){
+    Axios.get(
+      API_Comm
+    ).then((res) => {
+        setComm(res.data.clist);
+    })
+  }
+
+  function deleteList(){
+    Axios.get(
+      API_DEL
+    ).then(() => {
+      router.push("/bbs/free_bbs");
+    })
+  }
+
+  function commSubmit(){
+    Axios.post(
+      API_Submit, null,
+      {params:{nickname:"testnick", content:commin, b_idx:b_idx}}
+    ).then(
+      router.push("/bbs/view_bbs?b_idx="+b_idx)
+    );
+
+  }
 
   useEffect(() => {
     getList();
+    getComm();  
      },[]);
 
    return( 
@@ -68,8 +107,12 @@ export default function view_bbs(){
                             pathname: '/bbs/fix_bbs',
                             query: { list: JSON.stringify(list), bname:list.bname, content:list.content},
                           }}>수정</Link></Button>
-              <Button variant="contained" size="large">삭제</Button>
-              </Stack>
+                          {(function (){ 
+                    if(list.nickname === nickname){
+              <Button variant="contained" size="large" onClick={deleteList}>삭제</Button>
+              }})}
+              </Stack> 
+            
           </Grid>
       <Paper
         sx={{
@@ -85,30 +128,32 @@ export default function view_bbs(){
             댓글 입력
           </Grid>
           <Grid item xs={10}>
-            <TextField fullWidth label="댓글을 입력하세요" id="fullWidth" />
+            <TextField fullWidth label="댓글을 입력하세요" onChange={changeComm}/>
           </Grid>
           <Grid item xs={1}>
-            확인버튼
+          <Button variant="contained" endIcon={<SendIcon />} onClick={commSubmit}>
+            등록
+          </Button>
           </Grid>
         </Grid>
       </Paper>
      <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, width:'1200px', marginLeft:'450px'}}>
-      <Paper
+        {comm.map((comm) => (<Paper
         sx={{
           my: 4,
           mx: 'auto',
           p: 2,
         }}
       >
-        <Grid container wrap="nowrap" spacing={2}>
+      <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
-          댓글 작성자
+             {comm.nickname}
           </Grid>
           <Grid item xs zeroMinWidth>
-            <Typography noWrap>댓글</Typography>
-          </Grid>
-        </Grid> 
-      </Paper>
+            <Typography noWrap>{comm.content}</Typography>
+          </Grid> </Grid> 
+       
+      </Paper>))} 
        
       <Paper
         sx={{
