@@ -61,4 +61,16 @@
     SELECT * FROM bbs
     WHERE b_idx = #{b_idx}
   </select>
+
+<!-- 게시글 업데이트 문 -->
+  <update id="bbsEdit" parameterType="Map">
+    UPDATE bbs SET subject = #{subject}, content = #{content}, file_name = #{file_name}, ori_name = #{ori_name}
+    WHERE b_idx = #{b_idx}
+  </update>
+
+<!-- 조회수 update 문-->
+  <update id="viewCount" parameterType="String">
+    UPDATE bbs SET hit = hit + 1
+    WHERE b_idx = #{b_idx}
+  </update>
 </mapper>

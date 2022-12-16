@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import { Select } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material';
 import { useEffect } from 'react';
+import TextField from '@mui/material/TextField';
+
 
 
 
@@ -19,7 +21,7 @@ const Edit = dynamic(()=> import('../../com/Admin_Editor'), {ssr:false});
 
 export default function write(){
 
-    const editorRef = useRef();
+    const editorRef = useRef("");
     const [subject, setSubject] = useState("");
     const router = useRouter();
     const [bname, setBname] = useState(router.query.bname);
@@ -33,28 +35,23 @@ export default function write(){
     const DATA_URL = "/admin/edit/data";
     const EDIT_URL = "/admin/edit/ok";
 
-
     function getData(){
         Axios.post(
             DATA_URL, null,
             {params:{b_idx:b_idx}},
         ).then(json=>{
             setData(json.data.data);
-            setSubject(json.data.data.subject);
-            setContent(json.data.data.content);
-        })
+            setContent(json.data.data?.content);
+            setSubject(json.data.data?.subject);
+        });
     }
-
-    
 
 
     useEffect(()=>{
         getData();
-        console.log(subject);
-        console.log(content);
     },[]);
 
-
+    
     function changeSubject(e){
         setSubject(e.target.value);
     }
@@ -77,7 +74,7 @@ export default function write(){
             EDIT_URL, formData,
             {params:{
                 content:editorRef.current?.getInstance().getHTML(),
-                bname:bname,
+                bname: bname,
                 cPage: router.query.cPage,
                 b_idx: router.query.b_idx,
             },
@@ -104,7 +101,7 @@ export default function write(){
                                         <label htmlFor='subject'>제목</label>
                                     </th>
                                     <td>
-                                        <Input type='text' sx={{width:'450px'}} onChange={changeSubject}>{data.subject}</Input>
+                                        <input/>
                                     </td>
                                 </tr>
                                 {(bname === 'BANNER' || bname === 'BANNERMAIN' || bname === 'BANNERBBS') && (
@@ -142,7 +139,7 @@ export default function write(){
                                         <label htmlFor='file'>첨부 파일</label>
                                     </th>
                                     <td>
-                                        <input type='file' id='file' value={data.file_name} onChange={changeFile}/>
+                                        <input type='file' id='file' onChange={changeFile}/>
                                     </td>
                                 </tr>
                                 <tr>

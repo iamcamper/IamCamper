@@ -40,11 +40,11 @@ export default function notice(){
         if(router.query.cPage != null){
             setCPage(router.query.cPage);
         }
-        getList()
+        getList();
     },[]);
 
     useEffect(()=>{
-        getList()
+        getList();
     },[cPage]);
 
 

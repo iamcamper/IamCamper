@@ -72,6 +72,20 @@ public class AdminService {
         
     }
 
+    //어드민 글 수정
+    public void bbsEdit(String b_idx, String subject, String content, String file_name, String ori_name){
+
+        mapper.bbsEdit(b_idx, subject, content, file_name, ori_name);
+
+    }
+
+    //어드민 조회수 증가
+    public void viewCount (String b_idx){
+
+        mapper.viewCount(b_idx);
+        
+    }
+
 
     
 }

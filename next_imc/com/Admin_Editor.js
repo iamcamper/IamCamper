@@ -5,12 +5,9 @@ import Axios from 'axios';
 
 export default function Admin_Editor(props){
 
-    const {editorRef} = props.editorRef;
+    const {editorRef} = props;
     const [fileName, setFileName] = useState([]);
     const con = props.content;
-
-    console.log(con);
-
 
     const addImage = async(blob, callback) => {
         console.log(blob);
