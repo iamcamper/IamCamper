@@ -56,8 +56,8 @@ export default function banner(){
                             <TableCell>카테고리</TableCell>
                             <TableCell>썸네일</TableCell>
                             <TableCell>광고 제목</TableCell>
-                            <TableCell align="right">글쓴이</TableCell>
-                            <TableCell align="right">날짜</TableCell>
+                            <TableCell>글쓴이</TableCell>
+                            <TableCell>날짜</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
