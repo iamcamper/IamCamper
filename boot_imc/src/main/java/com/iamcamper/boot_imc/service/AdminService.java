@@ -83,9 +83,14 @@ public class AdminService {
     public void viewCount (String b_idx){
 
         mapper.viewCount(b_idx);
-        
+
     }
 
+    //오늘 가입한 회원 수 가져오기
+    public int todayRegCount(){
 
+        return mapper.todayRegCount();
+
+    }
     
 }

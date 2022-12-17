@@ -73,4 +73,12 @@
     UPDATE bbs SET hit = hit + 1
     WHERE b_idx = #{b_idx}
   </update>
+
+<!-- 대시보드 오늘 가입한 회원 수 -->
+  <select id="todayRegCount" resultType="int">
+    SELECT COUNT(*) FROM member
+    WHERE reg_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
+    AND activate = 0
+  </select>
+  
 </mapper>

@@ -37,4 +37,7 @@ public interface AdminMapper {
 
     //조회수 증가
     void viewCount(@Param("b_idx") String b_idx);
+
+    //오늘 가입한 회원 수
+    int todayRegCount();
 }

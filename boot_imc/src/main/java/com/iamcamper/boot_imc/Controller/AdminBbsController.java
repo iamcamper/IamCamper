@@ -286,5 +286,20 @@ public class AdminBbsController {
         
     }
 
+    @RequestMapping("/main/data")
+    public Map<String, Object> getDashData(){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        //오늘 가입한 회원 수 가져오기
+        int todayReg = a_service.todayRegCount();
+
+        map.put("todayReg", todayReg);
+
+        return map;
+
+
+    }
+
 
 }

@@ -20,8 +20,8 @@
   </select>
   <!-- 회원 가입 -->
   <insert id="reg" parameterType="Map">
-    INSERT INTO member (id, pw, nickname, name, email, birth, phone, manner_point, activate, grade)
-    VALUES (#{id}, #{pw}, #{nickname}, #{name}, #{email}, #{birth}, #{phone}, 0, 0, 0)
+    INSERT INTO member (id, pw, nickname, name, email, birth, phone, manner_point, activate, grade, reg_date)
+    VALUES (#{id}, #{pw}, #{nickname}, #{name}, #{email}, #{birth}, #{phone}, 0, 0, 0, DATE_FORMAT(NOW(), '%Y-%m-%d'))
   </insert>
   <select id="kakaologin" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Map">
     select * from member
@@ -54,6 +54,6 @@
   <!-- 닉네임을 받아 db에 추가해 주는 update 문-->
   <update id="snsRegAdd" parameterType="Map">
     UPDATE member SET nickname = #{nickname}, grade = 0
-    WHERE m_idx = #{m_idx}
+    WHERE m_idx = #{m_idx}, reg_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
   </update>
 </mapper> 
