@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import Dash_Chart4 from '../../com/Dash_Chart4';
 import Dash_Chart5 from '../../com/Dash_Chart5';
+import { ConstructionOutlined } from '@mui/icons-material';
 
 
 
@@ -25,7 +26,8 @@ export default function main(){
     const API_URL = "/admin/main/data";
 
     const [todayReg, setTodayReg] = useState(''); //오늘 가입한 회원 수
-    const [regData, setRegData] = useState([]);
+    const [totalReg, setTotalReg] = useState('');
+    const [regData, setRegData] = useState([]); //최근 5일 가입한 회원 수 배열
 
     function getData(){
 
@@ -33,6 +35,7 @@ export default function main(){
             API_URL, null,
         ).then(json => {
             setRegData(json.data.regList);
+            setTotalReg(json.data.totalReg);
             setTodayReg(json.data.todayReg);
         });
 
@@ -59,7 +62,7 @@ export default function main(){
                         </Grid>
                         <Grid item xs={4}>
                             <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
-                                <Dash_Chart2 regCount={todayReg}/>
+                                <Dash_Chart2 regCount={todayReg} totalReg={totalReg}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={4}>
@@ -70,12 +73,12 @@ export default function main(){
                     </Grid>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '300px'}}>
+                            <Paper elevation={3} sx={{textAlign: 'center', height: '320px'}}>
                                 <Dash_Chart5 regData={regData}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={6}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '300px'}}>
+                            <Paper elevation={3} sx={{textAlign: 'center', height: '320px'}}>
                                 <Dash_Chart4/>
                             </Paper>
                         </Grid>

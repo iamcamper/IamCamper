@@ -108,5 +108,12 @@ public class AdminService {
         return mapper.regCnt();
 
     }
+
+    //전체 멤버 수
+    public int memberCnt(){
+
+        return mapper.memberCnt();
+
+    }
     
 }

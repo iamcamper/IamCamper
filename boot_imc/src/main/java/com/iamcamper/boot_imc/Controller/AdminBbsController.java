@@ -55,7 +55,7 @@ public class AdminBbsController {
 
         page.setTotalCount(totalCount);
 
-        if(cPage != null) {
+        if(cPage.length() > 0) {
             page.setNowPage(Integer.parseInt(cPage));
         } else {
             page.setNowPage(1);
@@ -164,7 +164,7 @@ public class AdminBbsController {
 
         page.setTotalCount(count);
 
-        if(cPage != null){
+        if(cPage.length() > 0){
             page.setNowPage(Integer.parseInt(cPage));
         }else{
             page.setNowPage(1);
@@ -294,6 +294,8 @@ public class AdminBbsController {
 
         //오늘 가입한 회원 수 가져오기
         int todayReg = a_service.todayRegCount();
+        //전체 가입한 회원 수 가져오기
+        int totalReg = a_service.memberCnt();
 
         //최근 5일 가입자 수 가져오기
         List<RegCntVO> regList = a_service.regCnt();
@@ -305,6 +307,7 @@ public class AdminBbsController {
 
         map.put("regList", r_list);
         map.put("todayReg", todayReg);
+        map.put("totalReg", totalReg);
 
         return map;
 

@@ -12,7 +12,7 @@ export default function notice(){
     const router = useRouter();
     const LIST_URL = "/admin/notice/list";
     const [list, setList] = useState([]);
-    const [cPage, setCPage] = useState(1);
+    const [cPage, setCPage] = useState('');
     const [totalPage, setTotalPage] = useState();
 
     const pageChange = (event, value) => {
@@ -20,6 +20,7 @@ export default function notice(){
       };
     
     function getList(){
+
         Axios.post(
             LIST_URL, null,
             {params:{bname:'ADNOTICE', cPage:cPage}}
@@ -67,6 +68,7 @@ export default function notice(){
                             <TableCell align="right">글쓴이</TableCell>
                             <TableCell align="right">날짜</TableCell>
                             <TableCell align="right">조회수</TableCell>
+                            <TableCell align='center'>삭제</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
@@ -84,6 +86,9 @@ export default function notice(){
                                 <TableCell align="right">{data.nickname}</TableCell>
                                 <TableCell align="right">{data.write_date}</TableCell>
                                 <TableCell align="right">{data.hit}</TableCell>
+                                <TableCell align='center'>
+                                    <Button size='small' variant='contained' color='error'>삭제</Button>
+                                </TableCell>
                                 </TableRow>
                             )}
                         </TableBody>

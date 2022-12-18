@@ -95,4 +95,10 @@
     ORDER BY reg_date desc
     LIMIT 5;
   </select>
+
+<!-- 대시보드 전체 회원 가입 인원 구하기-->
+  <select id="memberCnt" resultType="int">
+    SELECT COUNT(*) FROM member
+    WHERE grade = 0 AND activate = 0
+  </select>
 </mapper>

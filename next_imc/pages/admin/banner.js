@@ -1,4 +1,4 @@
-import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@mui/material';
+import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button, Pagination } from '@mui/material';
 import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
 import Admin_Sidebar from '../../com/Admin_Sidebar';
@@ -9,13 +9,18 @@ import { useRouter } from 'next/router';
 
 
 
+
 export default function banner(){
 
     const router = useRouter();
     const LIST_URL = "/admin/banner/list";
     const [list, setList] = useState([]);
-    const [cPage, setCpage] = useState(1);
+    const [cPage, setCpage] = useState('');
     const [totalPage, setTotalPage] = useState();
+
+    const pageChange = (event, value) => {
+        setCPage(value);
+      };
 
     function getList(){
         Axios.post(
@@ -58,6 +63,7 @@ export default function banner(){
                             <TableCell>광고 제목</TableCell>
                             <TableCell>글쓴이</TableCell>
                             <TableCell>날짜</TableCell>
+                            <TableCell>삭제</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
@@ -76,11 +82,23 @@ export default function banner(){
                                     <TableCell>{data.subject}</TableCell>
                                     <TableCell>{data.nickname}</TableCell>
                                     <TableCell>{data.write_date}</TableCell>
+                                    <TableCell>
+                                        <Button size='small' variant='contained' color='error'>삭제</Button>
+                                    </TableCell>
                                 </TableRow>
                             )}
                         </TableBody>
                     </Table>
                 </TableContainer>
+                <Stack spacing={2}>
+                        <Pagination count={totalPage} 
+                            variant="outlined" 
+                            shape="rounded" 
+                            color='primary' 
+                            sx={{marginTop:'30px'}}
+                            page={cPage}
+                            onChange={pageChange}/>
+                </Stack>
             </Box>
         </Stack>
         <Admin_Footer/>

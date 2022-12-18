@@ -48,4 +48,7 @@ public interface AdminMapper {
 
     //대시보드 - 최근 5일 회원 가입자 수
     List<RegCntVO> regCnt();
+
+    //대시보드 - 토탈 회원 수
+    int memberCnt();
 }

@@ -3,23 +3,29 @@ import { Bar, Line } from "react-chartjs-2";
 import { Chart } from "chart.js/auto";
 import { useState } from "react";
 import { useEffect } from "react";
+import { width } from "@mui/system";
 
 
 
 
 export default function Dash_Chart5({regData}){
 
-console.log({regData});
-
 
 const data =  {
-            labels:[1,1,1,1,1,],
+            labels:
+                regData.reverse().map((data)=>{
+                    let label = data.reg_date;
+                    return label.substr(5, 8);
+                })
+            ,
             datasets: [
               {
                 type: 'line',
-                label: '회원 가입 현황',
+                label: '회원 가입 현황 (단위:명)',
                 backgroundColor: 'rgb(255, 99, 132)',
-                data: [20, 24, 11, 5, 1],
+                data: regData.reverse().map((data)=>{
+                    return data.cnt;
+                }),
                 borderColor: 'red',
                 borderWidth: 2
               },
@@ -30,7 +36,7 @@ const data =  {
 
     return(
         <div>
-            <h5>회원 가입 현황</h5>
+            <h3>회원 가입 현황</h3>
             <div>
                 <Line data={data}/>
             </div>

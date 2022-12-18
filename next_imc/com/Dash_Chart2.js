@@ -1,3 +1,4 @@
+import { PersonAdd } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 
 
@@ -6,17 +7,18 @@ import { Typography } from "@mui/material";
 export default function Dash_Chart2(props){
 
     const regCount = props.regCount;
+    const totalReg = props.totalReg;
 
     return(
         <div>
-            <h5>오늘 가입자</h5>
-            <Typography component="p" variant="h6">
+            <h3>오늘 가입자</h3>
+            <p>
                 {regCount} 명
-            </Typography>
-            <h5>총 게시물 수</h5>
-            <Typography component="p" variant="h6">
-                15개
-            </Typography>
+            </p>
+            <h3>누적 가입자</h3>
+            <h4>
+                {totalReg} 명
+            </h4>
         </div>
     );
 
