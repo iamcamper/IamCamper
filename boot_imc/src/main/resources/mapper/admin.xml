@@ -81,4 +81,18 @@
     AND activate = 0
   </select>
   
+<!-- 대시보드 전체 게시판별 토탈 게시글 수 -->
+  <select id="bbsTotalCnt" resultType="com.iamcamper.boot_imc.VO.BbsTotalCntVO">
+    SELECT bname, COUNT(*) AS cnt FROM bbs 
+    WHERE status = 0 AND write_date = DATE_FORMAT(NOW(), '%Y-%m-%d') 
+    GROUP BY bname
+  </select>
+
+<!-- 대시보드 회원 가입 인원 카운트 수-->
+  <select id="regCnt" resultType="com.iamcamper.boot_imc.VO.RegCntVO">
+    SELECT reg_date, COUNT(*) as cnt FROM member 
+    GROUP BY reg_date
+    ORDER BY reg_date desc
+    LIMIT 5;
+  </select>
 </mapper>

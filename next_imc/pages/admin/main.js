@@ -15,6 +15,8 @@ import Dash_Chart2 from '../../com/Dash_Chart2';
 import Dash_Chart3 from '../../com/Dash_Chart3';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
+import Dash_Chart4 from '../../com/Dash_Chart4';
+import Dash_Chart5 from '../../com/Dash_Chart5';
 
 
 
@@ -23,13 +25,14 @@ export default function main(){
     const API_URL = "/admin/main/data";
 
     const [todayReg, setTodayReg] = useState(''); //오늘 가입한 회원 수
-
+    const [regData, setRegData] = useState([]);
 
     function getData(){
 
         Axios.post(
             API_URL, null,
         ).then(json => {
+            setRegData(json.data.regList);
             setTodayReg(json.data.todayReg);
         });
 
@@ -39,8 +42,6 @@ export default function main(){
     useEffect(()=>{
         getData();
     },[]);
-
-
 
 
     return(
@@ -69,13 +70,13 @@ export default function main(){
                     </Grid>
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '200px'}}>
-                                <Dash_Chart3/>
+                            <Paper elevation={3} sx={{textAlign: 'center', height: '300px'}}>
+                                <Dash_Chart5 regData={regData}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={6}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '200px'}}>
-                                <Dash_Chart3/>
+                            <Paper elevation={3} sx={{textAlign: 'center', height: '300px'}}>
+                                <Dash_Chart4/>
                             </Paper>
                         </Grid>
                     </Grid>

@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.iamcamper.boot_imc.VO.BbsTotalCntVO;
 import com.iamcamper.boot_imc.VO.BbsVO;
 import com.iamcamper.boot_imc.VO.MemVO;
+import com.iamcamper.boot_imc.VO.RegCntVO;
 import com.iamcamper.boot_imc.mapper.AdminMapper;
 
 @Service
@@ -90,6 +92,20 @@ public class AdminService {
     public int todayRegCount(){
 
         return mapper.todayRegCount();
+
+    }
+
+    //게시판별 오늘의 게시글 전체 카운트 가져오기
+    public List<BbsTotalCntVO> bbsTotalCnt(){
+
+        return mapper.bbsTotalCnt();
+
+    }
+
+    //게시판별 최근 5일 회원가입자
+    public List<RegCntVO> regCnt(){
+
+        return mapper.regCnt();
 
     }
     

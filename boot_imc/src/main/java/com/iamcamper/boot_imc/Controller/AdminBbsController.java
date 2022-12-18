@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.iamcamper.boot_imc.VO.BbsVO;
+import com.iamcamper.boot_imc.VO.RegCntVO;
 import com.iamcamper.boot_imc.service.AdminService;
 import com.iamcamper.boot_imc.util.FileRenameUtil;
 import com.iamcamper.boot_imc.util.Paging;
@@ -294,6 +295,15 @@ public class AdminBbsController {
         //오늘 가입한 회원 수 가져오기
         int todayReg = a_service.todayRegCount();
 
+        //최근 5일 가입자 수 가져오기
+        List<RegCntVO> regList = a_service.regCnt();
+        RegCntVO [] r_list = null;
+        if(regList.size() > 0){
+            r_list = new RegCntVO[regList.size()];
+            regList.toArray(r_list);
+        }
+
+        map.put("regList", r_list);
         map.put("todayReg", todayReg);
 
         return map;

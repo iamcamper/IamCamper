@@ -5,8 +5,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.iamcamper.boot_imc.VO.BbsTotalCntVO;
 import com.iamcamper.boot_imc.VO.BbsVO;
 import com.iamcamper.boot_imc.VO.MemVO;
+import com.iamcamper.boot_imc.VO.RegCntVO;
 
 public interface AdminMapper {
 
@@ -38,6 +40,12 @@ public interface AdminMapper {
     //조회수 증가
     void viewCount(@Param("b_idx") String b_idx);
 
-    //오늘 가입한 회원 수
+    //대시보드 - 오늘 가입한 회원 수
     int todayRegCount();
+
+    //대시보드 - 게시판별 게시글 전체 카운트
+    List<BbsTotalCntVO> bbsTotalCnt();
+
+    //대시보드 - 최근 5일 회원 가입자 수
+    List<RegCntVO> regCnt();
 }
