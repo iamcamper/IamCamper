@@ -314,5 +314,57 @@ public class AdminBbsController {
 
     }
 
+    @RequestMapping("/bbs/search")
+    public Map<String, Object> bbsList(String category, String value, String cPage){
+
+        Map<String, Object> map = new HashMap<>();
+
+        Paging page = new Paging();
+
+        int totalCount = a_service.bbsCount(category, value);
+
+        page.setTotalCount(totalCount);
+
+        if(cPage.length() > 0) {
+            page.setNowPage(Integer.parseInt(cPage));
+        } else {
+            page.setNowPage(1);
+        }
+
+        String begin = String.valueOf(page.getBegin());
+        String end = String.valueOf(page.getEnd());
+
+        List<BbsVO> list = a_service.bbsList(category, value, begin, end);
+
+        BbsVO[] b_list = null;
+
+        if(list.size() > 0){
+            b_list = new BbsVO[list.size()];
+            list.toArray(b_list);
+        }
+
+        map.put("b_list", b_list);
+        map.put("totalPage", page.getTotalPage());
+
+        return map;
+
+
+    }
+
+    @RequestMapping("/bbs/del")
+    public Map<String, Object> bbsDel(String b_idx){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        a_service.bbsDel(b_idx);
+
+        int chk = a_service.bbsDelChk(b_idx);
+
+        map.put("chk", chk);
+
+        return map;
+
+    }
+
 
 }

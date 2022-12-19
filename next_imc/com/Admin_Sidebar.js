@@ -44,7 +44,7 @@ export default function Admin_Sidebar(){
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" href="/admin/dataupdate">
+                    <ListItemButton component="a" href="/admin/bbs">
                         <ListItemIcon>
                             <Description/>
                         </ListItemIcon>
@@ -52,11 +52,11 @@ export default function Admin_Sidebar(){
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" href="#member">
+                    <ListItemButton component="a" href="/admin/member">
                         <ListItemIcon>
                             <Person/>
                         </ListItemIcon>
-                        <ListItemText primary="회원 관리"/>
+                        <ListItemText primary="관리자 승인"/>
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>

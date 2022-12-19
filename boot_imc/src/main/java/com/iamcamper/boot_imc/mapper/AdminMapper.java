@@ -51,4 +51,16 @@ public interface AdminMapper {
 
     //대시보드 - 토탈 회원 수
     int memberCnt();
+
+    //검색한 글 리스트 페이징 기법으로 불러오기
+    List<BbsVO> bbsList(@Param("category") String category, @Param("value") String value, @Param("begin") String begin, @Param("end") String end);
+
+    //검색한 글 토탈 카운트 불러오기
+    int bbsCount(@Param("category") String category, @Param("value") String value);
+
+    //회원 게시판 게시글 삭제
+    void bbsDel(String b_idx);
+
+    //회원 게시글 강제 삭제 여부 확인
+    int bbsDelChk(String b_idx);
 }

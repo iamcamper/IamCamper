@@ -79,7 +79,14 @@ export default function banner(){
                                     <TableCell>
                                         썸네일
                                     </TableCell>
-                                    <TableCell>{data.subject}</TableCell>
+                                    <TableCell>
+                                    <Link href={{
+                                            pathname: "/admin/views",
+                                            query: {b_idx: data.b_idx, cPage: cPage, bname:data.bname, bbs:'banner'},
+                                        }}>
+                                        {data.subject}
+                                    </Link>
+                                    </TableCell>
                                     <TableCell>{data.nickname}</TableCell>
                                     <TableCell>{data.write_date}</TableCell>
                                     <TableCell>

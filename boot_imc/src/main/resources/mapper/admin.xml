@@ -101,4 +101,71 @@
     SELECT COUNT(*) FROM member
     WHERE grade = 0 AND activate = 0
   </select>
+
+<!-- 게시판별 글 검색 페이징 기법으로 반환 -->
+  <select id="bbsList" parameterType="Map" resultMap="listMap">
+  SELECT a.* FROM (
+      SELECT @RN:=@RN+1 AS rownum, b.* FROM(
+        SELECT * FROM bbs WHERE status = 0 
+        <if test = 'category.equals("nickname")'>
+        AND nickname LIKE CONCAT ('%', #{value}, '%')
+        AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+        </if>
+        <if test = "category.equals('bname')">
+          AND bname = #{value}
+        </if>
+        <if test = "category.equals('write_date')">
+          AND write_date = #{value}
+          AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+        </if>
+        <if test = "category.equals('subject')">
+          AND subject LIKE CONCAT ('%', #{value}, '%')
+          AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+        </if>
+        <if test = "category.equals('content')">
+          AND content LIKE CONCAT ('%', #{value}, '%')
+          AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+        </if>
+        ORDER BY b_idx DESC) b,
+        (SELECT @RN:=0) r
+      ) a
+    WHERE rownum BETWEEN #{begin} AND #{end}
+  </select>
+
+  <!-- 게시판별 글 갯수 카운트 -->
+  <select id="bbsCount" parameterType="Map" resultType="int">
+    SELECT COUNT(*) FROM bbs
+    WHERE status = 0 
+      <if test = 'category.equals("nickname")'>
+        AND nickname LIKE CONCAT ('%', #{value}, '%')
+        AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+      </if>
+      <if test = "category.equals('bname')">
+        AND bname = #{value}
+      </if>
+      <if test = "category.equals('write_date')">
+        AND write_date = #{value}
+        AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+      </if>
+      <if test = "category.equals('subject')">
+        AND subject LIKE CONCAT ('%', #{value}, '%')
+        AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+      </if>
+      <if test = "category.equals('content')">
+        AND content LIKE CONCAT ('%', #{value}, '%')
+        AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+      </if>
+  </select>
+
+  <!-- 회원 게시판 게시글 삭제 -->
+  <update id="bbsDel" parameterType="String">
+    UPDATE bbs SET status = 2
+    WHERE b_idx = #{b_idx}    
+  </update>
+
+  <!-- 강제 삭제한 게시물 여부 확인-->
+  <select id="bbsDelChk" parameterType="String" resultType="int">
+    SELECT COUNT(*) FROM bbs
+    WHERE b_idx = #{b_idx} AND status = 2
+  </select>
 </mapper>

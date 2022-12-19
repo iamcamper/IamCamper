@@ -115,5 +115,32 @@ public class AdminService {
         return mapper.memberCnt();
 
     }
+
+    //검색한 글 페이징 기법으로 반환
+    public List<BbsVO> bbsList(String category, String value, String begin, String end){
+
+        return mapper.bbsList(category, value, begin, end);
+
+    }
+
+    //검색한 글 토탈 카운트
+    public int bbsCount(String category, String value){
+
+        return mapper.bbsCount(category, value);
+
+    }
+
+    //회원 게시글 삭제
+    public void bbsDel(String b_idx){
+
+        mapper.bbsDel(b_idx);
+
+    }
     
+    //회원 게시글 강제 삭제 여부
+    public int bbsDelChk(String b_idx){
+
+        return mapper.bbsDelChk(b_idx);
+
+    }
 }

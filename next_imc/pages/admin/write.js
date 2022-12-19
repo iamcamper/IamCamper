@@ -19,7 +19,7 @@ const Edit = dynamic(()=> import('../../com/Admin_Editor'), {ssr:false});
 
 export default function write(){
     
-    const nickname = getCookie("nickname");
+    const nickname = getCookie("adminnickname");
     const editorRef = useRef();
     const [subject, setSubject] = useState();
     const WRITE_URL = "/admin/writeok";
