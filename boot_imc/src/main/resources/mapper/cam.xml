@@ -26,7 +26,7 @@
 
 <!-- 리스트 -->
 
-  <select id="P_clist" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="String">
+  <select id="P_clist" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="Map">
     SELECT a.* FROM (
       SELECT @RN:=@RN+1 AS rownum, b.* FROM(
         SELECT * FROM camping WHERE addr LIKE CONCAT(#{addr}, '%') AND category  LIKE CONCAT('%', #{category}, '%')) b,
@@ -35,7 +35,7 @@
     WHERE rownum BETWEEN #{begin} AND #{end}
   </select>
 
-  <select id="P_alist" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="String">
+  <select id="P_alist" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="Map">
     SELECT a.* FROM (
       SELECT @RN:=@RN+1 AS rownum, b.* FROM(
         SELECT * FROM camping WHERE addr LIKE CONCAT(#{addr}, '%') AND animal  LIKE CONCAT('가능', '%')) b,
@@ -44,13 +44,23 @@
     WHERE rownum BETWEEN #{begin} AND #{end}
   </select>
 
-  <select id="P_allList" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="String">
+  <select id="P_allList" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="Map">
     SELECT a.* FROM (
       SELECT @RN:=@RN+1 AS rownum, b.* FROM(
-       SELECT c.* FROM (SELECT * FROM camping where addr LIKE CONCAT(#{addr}, '%')) c,
+        SELECT * FROM camping WHERE addr LIKE CONCAT(#{addr}, '%')) b,
         (SELECT @RN:=0) r
       ) a
     WHERE rownum BETWEEN #{begin} AND #{end}
+  </select>
+
+  <!-- 오늘의 추천픽 -->
+  <select id="pick_list" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="Map">
+  SELECT a.* FROM (
+      SELECT @RN:=@RN+1 AS rownum, b.* FROM(
+        SELECT * FROM camping) b,
+        (SELECT @RN:=0) r
+      ) a
+    WHERE rownum BETWEEN #{begin}AND #{end}
   </select>
 
 </mapper>

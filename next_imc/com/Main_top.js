@@ -25,24 +25,26 @@ export default function Main1_top(){
 
 
                         {!ck && (
-                        <Button  variant="text" style={{display:"inline-block",widows:"100px"}} color="inherit"
-                        onClick={()=>router.push("/member/login")}>임시 로그인</Button>
+                        <Button  variant="text" style={{display:"inline-block",width:"50%"}} color="inherit"
+                        onClick={()=>router.push("/member/login")}>LOGIN</Button>
                         )}
                         {ck && (
-                        <Button  variant="text" style={{display:"inline-block",widows:"100px"}} color="inherit"
+                        <Button  variant="text" style={{display:"inline-block",width:"50%"}} color="inherit"
                         onClick={()=>{
-                            deleteCookie('id');
+                            deleteCookie("m_idx");
+                            deleteCookie("id");
+                            deleteCookie("nickname");
                             setCk(false);
                             router.push("/")
                         }}>Logout</Button>
                         )}
 
                         {!ck && (
-                        <Button  variant="text" style={{display:"inline-block",widows:"100px"}} color="inherit"
-                        onClick={()=>router.push("/member/registration")}>임시 회원가입</Button>
+                        <Button  variant="text" style={{display:"inline-block",width:"50%"}} color="inherit"
+                        onClick={()=>router.push("/member/registration")}>회원가입</Button>
                         )}
                         {ck && (
-                        <Button  variant="text" style={{display:"inline-block",widows:"100px%"}} color="inherit"
+                        <Button  variant="text" style={{display:"inline-block",width:"50%"  }} color="inherit"
                         onClick={()=>
                             router.push("/member/information ")
                         }>MyPage</Button>

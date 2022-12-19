@@ -37,15 +37,14 @@ public class CamService {
         Map<String, String> map = new HashMap<String, String>();
         List<CamVO> list = null;
 
-        map.put("addr", addr);
-        map.put("category", category);
-
         if (category.equals("애완동물")) {
             list = mapper.alist(addr);
         } else if (category.equals("전체보기")) {
-
+            System.out.println(addr);
             list = mapper.allList(addr);
         } else {
+            map.put("addr", addr);
+            map.put("category", category);
             list = mapper.clist(map);
         }
 
@@ -83,4 +82,25 @@ public class CamService {
         return vo;
     }
 
+    public CamVO[] picklist(int begin) {
+
+        Map<String, String> map = new HashMap<String, String>();
+        String b = String.valueOf(begin);
+        String e = String.valueOf(begin + 2);
+
+        map.put("begin", b);
+        map.put("end", e);
+
+        CamVO[] vo = null;
+
+        List<CamVO> list = mapper.pick_list(map);
+
+        if (list != null && list.size() > 0) {
+            vo = new CamVO[list.size()];
+            list.toArray(vo);
+        }
+
+        return vo;
+
+    }
 }

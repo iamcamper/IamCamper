@@ -23,4 +23,6 @@ public interface CamMapper {
 
     List<CamVO> P_allList(Map<String, String> map);
 
+    List<CamVO> pick_list(Map<String, String> map);
+
 }

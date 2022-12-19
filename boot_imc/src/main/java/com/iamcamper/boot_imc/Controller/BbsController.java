@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.iamcamper.boot_imc.VO.BbsVO;
+import com.iamcamper.boot_imc.VO.CamVO;
 import com.iamcamper.boot_imc.VO.CommVO;
 import com.iamcamper.boot_imc.service.BbsService;
+import com.iamcamper.boot_imc.service.CamService;
 import com.iamcamper.boot_imc.service.CommService;
 import com.iamcamper.boot_imc.util.FileRenameUtil;
 import com.iamcamper.boot_imc.util.Paging;
@@ -34,6 +36,9 @@ public class BbsController {
 
     @Autowired
     private BbsService b_Service;
+
+    @Autowired
+    private CamService cam_Service;
 
     @Autowired
     private HttpServletRequest req;
@@ -111,14 +116,20 @@ public class BbsController {
         return map;
     }
 
+    // 메인 페이지 베스트 글 + 오늘 추천 픽
     @RequestMapping("/blist")
     public Map<String, Object> blist() {
-        // 게시판 bname 정해지면 수정 할 곳!
+
+        int ren = (int) (Math.random() * 3000 + 1);
+
         BbsVO[] ar = b_Service.blist2("CAMREVIEW", "TSREVIEW", "RESTREVIEW");
         BbsVO[] ar2 = b_Service.blist("RESELL");
+
+        CamVO[] ar3 = cam_Service.picklist(ren);
         Map<String, Object> map = new HashMap<>();
         map.put("blist", ar);
         map.put("ulist", ar2);
+        map.put("plist", ar3);
 
         return map;
     }
