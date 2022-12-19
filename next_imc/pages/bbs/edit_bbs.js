@@ -87,12 +87,12 @@ export default function edit_bbs(){
                     label="bbs"
                     onChange={BnameChange}
                 >
-                    <MenuItem value="자유게시판">
+                    <MenuItem value="FREE">
                     자유게시판
                     </MenuItem>
-                    <MenuItem value="후기게시판">후기 게시판</MenuItem>
-                    <MenuItem value="맛집게시판">맛집 게시판</MenuItem>
-                    <MenuItem value="중고거래게시판">중고거래 게시판</MenuItem>
+                    <MenuItem value="TSREVIEW">후기 게시판</MenuItem>
+                    <MenuItem value="RESTREVIEW">맛집 게시판</MenuItem>
+                    <MenuItem value="RESELL">중고거래 게시판</MenuItem>
                 </Select>
             </FormControl>
             </Stack>

@@ -34,7 +34,7 @@ export default function free_bbs(){
   function getList(){
     Axios.post(
         API_URL, null,
-        {params:{bname:'자유게시판', cPage:cPage}}
+        {params:{bname:'FREE', cPage:cPage}}
       ).then((json) =>{
         setTotalPage(json.data.totalPage);
         console.log(json.data.list);

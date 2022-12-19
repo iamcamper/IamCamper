@@ -181,7 +181,6 @@ public class BbsController {
         }
 
         map.put("fname", fname);
-        map.put("thum_img", fname);
 
         return map;
     }

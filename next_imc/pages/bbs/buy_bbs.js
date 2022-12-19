@@ -25,7 +25,7 @@ export default function Home() {
     function getList(){
         Axios.post(
             API_URL, null,
-            {params:{bname:'중고거래게시판', cPage:cPage}}
+            {params:{bname:'RESELL', cPage:cPage}}
           ).then((json) =>{
             setTotalPage(json.data.totalPage);
             console.log(json.data.list);
