@@ -65,6 +65,9 @@ export default function login () {
                     <TextField name="pw" label="Enter User Password" type="password" fullWidth onChange={changeAdmin}></TextField>
                     <Button variant="contained" fullWidth onClick={LoginChk}>로그인</Button>
                 </Stack>
+                <Link href='/admin/reg'>
+                    <p>회원 가입</p>
+                </Link>
             </FormControl>
         </Box>
       </Box>

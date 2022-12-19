@@ -15,7 +15,7 @@
 <!-- login 기능 -->
     <select id="login" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Map">
     SELECT * FROM member
-    WHERE id = #{id} AND pw = #{pw} AND grade = #{grade}
+    WHERE id = #{id} AND pw = #{pw} AND grade = #{grade} AND activate = 0
     </select>
 
 <!-- 전체 게시글의 수 반환 -->
@@ -102,7 +102,7 @@
     WHERE grade = 0 AND activate = 0
   </select>
 
-<!-- 게시판별 글 검색 페이징 기법으로 반환 -->
+<!-- 카테고리별 글 검색 페이징 기법으로 반환 -->
   <select id="bbsList" parameterType="Map" resultMap="listMap">
   SELECT a.* FROM (
       SELECT @RN:=@RN+1 AS rownum, b.* FROM(
@@ -168,4 +168,16 @@
     SELECT COUNT(*) FROM bbs
     WHERE b_idx = #{b_idx} AND status = 2
   </select>
+
+  <!-- 어드민 회원 가입-->
+  <insert id="adminReg" parameterType="Map">
+    INSERT INTO member (id, pw, nickname, name, email, birth, phone, manner_point, activate, grade, reg_date)
+    VALUES (#{id}, #{pw}, #{nickname}, #{name}, #{email}, #{birth}, #{phone}, 0, 1, 9, DATE_FORMAT(NOW(), '%Y-%m-%d'))
+  </insert>
+
+  <!-- 어드민 회원 가입 여부 가져오기 -->
+  <select id="adminRegChk" parameterType="String" resultType="int">
+    SELECT COUNT(*) FROM member
+    WHERE id = #{id}
+  </select> 
 </mapper>

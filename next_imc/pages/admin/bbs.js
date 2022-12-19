@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Box, Button, FormControl, InputLabel, MenuItem, Pagination, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Box, Button, FormControl, getListItemAvatarUtilityClass, InputLabel, MenuItem, Pagination, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import Axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -61,13 +61,7 @@ export default function bbs(){
                 DEL_URL, null,
                 {params:{b_idx: b_idx}},
             ).then(json=>{
-                if(json.data.chk == 1){
-                    alert("정상적으로 삭제되었습니다!");
-                    searchList();
-                }else{
-                    alert("삭제 실패");
-                    return;
-                }
+                
             });
 
     }
@@ -117,7 +111,6 @@ export default function bbs(){
                             <MenuItem value="RESTREVIEW">중고거래</MenuItem>
                             <MenuItem value="RESTREVIEW">자유게시판</MenuItem>
                         </Select>
-
                     </FormControl>
 
                     )}
@@ -181,7 +174,7 @@ export default function bbs(){
                                     <TableCell>{data.nickname}</TableCell>
                                     <TableCell>{data.write_date}</TableCell>
                                     <TableCell>
-                                        <Button size='small' variant='contained' color='error' onclick={del(data.b_idx)}>삭제</Button>
+                                        <Button size='small' variant='contained' color='error' onClick={del(data.b_idx)}>삭제</Button>
                                     </TableCell>
                                 </TableRow>
                             ))}

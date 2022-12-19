@@ -23,6 +23,7 @@ import com.iamcamper.boot_imc.VO.RegCntVO;
 import com.iamcamper.boot_imc.service.AdminService;
 import com.iamcamper.boot_imc.util.FileRenameUtil;
 import com.iamcamper.boot_imc.util.Paging;
+import com.iamcamper.boot_imc.util.ThumImgUtil;
 
 @RestController
 @RequestMapping("/admin")
@@ -197,6 +198,10 @@ public class AdminBbsController {
 
         BbsVO bvo = a_service.views(b_idx);
 
+        String str = ThumImgUtil.thumImgUtil(bvo.getContent());
+
+        System.out.println(str);
+
         readCount(req, b_idx, res);
 
         map.put("data", bvo);
@@ -287,6 +292,9 @@ public class AdminBbsController {
         
     }
 
+    /*
+     * 대시보드 데이터 
+     */
     @RequestMapping("/main/data")
     public Map<String, Object> getDashData(){
 
@@ -314,6 +322,9 @@ public class AdminBbsController {
 
     }
 
+    /*
+     * 어드민 - 게시판 관리 검색
+     */
     @RequestMapping("/bbs/search")
     public Map<String, Object> bbsList(String category, String value, String cPage){
 
@@ -351,6 +362,9 @@ public class AdminBbsController {
 
     }
 
+    /*
+     * 어드민 - 게시판 관리 글 삭제
+     */
     @RequestMapping("/bbs/del")
     public Map<String, Object> bbsDel(String b_idx){
 
@@ -366,5 +380,23 @@ public class AdminBbsController {
 
     }
 
+     /*
+     * 어드민 - 회원 가입
+     */
+    @RequestMapping("/reg/ok")
+    public Map<String, Object> adminReg(String id, String pw, String nickname,
+    String name, String email, String phone, String birth) {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        a_service.adminReg(id, pw, nickname, name, email, birth, phone);
+
+        int chk = a_service.adminRegChk(id);
+
+        map.put("chk", chk);
+
+        return map;
+
+    }
 
 }

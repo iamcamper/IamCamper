@@ -63,4 +63,11 @@ public interface AdminMapper {
 
     //회원 게시글 강제 삭제 여부 확인
     int bbsDelChk(String b_idx);
+
+    //어드민 회원 가입
+    void adminReg(@Param("id") String id, @Param("pw") String pw, @Param("nickname") String nickname,
+    @Param("name") String name, @Param("email") String email, @Param("birth") String birth, @Param("phone") String phone); 
+
+    //어드민 회원 가입 여부 검사
+    int adminRegChk(String id);
 }

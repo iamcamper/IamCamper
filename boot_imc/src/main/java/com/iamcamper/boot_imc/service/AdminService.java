@@ -143,4 +143,19 @@ public class AdminService {
         return mapper.bbsDelChk(b_idx);
 
     }
+
+    //어드민 회원 가입
+    public void adminReg(String id, String pw, String nickname,
+            String name, String email, String birth, String phone) {
+
+        mapper.adminReg(id, pw, nickname, name, email, birth, phone);
+
+    }
+
+    //어드민 회원 가입 검사
+    public int adminRegChk(String id){
+
+        return mapper.adminRegChk(id);
+
+    }
 }
