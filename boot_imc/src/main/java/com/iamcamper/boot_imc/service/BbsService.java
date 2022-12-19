@@ -23,6 +23,10 @@ public class BbsService {
 
     }
 
+    public void fixbbs(String subject, String content, String file_name, String ori_name, String bname, String price){
+        mapper.edit(subject, content, file_name, ori_name, bname, price);
+    }
+
     public BbsVO view(String b_idx) {
 
         BbsVO view = mapper.view(b_idx);

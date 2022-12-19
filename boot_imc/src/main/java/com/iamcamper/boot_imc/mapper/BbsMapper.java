@@ -14,6 +14,8 @@ public interface BbsMapper {
 
     List<BbsVO> blist2(Map<String, String> map);
 
+    void edit(String subject, String content, String file_name, String ori_name, String bname, String price);
+
     BbsVO del(String b_idx);
 
     BbsVO view(String b_idx);

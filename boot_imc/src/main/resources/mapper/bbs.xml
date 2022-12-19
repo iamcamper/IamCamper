@@ -41,6 +41,7 @@
 		WHERE b_idx = #{b_idx}
 	</update>
 	
+	
 	<!-- 베스트 중고거래 글 불러오기 -->
 	<select id="blist" resultType="com.iamcamper.boot_imc.VO.BbsVO"  parameterType="String">
 		SELECT a.* FROM(

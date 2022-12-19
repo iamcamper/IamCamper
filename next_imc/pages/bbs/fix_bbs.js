@@ -20,13 +20,14 @@ const Editbbs = dynamic(()=> import('./editor'), {ssr:false});
 export default function fix_bbs(){
     
     const nickname = getCookie("nickname");
-    const [subject, setSubject] = useState({});
-    const WRITE_URL = "/bbs/fixbbs";
+    
+    const WRITE_URL = "/bbs/fixbbs/submit";
     const router = useRouter();
     const content = router.query.content;
     const formData = new FormData();    
     const [fix, setFix] = useState([]);
     const editorRef = useRef();
+    const [subject, setSubject] = useState(fix.subject);
     
     console.log(fix);
     console.log(content);
@@ -110,7 +111,7 @@ export default function fix_bbs(){
                          <label htmlFor='subject'>제목</label>
                     </th>
                     <td>
-                        <Input placeholder='제목' sx={{width:'450px'}} onChange={subjectChange} value={fix.subject}/>
+                        <Input defaultValue={fix.subject} placeholder='제목' sx={{width:'450px'}} onChange={subjectChange} value={subject}/>
                      </td>
                 </tr>
             </Stack>
@@ -126,7 +127,7 @@ export default function fix_bbs(){
                 </Stack> 
                 {
                     (function() {
-                        if (bname === '중고거래게시판') return (
+                        if (bname === 'RESELL') return (
                     <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
                          <tr>
                             <th style={{padding:'20px', textAlign:'left'}}>

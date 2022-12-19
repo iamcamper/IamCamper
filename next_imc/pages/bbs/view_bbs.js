@@ -54,7 +54,11 @@ export default function view_bbs(){
     Axios.get(
       API_Comm
     ).then((res) => {
-        setComm(res.data.clist);
+        if(res.data.clist === null)
+          setComm([{nickname:'', content:'댓글이 없습니다'}])
+          else(
+          setComm(res.data.clist)
+          )
     })
   }
 
@@ -153,39 +157,6 @@ export default function view_bbs(){
           </Grid> </Grid> 
        
       </Paper>))} 
-       
-      <Paper
-        sx={{
-          my: 4,
-          mx: 'auto',
-          p: 2,
-        }}
-      >
-        <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-            댓글 작성자
-          </Grid>
-          <Grid item xs>
-            <Typography noWrap>댓글</Typography>
-          </Grid>
-        </Grid>
-      </Paper>
-      <Paper
-        sx={{
-          my: 4,
-          mx: 'auto',
-          p: 2,
-        }}
-      >
-      <Grid container wrap="nowrap" spacing={2}>
-          <Grid item>
-          댓글 작성자
-          </Grid>
-          <Grid item xs>
-            <Typography>댓글</Typography>
-          </Grid>
-        </Grid>
-      </Paper>
     </Box>
       <div> 
          <Main_Bottom/>

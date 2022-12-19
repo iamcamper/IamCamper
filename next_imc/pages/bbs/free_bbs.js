@@ -4,7 +4,7 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main_Bottom from "../../com/Main_Bottom";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
-import { Button, Fab, Grid, Pagination } from "@mui/material";
+import { Button, Fab, Grid, Pagination, Stack } from "@mui/material";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -28,9 +28,6 @@ export default function free_bbs(){
     const API_URL = "/bbs/list";
     const router = useRouter();
   
-  
-
-
   function getList(){
     Axios.post(
         API_URL, null,
@@ -47,11 +44,13 @@ export default function free_bbs(){
         pathname:'/bbs/edit_bbs',
     });
 }
-
+const pageChange = (event, value) => {
+  setCpage(value);
+};
 
   useEffect(() => { //최초 한번만 호출하기 위해 사용함!
     getList()
-  },[]);
+  },[cPage]);
   
     return(
          <div className={styles.container}>
@@ -115,7 +114,11 @@ export default function free_bbs(){
               <img src={'/images/search_icon.png'} />
             </button>
           </form>
-          <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary' />
+          <Stack spacing={2}>
+          <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary' sx={{marginTop:'30px'}}
+                            page={cPage}
+                            onChange={pageChange}/>
+          </Stack>
         </div>
         <div>
           <Main_Bottom />

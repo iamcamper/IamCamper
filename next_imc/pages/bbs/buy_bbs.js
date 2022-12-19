@@ -7,7 +7,7 @@ import Main1 from '../../com/Main1';
 import Main1_Menu from '../../com/Main1_Menu';
 import Main_Bottom from '../../com/Main_Bottom';
 import Main_top from '../../com/Main_top';
-import { Box, Button, CardActions, CardContent, CardHeader, CardMedia, Grid, Typography } from '@mui/material';
+import { Box, Button, CardActions, CardContent, CardHeader, CardMedia, Grid, Link, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import  Axios  from 'axios';
 import { useRouter } from 'next/router';
@@ -21,6 +21,7 @@ export default function Home() {
     const router = useRouter();
 
     const API_URL = "/bbs/list";
+    console.log(list);
 
     function getList(){
         Axios.post(
@@ -34,8 +35,15 @@ export default function Home() {
       }
 
       useEffect(() => {
-        getList()
+        getList();
       },[]);
+
+      function linkview(){
+        router.push({
+                        pathname: '/bbs/view_bbs',
+                        query: { idx: list.b_idx },
+                       })
+      }
 
   return (
     <>  <div className={styles.container}>
@@ -56,12 +64,17 @@ export default function Home() {
                 <CardHeader
                     title={bbs.subject}
                     subheader={bbs.write_date} />
+                <CardActions onClick={() =>  router.push({
+                        pathname: '/bbs/view_bbs',
+                        query: { idx: bbs.b_idx },
+                       })
+                       }>
                 <CardMedia
                     component="img"
                     width="280"
                     height="290"
-                    image="/images/adminlogin.jpeg"
-                    alt="이미지" />
+                    image={bbs.thum_img}
+                    alt="이미지" /></CardActions>
                 <CardContent>
                     <Typography variant="h3" color="text.secondary">
                         {bbs.price}
