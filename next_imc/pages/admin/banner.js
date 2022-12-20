@@ -16,7 +16,7 @@ export default function banner(){
     const LIST_URL = "/admin/banner/list";
     const [list, setList] = useState([]);
     const [cPage, setCpage] = useState('');
-    const [totalPage, setTotalPage] = useState();
+    const [totalPage, setTotalPage] = useState(1);
 
     const pageChange = (event, value) => {
         setCPage(value);
@@ -67,7 +67,7 @@ export default function banner(){
                         </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list.map((data, index)=>
+                            {list != null && list.map((data, index)=>
                                 <TableRow key={index}>
                                     <TableCell>{data.b_idx}</TableCell>
                                     {(data.bname === 'BANNERMAIN') && (

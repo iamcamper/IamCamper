@@ -18,7 +18,7 @@ export default function bbs(){
     const API_URL = "/admin/bbs/search";
     const DEL_URL = "/admin/bbs/del";
     const [select, setSelect] = useState();
-    const [searchValue, setSearchValue] = useState();
+    const [searchValue, setSearchValue] = useState('');
     const [list, setList] = useState([]);
     const [cPage, setCpage] = useState('');
     const [totalPage, setTotalPage] = useState('');
@@ -55,14 +55,22 @@ export default function bbs(){
 
     }
 
-    function del(b_idx){
+    function del(idx){
+
+            if(confirm("정말로 삭제하시겠습니까?")){
         
             Axios.post(
                 DEL_URL, null,
-                {params:{b_idx: b_idx}},
+                {params: {b_idx: idx}} 
             ).then(json=>{
-                
+                if(json.data.chk == 1){
+                    alert("삭제가 완료되었습니다.");
+                    searchList();
+                }
             });
+        } else {
+            return;
+        }
 
     }
 
@@ -88,7 +96,7 @@ export default function bbs(){
                             </MenuItem>
                             <MenuItem value="bname">게시판</MenuItem>
                             <MenuItem value="nickname">작성자</MenuItem>
-                            <MenuItem value="write_date">글작성일</MenuItem>
+                            <MenuItem value="wdate">글작성일</MenuItem>
                             <MenuItem value="subject">글제목</MenuItem>
                             <MenuItem value="content">글내용</MenuItem>
                         </Select>
@@ -108,14 +116,14 @@ export default function bbs(){
                             <MenuItem value="CAMREVIEW">캠핑후기</MenuItem>
                             <MenuItem value="TSREVIEW">관광지후기</MenuItem>
                             <MenuItem value="RESTREVIEW">맛집후기</MenuItem>
-                            <MenuItem value="RESTREVIEW">중고거래</MenuItem>
-                            <MenuItem value="RESTREVIEW">자유게시판</MenuItem>
+                            <MenuItem value="RESELL">중고거래</MenuItem>
+                            <MenuItem value="FREE">자유게시판</MenuItem>
                         </Select>
                     </FormControl>
 
                     )}
 
-                    {select==='write_date' && (
+                    {select==='wdate' && (
 
                     <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
                          <TextField
@@ -159,7 +167,7 @@ export default function bbs(){
                         </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list.length > 0 && (list.map((data, index)=>
+                            {(list != null && list.length > 0) && (list.map((data, index)=>
                                 <TableRow key={index}>
                                     <TableCell>{data.b_idx}</TableCell>
                                     <TableCell>{data.bname}</TableCell>
@@ -174,11 +182,13 @@ export default function bbs(){
                                     <TableCell>{data.nickname}</TableCell>
                                     <TableCell>{data.write_date}</TableCell>
                                     <TableCell>
-                                        <Button size='small' variant='contained' color='error' onClick={del(data.b_idx)}>삭제</Button>
+                                        <Button size='small' variant='contained' color='error' onClick={()=>{
+                                            del(data.b_idx);
+                                    }}>삭제</Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
-                            {(list.length <= 0 || list == null) && (
+                            {(list == undefined || list.length < 0) && (
                                 <TableRow key={1}>
                                     <TableCell rowSpan={5}>검색된 내용이 없습니다.</TableCell>
                                 </TableRow>

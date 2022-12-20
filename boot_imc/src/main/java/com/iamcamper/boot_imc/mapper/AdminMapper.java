@@ -76,4 +76,10 @@ public interface AdminMapper {
 
     //게시글이 가장 많이 올라온 게시판 상위 1개
     BbsTotalCntVO bestBbs();
+
+    //어드민 회원 승인
+    void approve(String m_idx);
+
+    //어드민 회원 승인 여부
+    MemVO approveChk(String m_idx);
 }

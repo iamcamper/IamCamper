@@ -15,6 +15,8 @@ export default function approve(){
     const [cPage, setCPage] = useState('');
     const [totalPage, setTotalPage] = useState();
 
+    const APPROVE_URL = "/admin/reg/approve";
+
     const pageChange = (event, value) => {
         setCPage(value);
     };
@@ -26,6 +28,28 @@ export default function approve(){
         ).then(json =>{
             setList(json.data.list);
         })
+    }
+
+    function approve(m_idx){
+
+        if(confirm("해당 회원의 관리자 페이지 가입을 승인하시겠습니까?")){
+
+        Axios.post(
+            APPROVE_URL, null,
+            {params: {m_idx: m_idx}},
+        ).then(json=>{
+            if(json.data.chk==0){
+                alert("승인 완료되었습니다!");
+            }else{
+                alert("승인 실패");
+                return;
+            }
+        })
+
+        } else {
+            return;
+        }
+
     }
 
     useEffect(()=>{
@@ -53,7 +77,7 @@ export default function approve(){
                         </TableRow>
                         </TableHead>
                         <TableBody>
-                            {list.map((data, index)=> 
+                            {list != null && list.map((data, index)=> 
                                 <TableRow key={index}>
                                     <TableCell>{data.m_idx}</TableCell>
                                     <TableCell>{data.id}</TableCell>
@@ -61,7 +85,9 @@ export default function approve(){
                                     <TableCell>{data.email}</TableCell>
                                     <TableCell>{data.reg_date}</TableCell>
                                     <TableCell>
-                                        <Button size='small' variant='contained' color='error'>승인</Button>
+                                        <Button size='small' variant='contained' color='error' onClick={()=>{
+                                            approve(data.m_idx);
+                                        }}>승인</Button>
                                     </TableCell>
                                 </TableRow>
                             )}

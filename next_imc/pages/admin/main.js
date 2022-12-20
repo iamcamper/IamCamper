@@ -42,7 +42,6 @@ export default function main(){
             setTodayReg(json.data.todayReg);
             setBbsTotalList(json.data.bbsTotalCntList);
             setBestBbs(json.data.bestBbs.bnameko);
-            console.log(json.data.bestBbs);
         });
 
 
@@ -63,12 +62,12 @@ export default function main(){
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
                             <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
-                                <Dash_Chart1/>
+                                <Dash_Chart1 regCount={todayReg}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={4}>
                             <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
-                                <Dash_Chart2 regCount={todayReg} totalReg={totalReg}/>
+                                <Dash_Chart2 totalReg={totalReg}/>
                             </Paper>
                         </Grid>
                         <Grid item xs={4}>
