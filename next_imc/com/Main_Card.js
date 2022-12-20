@@ -6,7 +6,6 @@ import Axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export default function Main_Card(){
-
     
     const API_URL2 = "http://localhost:8080/bbs/blist";
     
@@ -46,7 +45,8 @@ export default function Main_Card(){
                 setPlist(
                     [{
                         subject:'데이터가 없습니다',
-                        bname:'null'
+                        bname:'null',
+                        image:''
                     }]
                 );    
             }
