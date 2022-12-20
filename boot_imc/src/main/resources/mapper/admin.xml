@@ -119,7 +119,7 @@
         <if test = "category.equals('bname')">
           AND bname = #{value}
         </if>
-        <if test = "category.equals('write_date')">
+        <if test = "category.equals('wdate')">
           AND write_date = #{value}
           AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
         </if>
@@ -203,6 +203,18 @@
     ON bd.bname = b.bname
     ORDER BY b.cnt DESC
     LIMIT 1;
+  </select>
+
+  <!-- 어드민 회원 승인 -->
+  <update id="approve" parameterType="String">
+    UPDATE member SET activate = 0
+    WHERE m_idx = #{m_idx}
+  </update>
+
+  <!-- 어드민 회원 승인 여부-->
+  <select id="approveChk" parameterType="String" resultType="com.iamcamper.boot_imc.VO.MemVO">
+    SELECT * FROM member
+    WHERE grade = 9 AND activate = 0 AND m_idx = #{m_idx}
   </select>
 
 </mapper>

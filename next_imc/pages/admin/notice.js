@@ -12,7 +12,7 @@ export default function notice(){
     const router = useRouter();
     const LIST_URL = "/admin/notice/list";
     const [list, setList] = useState([]);
-    const [cPage, setCPage] = useState('');
+    const [cPage, setCPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
 
     const pageChange = (event, value) => {
@@ -62,14 +62,14 @@ export default function notice(){
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
-                        <TableRow>
-                            <TableCell>글 번호</TableCell>
-                            <TableCell>제목</TableCell>
-                            <TableCell align="right">글쓴이</TableCell>
-                            <TableCell align="right">날짜</TableCell>
-                            <TableCell align="right">조회수</TableCell>
-                            <TableCell align='center'>삭제</TableCell>
-                        </TableRow>
+                            <TableRow>
+                                <TableCell>글 번호</TableCell>
+                                <TableCell>제목</TableCell>
+                                <TableCell align="right">글쓴이</TableCell>
+                                <TableCell align="right">날짜</TableCell>
+                                <TableCell align="right">조회수</TableCell>
+                                <TableCell align='center'>삭제</TableCell>
+                            </TableRow>
                         </TableHead>
                         <TableBody>
                             {list.map((data, index)=> 

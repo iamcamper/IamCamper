@@ -172,4 +172,18 @@ public class AdminService {
         return mapper.bestBbs();
 
     }
+
+    //어드민 회원 승인
+    public void approve(String m_idx){
+
+        mapper.approve(m_idx);
+
+    }
+
+    //어드민 회원 승인 여부
+    public MemVO approveChk(String m_idx){
+
+        return mapper.approveChk(m_idx);
+
+    }
 }

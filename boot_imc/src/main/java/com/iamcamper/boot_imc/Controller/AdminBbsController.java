@@ -200,10 +200,6 @@ public class AdminBbsController {
 
         BbsVO bvo = a_service.views(b_idx);
 
-        String str = ThumImgUtil.thumImgUtil(bvo.getContent());
-
-        System.out.println(str);
-
         readCount(req, b_idx, res);
 
         map.put("data", bvo);
@@ -276,7 +272,6 @@ public class AdminBbsController {
 
         if (oldCookie != null) {
             if(!oldCookie.getValue().contains("["+b_idx+"]")){
-                System.out.println("132123123123123123123");
                 a_service.viewCount(b_idx);
                 oldCookie.setValue(oldCookie.getValue()+"_["+b_idx+"]");
                 oldCookie.setPath("/");
@@ -346,6 +341,8 @@ public class AdminBbsController {
         Map<String, Object> map = new HashMap<>();
 
         Paging page = new Paging();
+
+        System.out.println(value);
 
         int totalCount = a_service.bbsCount(category, value);
 
@@ -435,5 +432,27 @@ public class AdminBbsController {
         return map;
 
     }
+
+    @RequestMapping("/reg/approve")
+    public Map<String, Object> regApprove(String m_idx){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        a_service.approve(m_idx);
+
+        MemVO mvo = a_service.approveChk(m_idx);
+
+        int chk = 0;
+
+        if(mvo == null){
+            chk = 1;
+        }
+
+        map.put("chk", chk);
+
+        return map;
+
+    }
+
 
 }
