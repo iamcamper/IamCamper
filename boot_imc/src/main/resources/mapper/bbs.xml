@@ -12,11 +12,11 @@
 	<select id="list" resultMap="map1" 
 		parameterType="Map">
 		SELECT a.* FROM(
-			SELECT @RN:=@RN+1 AS rownnum, b.* 
+			SELECT @RN:=@RN+1 AS rownnum, b.*
 			FROM (SELECT * FROM bbs
 					WHERE status = 0 ORDER BY b_idx DESC) b, (SELECT @RN:=0) r
 		) a
-		WHERE (rownnum BETWEEN #{begin} AND #{end}) AND bname = #{bname} AND status=0
+		WHERE (rownnum BETWEEN #{begin} AND #{end}) AND bname = #{bname}
 	</select>
     <insert id="add" parameterType="com.iamcamper.boot_imc.VO.BbsVO">
 		INSERT INTO bbs(subject, nickname, content, file_name, ori_name, thum_img, write_date, ip, bname, price)
@@ -68,5 +68,5 @@
     UPDATE bbs
     SET hit = hit + 1
     WHERE b_idx = #{b_idx}
-</update>
+	</update>
 </mapper>

@@ -6,6 +6,7 @@ export default function viewer({list}){
 	return (
 	<Viewer
 		initialValue = { list }
+		height="auto"
       	/>
 	);
 }

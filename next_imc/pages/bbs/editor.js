@@ -8,7 +8,6 @@ export default function editor(props){
 
     const ref = props.editorRef;
     const con = props.content;
-    const [thum_img, setThumimg] = useState();
    
     const addImage = async(blob, callback) => {
         console.log(blob);
@@ -21,7 +20,6 @@ export default function editor(props){
             },
         }).then(json => {
             callback("http://localhost:3000/upload_img/" + json.data.fname);
-            setThumimg("/upload_img/" + json.data.fname);
         })
         } catch {
 

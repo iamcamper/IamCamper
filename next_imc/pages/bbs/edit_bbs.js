@@ -118,7 +118,7 @@ export default function edit_bbs(){
                 </Stack> 
                 {
                     (function() {
-                        if (bname === 'RESELL') return (
+                        if (bname === 'RESELL') return (    
                     <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
                          <tr>
                             <th style={{padding:'20px', textAlign:'left'}}>

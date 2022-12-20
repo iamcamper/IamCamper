@@ -29,8 +29,12 @@ export default function Home() {
             {params:{bname:'RESELL', cPage:cPage}}
           ).then((json) =>{
             setTotalPage(json.data.totalPage);
-            console.log(json.data.list);
-            setList(json.data.list);
+            if(json.data.list == null){
+                alert("데이터가 없습니다.");
+                setList([]);
+              }else{
+              setList(json.data.list);
+              }
           });
       }
 
@@ -53,13 +57,13 @@ export default function Home() {
         </div>
             <Grid container my={8} style={{textAlign:'center', margin:'auto', width:'1600px'}}>
                 <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={()=>router.push("/bbs/free_bbs")} > 자유 게시판 </Button></Grid>
-                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} >후기 게시판</Button></Grid>
+                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={() => router.push("/bbs/campreview")}>후기 게시판</Button></Grid>
                 <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} > 맛집 게시판</Button></Grid>
                 <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={()=>router.push("/bbs/buy_bbs")}>중고 거래 게시판</Button></Grid>
           </Grid>
              <Box sx={{ flexGrow: 1, width: '1600px', margin:'auto', padding:'30px' }}>
             <Grid container spacing={1}>
-            {list.map((bbs, b_idx) => (
+            {list != null && list.map((bbs, b_idx) => (
         <Grid item xs={4} key ={bbs.b_idx}>
                 <CardHeader
                     title={bbs.subject}
@@ -71,13 +75,12 @@ export default function Home() {
                        }>
                 <CardMedia
                     component="img"
-                    width="280"
-                    height="290"
                     image={bbs.thum_img}
-                    alt="이미지" /></CardActions>
+                    sx={{width: 280, height: 290, objectFit: 'scale-down'}}
+                     /></CardActions>
                 <CardContent>
                     <Typography variant="h3" color="text.secondary">
-                        {bbs.price}
+                        {bbs.price} 원
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>

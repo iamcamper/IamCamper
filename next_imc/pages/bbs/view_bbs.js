@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import  ViewList  from "../../com/viewList";
 import Link from "next/Link";
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SendIcon from '@mui/icons-material/Send';
 import { getCookie } from "cookies-next";
 
@@ -47,7 +50,12 @@ export default function view_bbs(){
     Axios.get(
       API_VIEW
     ).then((res) => {
+      if(res.data == null){
+        alert("데이터가 없습니다.");
+        setList([]);
+      }else{
         setList(res.data);
+      }
     })
   }
   function getComm(){
@@ -78,6 +86,19 @@ export default function view_bbs(){
       router.push("/bbs/view_bbs?b_idx="+b_idx)
     );
 
+  }
+  const [clikehit, setClikehit] = useState(0);
+
+  function clikesubmit(){
+    if(clikehit == 0){
+      setClikehit(1);
+    }else if(clikehit == 1){
+      setClikehit(0);
+    }
+  }
+  let likecolor = {
+    0 : <FavoriteBorderIcon/>,
+    1 : <FavoriteIcon color="error"/>
   }
 
   useEffect(() => {
@@ -141,7 +162,7 @@ export default function view_bbs(){
         </Grid>
       </Paper>
      <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, width:'1200px', marginLeft:'450px'}}>
-        {comm.map((comm) => (<Paper
+        {comm != null && comm.map((comm) => (<Paper
         sx={{
           my: 4,
           mx: 'auto',
@@ -154,7 +175,13 @@ export default function view_bbs(){
           </Grid>
           <Grid item xs zeroMinWidth>
             <Typography noWrap>{comm.content}</Typography>
-          </Grid> </Grid> 
+          </Grid> 
+          <Grid>
+          <IconButton aria-label="FavoriteBorder" onClick={clikesubmit}>
+                          {likecolor[clikehit]}
+                    </IconButton>
+          </Grid>
+      </Grid> 
        
       </Paper>))} 
     </Box>

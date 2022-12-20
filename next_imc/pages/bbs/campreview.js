@@ -20,6 +20,7 @@ import Axios from "axios";
 import { useState, useEffect } from "react";
 import Banner from "./banner";
 import { getCookie, setCookie } from "cookies-next";
+import { textAlign } from "@mui/system";
 
 
 export default function free_bbs(){ 
@@ -35,16 +36,15 @@ export default function free_bbs(){
   function getList(){
     Axios.post(
         API_URL, null,
-        {params:{bname:'FREE', cPage:cPage}}
+        {params:{bname:'TSREVIEW', cPage:cPage}}
       ).then((json) =>{
+        setTotalPage(json.data.totalPage);
         if(json.data.list == null){
           alert("데이터가 없습니다.");
           setList([]);
         }else{
         setList(json.data.list);
         }
-        setTotalPage(json.data.totalPage);
-        
       });
   }
 
@@ -79,32 +79,34 @@ const pageChange = (event, value) => {
             </Grid>
 
             <TableContainer component={Paper}>
-              <Table aria-label="simple table">
+              <Table aria-label="simple table" >
                 <TableHead>
                   <TableRow>
-                    <TableCell>글번호</TableCell>
-                    <TableCell>글제목</TableCell>
-                    <TableCell>작성자</TableCell>
-                    <TableCell>작성일</TableCell>
-                    <TableCell>추천</TableCell>
-                    <TableCell>조회</TableCell>
+                    <TableCell sx={{width: 150}} align="center">글번호</TableCell>
+                    <TableCell sx={{width: 250}} align="center">미리보기</TableCell>
+                    <TableCell sx={{width: 500}} align="center">글제목</TableCell>
+                    <TableCell sx={{width: 250}} align="center">작성자</TableCell>
+                    <TableCell sx={{width: 250}} align="center">작성일</TableCell>
+                    <TableCell sx={{width: 100}} align="center">추천</TableCell>
+                    <TableCell sx={{width: 100}} align="center">조회</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody sx={{ width: '1600px', height: 'auto' }}>
+                <TableBody sx={{ width: '1600px', height: 'auto', textAlign: 'center'}}>
                   {list != null && list.map((bbs, index) => (
                     <TableRow key={index}>
-                      <TableCell>{bbs.b_idx}</TableCell>
-                      <TableCell>
+                      <TableCell align="center">{bbs.b_idx}</TableCell>
+                      <TableCell align="center"><img src={bbs.thum_img} style={{ width: 200, height: 100, objectFit: 'scale-down'}}></img></TableCell>
+                      <TableCell align="center">
                       <Link
                        href={{
                         pathname: '/bbs/view_bbs',
                         query: { idx: bbs.b_idx },
                        }}
                       >{bbs.subject}</Link></TableCell>
-                      <TableCell>{bbs.nickname}</TableCell>
-                      <TableCell>{bbs.write_date}</TableCell>
-                      <TableCell>{bbs.like}</TableCell>
-                      <TableCell>{bbs.hit}</TableCell>
+                      <TableCell align="center">{bbs.nickname}</TableCell>
+                      <TableCell align="center">{bbs.write_date}</TableCell>
+                      <TableCell align="center">{bbs.like}</TableCell>
+                      <TableCell align="center">{bbs.hit}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>  
