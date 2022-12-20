@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.iamcamper.boot_imc.VO.BbsVO;
+import com.iamcamper.boot_imc.VO.MemVO;
 import com.iamcamper.boot_imc.VO.RegCntVO;
 import com.iamcamper.boot_imc.service.AdminService;
 import com.iamcamper.boot_imc.util.FileRenameUtil;
@@ -394,6 +395,28 @@ public class AdminBbsController {
         int chk = a_service.adminRegChk(id);
 
         map.put("chk", chk);
+
+        return map;
+
+    }
+
+    /*
+     * 어드민 - 회원 가입자 중 승인 전 리스트
+     */
+    @RequestMapping("/reg/list")
+    public Map<String, Object> adminRegList(){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        List<MemVO> list = a_service.adminRegList();
+        MemVO [] m_list = null;
+
+        if(list.size() > 0){
+            m_list = new MemVO[list.size()];
+            list.toArray(m_list);
+        }
+
+        map.put("list", m_list);
 
         return map;
 

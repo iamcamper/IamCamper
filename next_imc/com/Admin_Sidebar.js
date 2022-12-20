@@ -52,7 +52,7 @@ export default function Admin_Sidebar(){
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                    <ListItemButton component="a" href="/admin/member">
+                    <ListItemButton component="a" href="/admin/approve">
                         <ListItemIcon>
                             <Person/>
                         </ListItemIcon>

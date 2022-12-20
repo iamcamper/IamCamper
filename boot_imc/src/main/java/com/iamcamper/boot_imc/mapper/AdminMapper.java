@@ -70,4 +70,7 @@ public interface AdminMapper {
 
     //어드민 회원 가입 여부 검사
     int adminRegChk(String id);
+
+    //어드민 회원 가입 리스트
+    List<MemVO> adminRegList();
 }

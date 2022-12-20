@@ -158,4 +158,11 @@ public class AdminService {
         return mapper.adminRegChk(id);
 
     }
+
+    //어드민 회원 가입 리스트
+    public List<MemVO> adminRegList(){
+
+        return mapper.adminRegList();
+
+    }
 }
