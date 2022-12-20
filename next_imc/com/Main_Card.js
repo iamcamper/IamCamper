@@ -18,30 +18,39 @@ export default function Main_Card(){
         Axios.get(
             API_URL2
         ).then((json)=>{
+            console.log(json);
+            setPlist(json.data.plist);
             if(json.data.blist != null){
                 setBlist(json.data.blist);
-                setUlist(json.data.ulist);
-                setPlist(json.data.plist);
-            }else if(json.data.blist == null){
+            }else{
                 setBlist(
                     [{
                         subject:'데이터가 없습니다',
                         bname:'null'
                     }]
-                );
+                );    
+            }
+            if(json.data.ulist != null){
+                setUlist(json.data.ulist);
+            }else{
                 setUlist(
                     [{
                         subject:'데이터가 없습니다',
                         bname:'null'
                     }]
-                );
+                );    
+            }
+            if(json.data.plist != null){
+                setPlist(json.data.plist);
+            }else{
                 setPlist(
                     [{
                         subject:'데이터가 없습니다',
                         bname:'null'
                     }]
-                );
+                );    
             }
+           
            
         });
     }
@@ -68,8 +77,7 @@ export default function Main_Card(){
                                     {plist.map((item,index) => (
                                          <Grid container marginTop='10px' borderBottom="1px solid #d3d3d3" paddingBottom='10px'key={index}>
                                              <Grid item xs={4}>
-                                                {item.image.length>0 && (
-
+                                                {item.image.length > 0 && (
                                                  <CardMedia 
                                                      component='img'
                                                      height='130px'
