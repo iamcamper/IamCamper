@@ -83,9 +83,14 @@
   
 <!-- 대시보드 전체 게시판별 토탈 게시글 수 -->
   <select id="bbsTotalCnt" resultType="com.iamcamper.boot_imc.VO.BbsTotalCntVO">
-    SELECT bname, COUNT(*) AS cnt FROM bbs 
-    WHERE status = 0 AND write_date = DATE_FORMAT(NOW(), '%Y-%m-%d') 
-    GROUP BY bname
+    SELECT bd.bname, bd.bnameko, IFNULL(b.cnt, 0) AS cnt
+    FROM bbsdata bd LEFT OUTER JOIN 
+    (SELECT bname, COUNT(*) AS cnt FROM bbs
+    WHERE status = 0 AND write_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
+    AND bname IN ('RESELL', 'CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'FREE')
+    GROUP BY bname) b
+    ON bd.bname = b.bname
+    ORDER BY bd.bbs_idx;
   </select>
 
 <!-- 대시보드 회원 가입 인원 카운트 수-->
@@ -186,4 +191,18 @@
     SELECT * FROM member
     WHERE grade = 9 AND activate = 1
   </select>
+
+  <!-- 어드민 대시보드 오늘 가장 글이 많이 작성된 게시판 -->
+  <select id="bestBbs" resultType="com.iamcamper.boot_imc.VO.BbsTotalCntVO">
+    SELECT bd.bname, bd.bnameko, IFNULL(b.cnt, 0) AS cnt
+    FROM bbsdata bd LEFT JOIN 
+    (SELECT bname, COUNT(*) AS cnt FROM bbs
+    WHERE status = 0 AND write_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
+    AND bname IN ('RESELL', 'CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'FREE')
+    GROUP BY bname) b
+    ON bd.bname = b.bname
+    ORDER BY b.cnt DESC
+    LIMIT 1;
+  </select>
+
 </mapper>

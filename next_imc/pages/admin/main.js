@@ -27,8 +27,10 @@ export default function main(){
     const API_URL = "/admin/main/data";
 
     const [todayReg, setTodayReg] = useState(''); //오늘 가입한 회원 수
-    const [totalReg, setTotalReg] = useState('');
+    const [totalReg, setTotalReg] = useState(''); //전체 회원 수
     const [regData, setRegData] = useState([]); //최근 5일 가입한 회원 수 배열
+    const [bbsTotalList, setBbsTotalList] = useState([]); //게시판별 오늘 토탈 글 갯수
+    const [bestBbs, setBestBbs] = useState();
 
     function getData(){
 
@@ -38,6 +40,9 @@ export default function main(){
             setRegData(json.data.regList);
             setTotalReg(json.data.totalReg);
             setTodayReg(json.data.todayReg);
+            setBbsTotalList(json.data.bbsTotalCntList);
+            setBestBbs(json.data.bestBbs.bnameko);
+            console.log(json.data.bestBbs);
         });
 
 
@@ -68,7 +73,7 @@ export default function main(){
                         </Grid>
                         <Grid item xs={4}>
                             <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
-                                <Dash_Chart3/>
+                                <Dash_Chart3 bestBbs={bestBbs}/>
                             </Paper>
                         </Grid>
                     </Grid>
@@ -80,19 +85,7 @@ export default function main(){
                         </Grid>
                         <Grid item xs={6}>
                             <Paper elevation={3} sx={{textAlign: 'center', height: '320px'}}>
-                                <Dash_Chart4/>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '200px'}}>
-                                <Dash_Chart3/>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '200px'}}>
-                                <Dash_Chart3/>
+                                <Dash_Chart4 bbsTotalList={bbsTotalList}/>
                             </Paper>
                         </Grid>
                     </Grid>

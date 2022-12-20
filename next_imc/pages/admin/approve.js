@@ -44,7 +44,7 @@ export default function approve(){
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                         <TableRow>
-                            <TableCell>번호</TableCell>
+                            <TableCell>회원 번호</TableCell>
                             <TableCell>아이디</TableCell>
                             <TableCell>닉네임</TableCell>
                             <TableCell>이메일</TableCell>
@@ -60,7 +60,7 @@ export default function approve(){
                                     <TableCell>{data.nickname}</TableCell>
                                     <TableCell>{data.email}</TableCell>
                                     <TableCell>{data.reg_date}</TableCell>
-                                    <TableCell align='center'>
+                                    <TableCell>
                                         <Button size='small' variant='contained' color='error'>승인</Button>
                                     </TableCell>
                                 </TableRow>

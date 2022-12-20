@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.iamcamper.boot_imc.VO.BbsTotalCntVO;
 import com.iamcamper.boot_imc.VO.BbsVO;
 import com.iamcamper.boot_imc.VO.MemVO;
 import com.iamcamper.boot_imc.VO.RegCntVO;
@@ -306,6 +307,17 @@ public class AdminBbsController {
         //전체 가입한 회원 수 가져오기
         int totalReg = a_service.memberCnt();
 
+        //오늘 게시판 글 수 가져오기
+        List<BbsTotalCntVO> todayBbsCountList = a_service.bbsTotalCnt();
+        BbsTotalCntVO[] b_total_list = null;
+        if(todayBbsCountList.size() > 0){
+            b_total_list = new BbsTotalCntVO[todayBbsCountList.size()];
+            todayBbsCountList.toArray(b_total_list);
+        }
+
+        //베스트 게시판 가져오기
+        BbsTotalCntVO bestBbs = a_service.bestBbs();
+
         //최근 5일 가입자 수 가져오기
         List<RegCntVO> regList = a_service.regCnt();
         RegCntVO [] r_list = null;
@@ -314,6 +326,8 @@ public class AdminBbsController {
             regList.toArray(r_list);
         }
 
+        map.put("bestBbs", bestBbs);
+        map.put("bbsTotalCntList", b_total_list);
         map.put("regList", r_list);
         map.put("todayReg", todayReg);
         map.put("totalReg", totalReg);

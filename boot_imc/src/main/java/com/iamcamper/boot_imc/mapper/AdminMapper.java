@@ -73,4 +73,7 @@ public interface AdminMapper {
 
     //어드민 회원 가입 리스트
     List<MemVO> adminRegList();
+
+    //게시글이 가장 많이 올라온 게시판 상위 1개
+    BbsTotalCntVO bestBbs();
 }

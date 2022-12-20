@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemVO {
-    private String m_idx, nickname, id, pw, email, name, birth, phone, snsAuth, snsId, snsNickname, snsByear;
+    private String m_idx, nickname, id, pw, email, name, birth, phone, snsAuth, snsId, snsNickname, snsByear, reg_date;
     private Integer manner_point, activate, grade;
 }
