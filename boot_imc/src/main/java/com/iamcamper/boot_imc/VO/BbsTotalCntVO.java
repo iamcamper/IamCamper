@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BbsTotalCntVO {
 
-    private String bname, cnt;
+    private String bname, cnt, bnameko;
     
 }

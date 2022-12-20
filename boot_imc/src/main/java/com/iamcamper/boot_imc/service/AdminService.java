@@ -165,4 +165,11 @@ public class AdminService {
         return mapper.adminRegList();
 
     }
+
+    //게시글이 가장 많이 작성된 상위 1개의 게시판
+    public BbsTotalCntVO bestBbs(){
+
+        return mapper.bestBbs();
+
+    }
 }
