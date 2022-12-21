@@ -1,4 +1,5 @@
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
+
 
 
 
@@ -6,13 +7,12 @@ import { Typography } from "@mui/material";
 export default function Dash_Chart1({regCount}){
 
     return(
-        <div>
-            <h3>오늘 가입자</h3>
+        <Box marginTop={2} paddingTop={4}>
+            <Typography variant="h5" gutterBottom>오늘 가입한 회원</Typography>
             <Typography component="p" variant="h4">
                 {regCount} 명
             </Typography>
-        </div>
+        </Box>
     );
-
 
 }

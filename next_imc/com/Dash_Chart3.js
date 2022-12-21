@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 
 
@@ -7,12 +7,12 @@ export default function Dash_Chart3({bestBbs}){
 
 
     return(
-        <div>
-            <h5>오늘의 인기 게시판</h5>
-            <div>
+        <Box marginTop={2} paddingTop={4}>
+            <Typography variant="h5" gutterBottom>오늘의 인기 게시판</Typography>
+            <Typography component="p" variant="h4">
                {bestBbs}
-            </div>
-        </div>
+            </Typography>
+        </Box>
     );
 
 

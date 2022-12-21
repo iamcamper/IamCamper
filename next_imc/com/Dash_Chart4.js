@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Bar, Line } from "react-chartjs-2";
 import { Chart } from "chart.js/auto";
 
@@ -38,20 +38,33 @@ const data =  {
 					'rgba(75, 192, 192, 0.2)',
                     'rgba(153, 102, 255, 0.2)',
                 ],
-                borderWidth: 2
+                borderWidth: 2,
               },
               
     ],
 };
 
+const options = {
+    responsive: false,
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  };
+
 
     return(
-        <div>
-            <h5>인기 게시판 내역</h5>
-            <div>
-                <Bar data={data}/>
-            </div>
-        </div>
+        <Box marginTop={2} paddingTop={1}>
+            <Typography variant="h5" gutterBottom>오늘 게시판별 게시글 통계</Typography>
+            <Box>
+                <Bar data={data} options={options} style={{position: 'relative', height:'260px', width:'450px', margin:'auto'}}/>
+            </Box>
+        </Box>
     );
 
 

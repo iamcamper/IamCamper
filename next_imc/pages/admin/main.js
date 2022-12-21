@@ -1,5 +1,5 @@
 import Admin_Sidebar from '../../com/Admin_Sidebar';
-import { Box, Container, Grid, Stack } from "@mui/material";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import Admin_Navbar from '../../com/Admin_Navbar';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import Dash_Chart4 from '../../com/Dash_Chart4';
 import Dash_Chart5 from '../../com/Dash_Chart5';
-import { ConstructionOutlined } from '@mui/icons-material';
+import { ConstructionOutlined, Home } from '@mui/icons-material';
 import { hasCookie } from 'cookies-next';
 
 
@@ -58,7 +58,9 @@ export default function main(){
             <Stack direction="row" spacing={2} justifyContent="space-between">  
                 <Admin_Sidebar/>
                 <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
-                    <h3>대시보드</h3>
+                    <Typography variant="h5" gutterBottom>
+                       [ 대시보드 ]
+                    </Typography>
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
                             <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
