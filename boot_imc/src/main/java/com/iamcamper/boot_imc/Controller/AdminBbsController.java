@@ -43,12 +43,12 @@ public class AdminBbsController {
 
     String img_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_img";
     String file_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_file";
-    
+
     /*
      * 공지사항 리스트 불러오기
      */
     @RequestMapping("/notice/list")
-    public Map<String, Object> noticeList(@RequestParam("bname") String bname, @RequestParam("cPage") String cPage){
+    public Map<String, Object> noticeList(@RequestParam("bname") String bname, @RequestParam("cPage") String cPage) {
 
         Paging page = new Paging();
 
@@ -58,7 +58,7 @@ public class AdminBbsController {
 
         page.setTotalCount(totalCount);
 
-        if(cPage.length() > 0) {
+        if (cPage.length() > 0) {
             page.setNowPage(Integer.parseInt(cPage));
         } else {
             page.setNowPage(1);
@@ -66,37 +66,36 @@ public class AdminBbsController {
 
         String begin = String.valueOf(page.getBegin());
         String end = String.valueOf(page.getEnd());
-        
+
         List<BbsVO> list = a_service.list(bname, begin, end);
 
-        BbsVO [] b_list = null;
-        if(list != null && list.size()>0){
+        BbsVO[] b_list = null;
+        if (list != null && list.size() > 0) {
             b_list = new BbsVO[list.size()];
             list.toArray(b_list);
         }
 
         map.put("list", b_list);
         map.put("totalPage", page.getTotalPage());
- 
-        return map;
-        
-    }
 
+        return map;
+
+    }
 
     /*
      * 비동기식 통신으로 에디터에 이미지 업로드하기
      */
     @RequestMapping("/upload_img")
-    public Map<String, Object> uploadImg(@RequestPart(value="file", required = true) MultipartFile file){
+    public Map<String, Object> uploadImg(@RequestPart(value = "file", required = true) MultipartFile file) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
         String fname = null;
-        if(file.getSize() > 0) {
+        if (file.getSize() > 0) {
             fname = file.getOriginalFilename();
             fname = FileRenameUtil.checkSameFileName(fname, img_path);
 
-            try{
+            try {
                 file.transferTo(new File(img_path, fname));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -104,7 +103,7 @@ public class AdminBbsController {
         }
 
         map.put("fname", fname);
-        
+
         return map;
     }
 
@@ -112,25 +111,26 @@ public class AdminBbsController {
      * 게시글 저장하기
      */
     @RequestMapping("/writeok")
-    public Map<String, Object> writeOk(@RequestPart(value="nickname") String nickname, @RequestPart(value = "subject") String subject, String content, String bname, 
-                @RequestPart(value="file", required=false) MultipartFile file){
+    public Map<String, Object> writeOk(@RequestPart(value = "nickname") String nickname,
+            @RequestPart(value = "subject") String subject, String content, String bname,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
         BbsVO vo = new BbsVO();
 
-        if(file != null) {
+        if (file != null) {
 
             String ori_name = null;
             String file_name = null;
 
-            if(file.getSize() > 0){
+            if (file.getSize() > 0) {
                 ori_name = file.getOriginalFilename();
                 file_name = FileRenameUtil.checkSameFileName(ori_name, file_path);
 
-                try{
+                try {
                     file.transferTo(new File(file_path, file_name));
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -145,7 +145,6 @@ public class AdminBbsController {
         vo.setNickname(nickname);
         vo.setContent(content);
         vo.setBname(bname);
-        
 
         a_service.write(vo);
 
@@ -157,8 +156,8 @@ public class AdminBbsController {
      * 배너 리스트 불러오기
      */
     @RequestMapping("/banner/list")
-    public Map<String, Object> bannerList(String cPage, String bname1, String bname2){
-        
+    public Map<String, Object> bannerList(String cPage, String bname1, String bname2) {
+
         Map<String, Object> map = new HashMap<String, Object>();
 
         Paging page = new Paging();
@@ -167,9 +166,9 @@ public class AdminBbsController {
 
         page.setTotalCount(count);
 
-        if(cPage.length() > 0){
+        if (cPage.length() > 0) {
             page.setNowPage(Integer.parseInt(cPage));
-        }else{
+        } else {
             page.setNowPage(1);
         }
 
@@ -179,7 +178,7 @@ public class AdminBbsController {
         List<BbsVO> list = a_service.bannerList(begin, end, bname1, bname2);
 
         BbsVO[] b_list = null;
-        if(list.size() > 0){
+        if (list.size() > 0) {
             b_list = new BbsVO[list.size()];
             list.toArray(b_list);
         }
@@ -194,7 +193,7 @@ public class AdminBbsController {
      * 해당 게시글 불러오기
      */
     @RequestMapping("/views/data")
-    public Map<String, Object> views(String b_idx){
+    public Map<String, Object> views(String b_idx) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -207,11 +206,12 @@ public class AdminBbsController {
         return map;
 
     }
+
     /*
      * 어드민 글 수정하기 전 원 내용 불러오기
      */
     @RequestMapping("/edit/data")
-    public Map<String, Object> editData(String b_idx){
+    public Map<String, Object> editData(String b_idx) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -228,95 +228,94 @@ public class AdminBbsController {
      */
     @RequestMapping("/edit/ok")
     public Map<String, Object> editOk(@RequestPart(value = "subject") String subject, String content,
-        @RequestPart(value="file", required=false) MultipartFile file, String b_idx){
+            @RequestPart(value = "file", required = false) MultipartFile file, String b_idx) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
         String ori_name = null;
         String file_name = null;
 
-            if(file != null){
-                ori_name = file.getOriginalFilename();
-                file_name = FileRenameUtil.checkSameFileName(ori_name, file_path);
+        if (file != null) {
+            ori_name = file.getOriginalFilename();
+            file_name = FileRenameUtil.checkSameFileName(ori_name, file_path);
 
-                try{
-                    file.transferTo(new File(file_path, file_name));
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-        
+            try {
+                file.transferTo(new File(file_path, file_name));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        a_service.bbsEdit(b_idx, subject, content, file_name, ori_name);
+
+        return map;
+
     }
-    
-    a_service.bbsEdit(b_idx, subject, content, file_name, ori_name);
-
-    return map;
-        
-}
 
     /*
      * 조회수 중복 방지 메서드
      */
 
-    public void readCount(HttpServletRequest req, String b_idx, HttpServletResponse res){
+    public void readCount(HttpServletRequest req, String b_idx, HttpServletResponse res) {
 
         Cookie cookies[] = req.getCookies();
         Cookie oldCookie = null;
 
-        if(cookies != null){
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("view")){
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("view")) {
                     oldCookie = cookie;
                 }
             }
         }
 
         if (oldCookie != null) {
-            if(!oldCookie.getValue().contains("["+b_idx+"]")){
+            if (!oldCookie.getValue().contains("[" + b_idx + "]")) {
                 a_service.viewCount(b_idx);
-                oldCookie.setValue(oldCookie.getValue()+"_["+b_idx+"]");
+                oldCookie.setValue(oldCookie.getValue() + "_[" + b_idx + "]");
                 oldCookie.setPath("/");
-                oldCookie.setMaxAge(60*60*24);
+                oldCookie.setMaxAge(60 * 60 * 24);
                 res.addCookie(oldCookie);
             }
         } else {
             a_service.viewCount(b_idx);
-            Cookie newCookie = new Cookie("view","["+b_idx+"]");
+            Cookie newCookie = new Cookie("view", "[" + b_idx + "]");
             newCookie.setPath("/");
-            newCookie.setMaxAge(60*60*24);
+            newCookie.setMaxAge(60 * 60 * 24);
             res.addCookie(newCookie);
         }
 
-        
     }
 
     /*
-     * 대시보드 데이터 
+     * 대시보드 데이터
      */
     @RequestMapping("/main/data")
-    public Map<String, Object> getDashData(){
+    public Map<String, Object> getDashData() {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
-        //오늘 가입한 회원 수 가져오기
+        // 오늘 가입한 회원 수 가져오기
         int todayReg = a_service.todayRegCount();
-        //전체 가입한 회원 수 가져오기
+        // 전체 가입한 회원 수 가져오기
         int totalReg = a_service.memberCnt();
 
-        //오늘 게시판 글 수 가져오기
+        // 오늘 게시판 글 수 가져오기
         List<BbsTotalCntVO> todayBbsCountList = a_service.bbsTotalCnt();
         BbsTotalCntVO[] b_total_list = null;
-        if(todayBbsCountList.size() > 0){
+        if (todayBbsCountList.size() > 0) {
             b_total_list = new BbsTotalCntVO[todayBbsCountList.size()];
             todayBbsCountList.toArray(b_total_list);
         }
 
-        //베스트 게시판 가져오기
+        // 베스트 게시판 가져오기
         BbsTotalCntVO bestBbs = a_service.bestBbs();
 
-        //최근 5일 가입자 수 가져오기
+        // 최근 5일 가입자 수 가져오기
         List<RegCntVO> regList = a_service.regCnt();
-        RegCntVO [] r_list = null;
-        if(regList.size() > 0){
+        RegCntVO[] r_list = null;
+        if (regList.size() > 0) {
             r_list = new RegCntVO[regList.size()];
             regList.toArray(r_list);
         }
@@ -329,14 +328,13 @@ public class AdminBbsController {
 
         return map;
 
-
     }
 
     /*
      * 어드민 - 게시판 관리 검색
      */
     @RequestMapping("/bbs/search")
-    public Map<String, Object> bbsList(String category, String value, String cPage){
+    public Map<String, Object> bbsList(String category, String value, String cPage) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -348,7 +346,7 @@ public class AdminBbsController {
 
         page.setTotalCount(totalCount);
 
-        if(cPage.length() > 0) {
+        if (cPage.length() > 0) {
             page.setNowPage(Integer.parseInt(cPage));
         } else {
             page.setNowPage(1);
@@ -361,7 +359,7 @@ public class AdminBbsController {
 
         BbsVO[] b_list = null;
 
-        if(list.size() > 0){
+        if (list.size() > 0) {
             b_list = new BbsVO[list.size()];
             list.toArray(b_list);
         }
@@ -371,14 +369,13 @@ public class AdminBbsController {
 
         return map;
 
-
     }
 
     /*
      * 어드민 - 게시판 관리 글 삭제
      */
     @RequestMapping("/bbs/del")
-    public Map<String, Object> bbsDel(String b_idx){
+    public Map<String, Object> bbsDel(String b_idx) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -392,12 +389,12 @@ public class AdminBbsController {
 
     }
 
-     /*
+    /*
      * 어드민 - 회원 가입
      */
     @RequestMapping("/reg/ok")
     public Map<String, Object> adminReg(String id, String pw, String nickname,
-    String name, String email, String phone, String birth) {
+            String name, String email, String phone, String birth) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -415,14 +412,14 @@ public class AdminBbsController {
      * 어드민 - 회원 가입자 중 승인 전 리스트
      */
     @RequestMapping("/reg/list")
-    public Map<String, Object> adminRegList(){
+    public Map<String, Object> adminRegList() {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
         List<MemVO> list = a_service.adminRegList();
-        MemVO [] m_list = null;
+        MemVO[] m_list = null;
 
-        if(list.size() > 0){
+        if (list.size() > 0) {
             m_list = new MemVO[list.size()];
             list.toArray(m_list);
         }
@@ -434,7 +431,7 @@ public class AdminBbsController {
     }
 
     @RequestMapping("/reg/approve")
-    public Map<String, Object> regApprove(String m_idx){
+    public Map<String, Object> regApprove(String m_idx) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -444,7 +441,7 @@ public class AdminBbsController {
 
         int chk = 0;
 
-        if(mvo == null){
+        if (mvo == null) {
             chk = 1;
         }
 
@@ -453,6 +450,5 @@ public class AdminBbsController {
         return map;
 
     }
-
 
 }

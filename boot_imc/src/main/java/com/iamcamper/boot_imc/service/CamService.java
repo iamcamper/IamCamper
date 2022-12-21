@@ -103,4 +103,17 @@ public class CamService {
         return vo;
 
     }
+
+    public CamVO[] search_m(String title) {
+
+        CamVO[] vo = null;
+
+        List<CamVO> list = mapper.search_m(title);
+
+        if (list != null && list.size() > 0) {
+            vo = new CamVO[list.size()];
+            list.toArray(vo);
+        }
+        return vo;
+    }
 }

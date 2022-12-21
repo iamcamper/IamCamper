@@ -28,6 +28,18 @@ public class CampingController {
 
     Paging page = new Paging();
 
+    @RequestMapping("/Search")
+    public Map<String, CamVO[]> Search(String title) {
+
+        Map<String, CamVO[]> map = new HashMap<String, CamVO[]>();
+
+        CamVO[] vo = service.search_m(title);
+
+        map.put("vo", vo);
+
+        return map;
+    }
+
     @RequestMapping("/getData")
     public Map<String, CamVO[]> getData(String addr, String category, String cPage) {
 

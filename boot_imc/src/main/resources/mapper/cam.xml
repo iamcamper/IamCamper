@@ -23,6 +23,10 @@
   <select id="allList" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="String">
 		SELECT a.* FROM (SELECT * FROM camping where addr LIKE CONCAT(#{addr}, '%')) a
 	</select>
+  <select id="search_m" resultType="com.iamcamper.boot_imc.VO.CamVO"  parameterType="String">
+  SELECT * FROM camping
+  WHERE title  = #{title}
+  </select>
 
 <!-- 리스트 -->
 
@@ -62,5 +66,4 @@
       ) a
     WHERE rownum BETWEEN #{begin}AND #{end}
   </select>
-
 </mapper>

@@ -53,7 +53,6 @@ export default function pwd(){
     function resetPw2(e){
         setPw2(e.target.value);
 
-        console.log(pw2);
     }
 
     function resetPw(e){
@@ -120,7 +119,7 @@ export default function pwd(){
                                                     <label>현재 비밀번호</label>
                                                 </th>
                                                 <td>
-                                                    <TextField name="id" type="password"     size="small" variant="standard" placeholder="현재 비밀번호" sx={{width:'220px'}} onChange={resetPw2} />
+                                                    <TextField name="id" type="password"   size="small" variant="standard" placeholder="현재 비밀번호" sx={{width:'220px'}} onChange={resetPw2} />
                                                 </td>
                                             </tr>
                                             <tr>

@@ -18,18 +18,18 @@ export default function Main1_top(){
     },[]);
 
     return(
-        <div style={{width:'1600px', margin:'0 auto',height:'80px'}}> 
+        <div className="maint"> 
             <Grid container>
                 <Grid item xs={9}></Grid>
                 <Grid item xs={3}>
 
 
                         {!ck && (
-                        <Button  variant="text" style={{display:"inline-block",width:"50%"}} color="inherit"
+                        <Button className="maint2" variant="text"  color="inherit"
                         onClick={()=>router.push("/member/login")}>LOGIN</Button>
                         )}
                         {ck && (
-                        <Button  variant="text" style={{display:"inline-block",width:"50%"}} color="inherit"
+                        <Button className="maint2" variant="text" color="inherit"
                         onClick={()=>{
                             deleteCookie("m_idx");
                             deleteCookie("id");
@@ -40,11 +40,11 @@ export default function Main1_top(){
                         )}
 
                         {!ck && (
-                        <Button  variant="text" style={{display:"inline-block",width:"50%"}} color="inherit"
+                        <Button className="maint2" variant="text"  color="inherit"
                         onClick={()=>router.push("/member/registration")}>회원가입</Button>
                         )}
                         {ck && (
-                        <Button  variant="text" style={{display:"inline-block",width:"50%"  }} color="inherit"
+                        <Button className="maint2" variant="text"color="inherit"
                         onClick={()=>
                             router.push("/member/information ")
                         }>MyPage</Button>
