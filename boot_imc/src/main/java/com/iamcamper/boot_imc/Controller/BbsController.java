@@ -163,13 +163,14 @@ public class BbsController {
         }
         String img_start = "/upload_img/";
         String img_close = "contenteditable";
-
+        
         int begin = content.indexOf(img_start);
         int end = content. indexOf(img_close, begin-1);
-
+        if(begin > 0 & end > 0){
         String thum = content.substring(begin, end-2);
-        
         vo.setThum_img(thum);
+        }
+        
         vo.setIp(req.getRemoteAddr());
         vo.setSubject(subject);
         vo.setNickname(nickname);
