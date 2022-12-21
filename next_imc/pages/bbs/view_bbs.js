@@ -27,6 +27,9 @@ export default function view_bbs(){
   const API_DEL = "/bbs/del?b_idx="+b_idx;
   const API_Comm = "/bbs/commList?b_idx="+b_idx;
   const API_Submit = "/bbs/commAdd";
+  const API_CLIKE = "/like/cup";
+  const API_CDEL = "/like/cdw";
+  const API_CCHK = "/like/cchk";
   const [comm, setComm] = useState([]);
   const [commin, setCommin] = useState('');
  
@@ -87,23 +90,43 @@ export default function view_bbs(){
     );
 
   }
-  const [clikehit, setClikehit] = useState(0);
-
+  const [clikehit, setClikehit] = useState();
+    
   function clikesubmit(){
     if(clikehit == 0){
       setClikehit(1);
+      Axios.post(
+        API_CLIKE,null,
+        {params:{c_idx:1, m_idx:1}}
+      ).then(
+        router.push("/bbs/view_bbs?idx="+b_idx)
+      );
     }else if(clikehit == 1){
       setClikehit(0);
+      Axios.post(
+        API_CDEL,null,
+        {params:{c_idx:1, m_idx:1}}
+      ).then(
+        router.push("/bbs/view_bbs?idx="+b_idx)
+      );
     }
   }
   let likecolor = {
     0 : <FavoriteBorderIcon/>,
     1 : <FavoriteIcon color="error"/>
   }
-
+  function clikechk(){
+      Axios.post(
+        API_CCHK,null,
+          {params:{c_idx:1, m_idx:1}}
+        ).then((json) =>{
+          setClikehit(json.data.ccnt);
+        });
+      }
   useEffect(() => {
     getList();
     getComm();  
+    clikechk();
      },[]);
 
    return( 
