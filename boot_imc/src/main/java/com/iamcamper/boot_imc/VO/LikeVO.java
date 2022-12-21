@@ -10,5 +10,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LikeVO {
-    String i_idx, m_idx, b_idx, c_idx, status;
+    Integer i_idx, m_idx, b_idx, c_idx, status;
 }

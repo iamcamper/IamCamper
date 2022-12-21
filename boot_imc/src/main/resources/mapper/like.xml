@@ -4,41 +4,53 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iamcamper.boot_imc.mapper.LikeMapper">
 
-<select id="chklike" parameterType="com.iamcamper.boot_imc.VO.LikeVO">
+<select id="chk" resultType="int" parameterType="Map">
+    Select COUNT(*) from iamcamper.like
+        Where m_idx = #{m_idx}
+        And b_idx = #{b_idx} 
+        And status = 1
+</select>
+<select id="cchk" resultType="int" parameterType="Map">
+    Select COUNT(*) from iamcamper.like
+        Where m_idx = #{m_idx}
+        And c_idx = #{c_idx} 
+        And status = 1
+</select>
+<select id="chklike" resultType="com.iamcamper.boot_imc.VO.LikeVO" parameterType="Map">
     SELECT ifnull(max(b_idx),0)b_idx FROM iamcamper.like
     WHERE m_idx = #{m_idx}
 </select>
-<select id="chkclike" parameterType="com.iamcamper.boot_imc.VO.LikeVO">
+<select id="chkclike" resultType="com.iamcamper.boot_imc.VO.LikeVO" parameterType="Map">
     SELECT ifnull(max(c_idx),0)c_idx FROM iamcamper.like
     WHERE m_idx = #{m_idx}
 </select>
 <insert id='addlike' parameterType="com.iamcamper.boot_imc.VO.LikeVO">
-    INSERT INTO like(m_idx, b_idx)
-    VALUES (#{m_idx}, #{b_idx})
+    INSERT INTO iamcamper.like(m_idx, b_idx, status)
+    VALUES (#{m_idx}, #{b_idx}, 1)
 </insert>
 <insert id='addclike' parameterType="com.iamcamper.boot_imc.VO.LikeVO">
-    INSERT INTO like(m_idx, c_idx)
-    VALUES (#{m_idx}, #{c_idx})
+    INSERT INTO iamcamper.like(m_idx, c_idx)
+    VALUES (#{m_idx}, #{c_idx}, 1)
 </insert>
 <update id="likeup">
-    UPDATE like
-    set status = status + 1
+    UPDATE iamcamper.like
+    set status = 1
     WHERE b_idx = #{b_idx} AND m_idx = #{m_idx}
 </update>
 <update id="likedel">
-    UPDATE like
-    set status = status -1
+    UPDATE iamcamper.like
+    set status = 0
     WHERE b_idx = #{b_idx} AND m_idx = #{m_idx}
 </update>
 
 <update id="clikeup">
-    UPDATE like
-    set status = status + 1
+    UPDATE iamcamper.like
+    set status = 1
     WHERE c_idx = #{c_idx} AND m_idx = #{m_idx}
 </update>
 <update id="clikedel">
-    UPDATE like
-    set status = status - 1
+    UPDATE iamcamper.like
+    set status = 0
     WHERE c_idx = #{c_idx} AND m_idx = #{m_idx}
 </update>
 </mapper>

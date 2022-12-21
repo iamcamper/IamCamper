@@ -16,9 +16,10 @@ export default function viewList({list}){
 
   
   const router = useRouter();
-  const [likehit, setLikehit] = useState(0);
+  const [likehit, setLikehit] = useState();
   const API_LIKE = "/like/up";
-  const API_DEL = "like/dw";
+  const API_DEL = "/like/dw";
+  const API_CHK = "/like/chk";
 
   function likesubmit(){
     if(likehit == 0){
@@ -27,10 +28,16 @@ export default function viewList({list}){
         API_LIKE,null,
         {params:{b_idx:list.b_idx, m_idx:1}}
       ).then(
-        router.push("/bbs/view_bbs?b_idx="+list.b_idx)
+        router.push("/bbs/view_bbs?idx="+list.b_idx)
       );
     }else if(likehit == 1){
-      setLikehit(0)
+      setLikehit(0);
+      Axios.post(
+        API_DEL,null,
+        {params:{b_idx:list.b_idx, m_idx:1}}
+      ).then(
+        router.push("/bbs/view_bbs?idx="+list.b_idx)
+      );
     }
     console.log(likehit);
   }
@@ -39,6 +46,20 @@ export default function viewList({list}){
     1 : <FavoriteIcon color="error"/>
   }
 console.log(likehit);
+
+function likechk(){
+  Axios.post(
+    API_CHK,null,
+    {params:{b_idx:6, m_idx:1}}
+  ).then((json) =>{
+    setLikehit(json.data.cnt);
+  });
+}
+
+useEffect(() => {
+  likechk()
+},[]);
+
     return(
      <Grid container spacing={2}>
         <Grid item xs={12} sm container>
