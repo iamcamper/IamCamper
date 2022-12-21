@@ -36,7 +36,7 @@ export default function views(){
 
     function goList(){
         router.push({
-            pathname:'/admin/notice',
+            pathname:'/admin/'+bbs,
             query: {cPage: cPage},
         });
     }

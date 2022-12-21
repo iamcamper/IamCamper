@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Box, Button, FormControl, getListItemAvatarUtilityClass, InputLabel, MenuItem, Pagination, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Box, Button, FormControl, getListItemAvatarUtilityClass, InputLabel, MenuItem, Pagination, Paper, Select, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import Axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -81,7 +81,9 @@ export default function bbs(){
         <Stack direction="row" spacing={2} justifyContent="space-between">  
             <Admin_Sidebar/>
             <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
-            <h5>게시글 관리</h5>
+                <Typography variant="h5" gutterBottom>
+                    [ 게시글 관리 ]
+                </Typography>
                 <Paper sx={{padding:"20px", margin:'auto'}}>
                     <div>게시글 검색</div>
                     <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
