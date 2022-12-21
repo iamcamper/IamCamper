@@ -8,8 +8,8 @@ export default function logout(){
     const router = useRouter();
 
     function delCookie(){
-        deleteCookie("id");
-        deleteCookie("nickname");
+        deleteCookie("adminid");
+        deleteCookie("adminnickname");
         router.push("/admin/login");
     }
     

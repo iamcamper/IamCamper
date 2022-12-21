@@ -34,24 +34,15 @@ const data =  {
 };
 
 const options = {
-    responsive: false,
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
-  };
+    responsive: false
+};
 
 
     return(
-        <Box marginTop={2} paddingTop={1}>
+        <Box marginTop={2} paddingTop={2}>
             <Typography variant="h5" gutterBottom>최근 5일 가입자 현황</Typography>
             <Box>
-                <Line data={data} options={options} style={{position: 'relative', height:'260px', width:'450px', margin:'auto'}}/>
+                <Line data={data} options={options} style={{position: 'relative', height:'30vh', width:'30vw', margin:'auto'}}/>
             </Box>
         </Box>
     );

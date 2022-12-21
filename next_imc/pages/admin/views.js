@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { Box, Stack, Paper, Button } from "@mui/material";
 import dynamic from "next/dynamic";
 import viewStyles from "../admin/view.module.css";
-import { ContactSupportOutlined } from "@mui/icons-material";
 
 
 const Viewer = dynamic(()=> import('../../com/Admin_Viewer'), {ssr:false});
@@ -22,6 +21,8 @@ export default function views(){
     const DATA_URL = "/admin/views/data"
     const [data, setData] = useState({});
 
+
+
     function getData(){
 
         Axios.post(
@@ -35,7 +36,7 @@ export default function views(){
 
     function goList(){
         router.push({
-            pathname:'/admin/'+bbs,
+            pathname:'/admin/notice',
             query: {cPage: cPage},
         });
     }

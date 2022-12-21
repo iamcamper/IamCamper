@@ -18,7 +18,7 @@ import Axios from 'axios';
 import Dash_Chart4 from '../../com/Dash_Chart4';
 import Dash_Chart5 from '../../com/Dash_Chart5';
 import { ConstructionOutlined, Home } from '@mui/icons-material';
-import { hasCookie } from 'cookies-next';
+import { getCookie, hasCookie, setCookie } from 'cookies-next';
 
 
 
@@ -31,6 +31,7 @@ export default function main(){
     const [regData, setRegData] = useState([]); //최근 5일 가입한 회원 수 배열
     const [bbsTotalList, setBbsTotalList] = useState([]); //게시판별 오늘 토탈 글 갯수
     const [bestBbs, setBestBbs] = useState();
+    const [cookieChk, setCookieChk] = useState(false);
 
     function getData(){
 
@@ -48,52 +49,69 @@ export default function main(){
     }
 
     useEffect(()=>{
+
+        if(hasCookie("adminid")){
+            setCookieChk(true);
+        } else {
+            setCookieChk(false);
+        }
+
         getData();
+        
     },[]);
 
 
     return(
-        <Box>
-            <Admin_Navbar/>
-            <Stack direction="row" spacing={2} justifyContent="space-between">  
-                <Admin_Sidebar/>
-                <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
-                    <Typography variant="h5" gutterBottom>
-                       [ 대시보드 ]
-                    </Typography>
-                    <Grid container spacing={2}>
-                        <Grid item xs={4}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
-                                <Dash_Chart1 regCount={todayReg}/>
-                            </Paper>
+        <>
+            {cookieChk && (
+            <Box>
+                <Admin_Navbar/>
+                <Stack direction="row" spacing={2} justifyContent="space-between">  
+                    <Admin_Sidebar/>
+                    <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
+                        <Typography variant="h5" gutterBottom>
+                        [ 대시보드 ]
+                        </Typography>
+                        <Grid container spacing={2}>
+                            <Grid item xs={4}>
+                                <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
+                                    <Dash_Chart1 regCount={todayReg}/>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
+                                    <Dash_Chart2 totalReg={totalReg}/>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
+                                    <Dash_Chart3 bestBbs={bestBbs}/>
+                                </Paper>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={4}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
-                                <Dash_Chart2 totalReg={totalReg}/>
-                            </Paper>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <Paper elevation={3} sx={{textAlign: 'center', height: '320px'}}>
+                                    <Dash_Chart5 regData={regData}/>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Paper elevation={3} sx={{textAlign: 'center', height: '320px'}}>
+                                    <Dash_Chart4 bbsTotalList={bbsTotalList}/>
+                                </Paper>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={4}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
-                                <Dash_Chart3 bestBbs={bestBbs}/>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '320px'}}>
-                                <Dash_Chart5 regData={regData}/>
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Paper elevation={3} sx={{textAlign: 'center', height: '320px'}}>
-                                <Dash_Chart4 bbsTotalList={bbsTotalList}/>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Stack>
-            <Admin_Footer/>
-        </Box>
+                    </Box>
+                </Stack>
+                <Admin_Footer/>
+            </Box>
+            )}
+            {!cookieChk && (
+                <div>
+                    <h1>잘못된 접근입니다.</h1>
+                </div>
+            )}
+        </>
     );
 
 }

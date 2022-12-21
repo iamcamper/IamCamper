@@ -45,24 +45,15 @@ const data =  {
 };
 
 const options = {
-    responsive: false,
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
+    responsive: false
   };
 
 
     return(
-        <Box marginTop={2} paddingTop={1}>
+        <Box marginTop={2} paddingTop={2}>
             <Typography variant="h5" gutterBottom>오늘 게시판별 게시글 통계</Typography>
             <Box>
-                <Bar data={data} options={options} style={{position: 'relative', height:'260px', width:'450px', margin:'auto'}}/>
+                <Bar data={data} options={options} style={{position: 'relative', height:'30vh', width:'30vw', margin:'auto'}}/>
             </Box>
         </Box>
     );
