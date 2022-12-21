@@ -35,7 +35,6 @@ export default function write(){
 
     function changeBname(e){
         setBname(e.target.value);
-        console.log(bname);
     }
 
     function changeFile(e){
@@ -78,7 +77,7 @@ export default function write(){
                                         <label htmlFor='subject'>제목</label>
                                     </th>
                                     <td>
-                                        <Input type='text 'placeholder='제목' sx={{width:'450px'}} onChange={changeSubject}/>
+                                        <Input type='text' placeholder='제목' sx={{width:'450px'}} onChange={changeSubject}/>
                                     </td>
                                 </tr>
                                 {(bname === 'BANNER' || bname === 'BANNERMAIN' || bname === 'BANNERBBS') && (
@@ -91,11 +90,11 @@ export default function write(){
                                             <InputLabel id="category">
                                                     카테고리
                                             </InputLabel>
-                                                <Select labelId='category' onChange={changeBname} value={bname || ''}>
-                                                    <MenuItem value={'BANNERMAIN' || ''}>
+                                                <Select labelId='category' onChange={changeBname}>
+                                                    <MenuItem value='BANNERMAIN'>
                                                         메인
                                                     </MenuItem>
-                                                    <MenuItem value={'BANNERBBS' || ''}>
+                                                    <MenuItem value='BANNERBBS'>
                                                         게시판
                                                     </MenuItem>
                                                 </Select>

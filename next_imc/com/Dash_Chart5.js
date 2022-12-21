@@ -42,7 +42,7 @@ const options = {
         <Box marginTop={2} paddingTop={2}>
             <Typography variant="h5" gutterBottom>최근 5일 가입자 현황</Typography>
             <Box>
-                <Line data={data} options={options} style={{position: 'relative', height:'30vh', width:'30vw', margin:'auto'}}/>
+                <Line data={data} options={options} style={{position: 'relative', width:'35vw', margin:'auto'}}/>
             </Box>
         </Box>
     );

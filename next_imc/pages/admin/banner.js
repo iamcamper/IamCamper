@@ -1,4 +1,4 @@
-import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button, Pagination } from '@mui/material';
+import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button, Pagination, Typography } from '@mui/material';
 import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
 import Admin_Sidebar from '../../com/Admin_Sidebar';
@@ -13,13 +13,15 @@ import { useRouter } from 'next/router';
 export default function banner(){
 
     const router = useRouter();
+    let num = router.query.cPage ? router.query.cPage : '1';
+    let parsNum = parseInt(num);
     const LIST_URL = "/admin/banner/list";
     const [list, setList] = useState([]);
-    const [cPage, setCpage] = useState('');
+    const [cPage, setCpage] = useState(parsNum);
     const [totalPage, setTotalPage] = useState(1);
 
     const pageChange = (event, value) => {
-        setCPage(value);
+        setCpage(value);
       };
 
     function getList(){
@@ -36,6 +38,10 @@ export default function banner(){
         getList();
     },[]);
 
+    useEffect(()=>{
+        getList();
+    },[cPage]);
+
     function write(){
         router.push({
             pathname: '/admin/write',
@@ -50,7 +56,9 @@ export default function banner(){
         <Stack direction="row" spacing={2} justifyContent="space-between">  
             <Admin_Sidebar/>
             <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
-                <h5>광고(배너) 등록 / 관리</h5>
+                <Typography variant="h5" gutterBottom>
+                    [ 광고 / 배너 관리 ]
+                </Typography>
                 <Button size="small" variant="contained" sx={{margin:"10px"}} onClick={write}>
                     글쓰기</Button>
                 <TableContainer component={Paper}>

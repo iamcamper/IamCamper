@@ -7,15 +7,18 @@ import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { hasCookie } from 'cookies-next';
+import { useLocation } from 'react-router-dom';
+
 
 
 export default function notice(){
-
     
     const router = useRouter();
+    let num = router.query.cPage ? router.query.cPage : '1';
+    let parsNum = parseInt(num);
     const LIST_URL = "/admin/notice/list";
     const [list, setList] = useState([]);
-    const [cPage, setCPage] = useState('');
+    const [cPage, setCPage] = useState(parsNum);
     const [totalPage, setTotalPage] = useState();
     const [cookieChk, setCookieChk] = useState(false);
 
@@ -42,7 +45,6 @@ export default function notice(){
     }
 
     useEffect(()=>{
-        
         getList();
     },[]);
 
@@ -85,7 +87,7 @@ export default function notice(){
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {list.map((data, index)=> 
+                                {list != null && list.map((data, index)=> 
                                     <TableRow key={index}>
                                     <TableCell>{data.b_idx}</TableCell>
                                         <TableCell>

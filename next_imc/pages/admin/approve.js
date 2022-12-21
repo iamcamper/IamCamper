@@ -1,4 +1,4 @@
-import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button, Pagination} from '@mui/material';
+import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button, Pagination, Typography} from '@mui/material';
 import { useRouter } from 'next/router';
 import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
@@ -63,7 +63,9 @@ export default function approve(){
         <Stack direction="row" spacing={2} justifyContent="space-between">  
             <Admin_Sidebar/>
             <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
-                <h5>관리자 승인</h5>
+                <Typography variant="h5" gutterBottom>
+                    [ 관리자 승인 ]
+                </Typography>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>

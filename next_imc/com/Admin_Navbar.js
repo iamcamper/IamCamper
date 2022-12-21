@@ -36,9 +36,6 @@ export default function Admin_Navbar(){
                     <Typography variant="h6" sx={{display:{xs:"none" , sm:"block"}}}>I AM CAMPER ADMIN</Typography>
                     <Home sx={{display:{xs:"block" , sm:"none"}}}/>
                     <Stack direction='row' spacing={2}>
-                        <Box>
-                            <Avatar src="/broken-image.jpg" />
-                        </Box>
                         <Box sx={{paddingTop:'10px'}}>
                             {nickname}님 환영합니다!
                         </Box>
