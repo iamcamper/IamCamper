@@ -1,4 +1,4 @@
-import { Announcement, Campaign, Description, Event, Home, Logout, Person, Upgrade } from "@mui/icons-material";
+import { Announcement, Campaign, Description, Event, Help, Home, Logout, Person, Upgrade } from "@mui/icons-material";
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import Axios from "axios";
 
@@ -49,6 +49,14 @@ export default function Admin_Sidebar(){
                             <Description/>
                         </ListItemIcon>
                         <ListItemText primary="게시글 관리"/>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton component="a" href="/admin/qna">
+                        <ListItemIcon>
+                            <Help/>
+                        </ListItemIcon>
+                        <ListItemText primary="자주하는 질문 등록"/>
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>

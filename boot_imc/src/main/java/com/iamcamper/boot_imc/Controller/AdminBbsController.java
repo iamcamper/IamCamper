@@ -27,6 +27,8 @@ import com.iamcamper.boot_imc.service.AdminService;
 import com.iamcamper.boot_imc.util.FileRenameUtil;
 import com.iamcamper.boot_imc.util.Paging;
 import com.iamcamper.boot_imc.util.ThumImgUtil;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @RestController
 @RequestMapping("/admin")
@@ -498,4 +500,38 @@ public class AdminBbsController {
 
     }
 
+    @RequestMapping("/qna/list")
+    public Map<String, Object> qnaList(@RequestParam("bname") String bname, @RequestParam("cPage") String cPage) {
+
+        Paging page = new Paging();
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        int totalCount = a_service.totalCount(bname);
+
+        page.setTotalCount(totalCount);
+
+        if (cPage.length() > 0) {
+            page.setNowPage(Integer.parseInt(cPage));
+        } else {
+            page.setNowPage(1);
+        }
+
+        String begin = String.valueOf(page.getBegin());
+        String end = String.valueOf(page.getEnd());
+
+        List<BbsVO> list = a_service.list(bname, begin, end);
+
+        BbsVO[] b_list = null;
+        if (list != null && list.size() > 0) {
+            b_list = new BbsVO[list.size()];
+            list.toArray(b_list);
+        }
+
+        map.put("list", b_list);
+        map.put("totalPage", page.getTotalPage());
+
+        return map;
+
+    }
 }
