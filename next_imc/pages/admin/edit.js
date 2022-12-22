@@ -139,7 +139,11 @@ export default function write(){
                                         <label htmlFor='file'>첨부 파일</label>
                                     </th>
                                     <td>
-                                        <input type='file' id='file' onChange={changeFile}/>
+                                        {(bname === 'BANNER' || bname === 'BANNERMAIN' || bname === 'BANNERBBS') && 
+                                        ( <input type='file' id='file' onChange={changeFile} accept='.gif, .jpg, .png'/> )}
+                                        {(bname === 'ADNOTICE') && (
+                                          <input type='file' id='file' onChange={changeFile}/>
+                                        )}
                                     </td>
                                 </tr>
                                 <tr>

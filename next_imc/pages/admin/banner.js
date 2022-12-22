@@ -6,6 +6,7 @@ import Axios from 'axios';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { hasCookie } from 'cookies-next';
 
 
 
@@ -19,6 +20,7 @@ export default function banner(){
     const [list, setList] = useState([]);
     const [cPage, setCpage] = useState(parsNum);
     const [totalPage, setTotalPage] = useState(1);
+    const [cookieChk, setCookieChk] = useState(false);
 
     const pageChange = (event, value) => {
         setCpage(value);
@@ -49,8 +51,17 @@ export default function banner(){
         })
     }
 
-    return(
+    useEffect(()=>{
+        if(hasCookie("adminid")){
+            setCookieChk(true);
+        } else {
+            setCookieChk(false);
+        }
+    },[]);
 
+    return(
+        <>
+        {cookieChk && (
         <Box>
         <Admin_Navbar/>
         <Stack direction="row" spacing={2} justifyContent="space-between">  
@@ -67,7 +78,6 @@ export default function banner(){
                         <TableRow>
                             <TableCell>글 번호</TableCell>
                             <TableCell>카테고리</TableCell>
-                            <TableCell>썸네일</TableCell>
                             <TableCell>광고 제목</TableCell>
                             <TableCell>글쓴이</TableCell>
                             <TableCell>날짜</TableCell>
@@ -85,9 +95,6 @@ export default function banner(){
                                         <TableCell>[게시판]</TableCell>
                                     )}  
                                     <TableCell>
-                                        썸네일
-                                    </TableCell>
-                                    <TableCell>
                                     <Link href={{
                                             pathname: "/admin/views",
                                             query: {b_idx: data.b_idx, cPage: cPage, bname:data.bname, bbs:'banner'},
@@ -97,9 +104,16 @@ export default function banner(){
                                     </TableCell>
                                     <TableCell>{data.nickname}</TableCell>
                                     <TableCell>{data.write_date}</TableCell>
-                                    <TableCell>
+                                    {data.nickname === getCookie("adminnickname") && (
+                                    <TableCell align='center'>
                                         <Button size='small' variant='contained' color='error'>삭제</Button>
                                     </TableCell>
+                                    )}
+                                    {data.nickname !== getCookie("adminnickname") && (
+                                    <TableCell align='center'>
+                                       
+                                    </TableCell>
+                                    )}
                                 </TableRow>
                             )}
                         </TableBody>
@@ -119,6 +133,13 @@ export default function banner(){
         <Admin_Footer/>
 
     </Box>
+     )}
+     {!cookieChk &&(
+         <div>
+             <h1>잘못된 접근입니다.</h1>
+         </div>
+     )}
+    </>
 
     );
 

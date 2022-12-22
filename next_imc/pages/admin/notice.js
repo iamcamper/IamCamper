@@ -6,7 +6,7 @@ import Admin_Sidebar from '../../com/Admin_Sidebar';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { hasCookie } from 'cookies-next';
+import { getCookie, hasCookie } from 'cookies-next';
 import { useLocation } from 'react-router-dom';
 
 
@@ -101,9 +101,16 @@ export default function notice(){
                                     <TableCell align="right">{data.nickname}</TableCell>
                                     <TableCell align="right">{data.write_date}</TableCell>
                                     <TableCell align="right">{data.hit}</TableCell>
+                                    {data.nickname === getCookie("adminnickname") && (
                                     <TableCell align='center'>
                                         <Button size='small' variant='contained' color='error'>삭제</Button>
                                     </TableCell>
+                                    )}
+                                    {data.nickname !== getCookie("adminnickname") && (
+                                    <TableCell align='center'>
+                                       
+                                    </TableCell>
+                                    )}
                                     </TableRow>
                                 )}
                             </TableBody>

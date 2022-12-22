@@ -86,9 +86,16 @@ export default function views(){
                                     <th>
                                         첨부파일
                                     </th>
-                                    <td>
-                                        {data.filename}
-                                    </td>
+                                    {data.file_name == null &&(
+                                        <td>
+                                            첨부된 파일이 없습니다.
+                                        </td>
+                                    )}
+                                    {data.file_name != null &&(
+                                        <td>
+                                            {data.file_name}
+                                        </td>
+                                    )}
                                 </tr>
                             </tbody>
                         </table>

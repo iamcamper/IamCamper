@@ -6,6 +6,7 @@ import Admin_Sidebar from '../../com/Admin_Sidebar';
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { hasCookie } from 'cookies-next';
 
 export default function approve(){
 
@@ -14,6 +15,7 @@ export default function approve(){
     const [list, setList] = useState([]);
     const [cPage, setCPage] = useState('');
     const [totalPage, setTotalPage] = useState();
+    const [cookieChk, setCookieChk] = useState(false);
 
     const APPROVE_URL = "/admin/reg/approve";
 
@@ -56,7 +58,17 @@ export default function approve(){
         getList();
     },[]);
 
+    useEffect(()=>{
+        if(hasCookie("adminid")){
+            setCookieChk(true);
+        } else {
+            setCookieChk(false);
+        }
+    },[]);
+
     return(
+        <>
+        {cookieChk && (
 
         <Box>
         <Admin_Navbar/>
@@ -105,7 +117,13 @@ export default function approve(){
         </Stack>
         <Admin_Footer/>
     </Box>
-
+    )}
+    {!cookieChk &&(
+         <div>
+             <h1>잘못된 접근입니다.</h1>
+         </div>
+     )}
+    </>
     );
 
 }
