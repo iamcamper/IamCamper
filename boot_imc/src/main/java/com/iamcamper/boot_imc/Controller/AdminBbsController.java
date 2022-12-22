@@ -42,7 +42,7 @@ public class AdminBbsController {
     private HttpServletResponse res;
 
     String img_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_img";
-    String file_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_file";
+    String file_path = "C:/My test/main1219/IamCamper/next_imc/public/upload_file";
 
     /*
      * 공지사항 리스트 불러오기
@@ -446,6 +446,21 @@ public class AdminBbsController {
         }
 
         map.put("chk", chk);
+
+        return map;
+
+    }
+
+    // 메인페이지 배너 불러오기
+    @RequestMapping("/bbs/BannerMain")
+    public Map<String, Object> BannerMain() {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        BbsVO[] vo = a_service.BannerMain();
+
+        map.put("vo", vo);
+        map.put("path", file_path);
 
         return map;
 

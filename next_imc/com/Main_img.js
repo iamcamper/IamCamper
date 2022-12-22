@@ -1,6 +1,7 @@
 
 import { Box,Card,CardMedia,TextField} from "@mui/material";
 import zIndex from "@mui/material/styles/zIndex";
+import Axios from 'axios';
 import { useState,useEffect } from "react";
 import {FaArrowAltCircleRight,FaArrowAltCircleLeft} from 'react-icons/fa';
 //import styles from '../styles/main.module.css';
@@ -25,7 +26,31 @@ export default function Main1_img(){
             image:'https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20151227_14%2Fboreumm_1451226185243639Jq_PNG%2Fcamping2_b5.png&type=a340'
         }
     ])
+    const [file_path,setFile_path]= useState();
     //------------------------------------------------
+
+    const API_URL = "/bbs/BannerMain";
+
+    function getIlist(){
+
+        Axios.post(
+            "http://localhost:8080/admin/bbs/BannerMain",
+            null
+        ).then((json)=>{
+            console.log(json.data);
+            if(json.data.vo !=null){
+
+                setData(json.data.vo);
+                setFile_path(json.data.path);
+
+            }
+
+        });
+    }
+
+    useEffect(() => { 
+        getIlist();
+    },[]);
 
     const [cnt , setcnt] = useState(0);
     const length = Data.length;
@@ -59,8 +84,9 @@ export default function Main1_img(){
                 return(
                 <div className={index === cnt ? 'slide active':'slide'} key={index}>
                     {index === cnt &&(
-                    <img src={item.image} alt='image' className='image'/>
+                    <img src={"upload_file/"+item.file_name} alt='image' className='image'/>
                     )}
+                    
                 </div>
                 )
             })}

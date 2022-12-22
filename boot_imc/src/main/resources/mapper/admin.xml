@@ -217,4 +217,10 @@
     WHERE grade = 9 AND activate = 0 AND m_idx = #{m_idx}
   </select>
 
+  <!-- 메인 페이지 배너 불러오기-->
+  <select id="BannerMain" resultType="com.iamcamper.boot_imc.VO.BbsVO">
+    SELECT * FROM iamcamper.bbs
+    WHERE bname ='BANNERMAIN' AND status = 0
+  </select>
+
 </mapper>

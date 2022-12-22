@@ -17,8 +17,7 @@ export default function Main_Card(){
         Axios.get(
             API_URL2
         ).then((json)=>{
-            console.log(json);
-            setPlist(json.data.plist);
+            
             if(json.data.blist != null){
                 setBlist(json.data.blist);
             }else{
@@ -151,10 +150,7 @@ export default function Main_Card(){
                                     <Typography variant='body1' color='text.secondary' className='bbstitle'>
                                         <Link
                                         className='bbstitle'
-                                        href={{
-                                            pathname: '/bbs/view_bbs',
-                                            query: {'idx':item.b_idx},
-                                        }}
+                                        href={"bbs/view_bbs?b_idx="+item.b_idx}
                                         >{item.subject}
                                         </Link>
                                    </Typography>

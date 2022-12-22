@@ -58,6 +58,7 @@
 					WHERE status = 0 AND bname = #{bname1} or bname = #{bname2} or bname = #{bname3} ORDER BY hit DESC) b, (SELECT @RN:=0) r) a
 			WHERE rownnum BETWEEN '1' AND '10'
 	</select>
+	<!-- 메인페이지 배너 불러오기 -->
 
 	<select id="totalCount" resultType="int" parameterType="String">
     SELECT COUNT(*) FROM bbs

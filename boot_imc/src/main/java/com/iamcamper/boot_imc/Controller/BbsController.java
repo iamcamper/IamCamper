@@ -126,8 +126,8 @@ public class BbsController {
 
         BbsVO[] ar = b_Service.blist2("CAMREVIEW", "TSREVIEW", "RESTREVIEW");
         BbsVO[] ar2 = b_Service.blist("RESELL");
-
         CamVO[] ar3 = cam_Service.picklist(ren);
+        BbsVO[] ar4 = null;
         Map<String, Object> map = new HashMap<>();
         map.put("blist", ar);
         map.put("ulist", ar2);
@@ -163,14 +163,14 @@ public class BbsController {
         }
         String img_start = "/upload_img/";
         String img_close = "contenteditable";
-        
+
         int begin = content.indexOf(img_start);
-        int end = content. indexOf(img_close, begin-1);
-        if(begin > 0 & end > 0){
-        String thum = content.substring(begin, end-2);
-        vo.setThum_img(thum);
+        int end = content.indexOf(img_close, begin - 1);
+        if (begin > 0 & end > 0) {
+            String thum = content.substring(begin, end - 2);
+            vo.setThum_img(thum);
         }
-        
+
         vo.setIp(req.getRemoteAddr());
         vo.setSubject(subject);
         vo.setNickname(nickname);
@@ -183,32 +183,33 @@ public class BbsController {
         return map;
 
     }
+
     @RequestMapping("/fixbbs/submit")
     public Map<String, Object> editOk(String subject, String content,
-        @RequestPart(value="file", required=false) MultipartFile file, String bname, String price){
+            @RequestPart(value = "file", required = false) MultipartFile file, String bname, String price) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
         String ori_name = null;
         String file_name = null;
 
-            if(file != null){
-                ori_name = file.getOriginalFilename();
-                file_name = FileRenameUtil.checkSameFileName(ori_name, file_path);
+        if (file != null) {
+            ori_name = file.getOriginalFilename();
+            file_name = FileRenameUtil.checkSameFileName(ori_name, file_path);
 
-                try{
-                    file.transferTo(new File(file_path, file_name));
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-        
+            try {
+                file.transferTo(new File(file_path, file_name));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        b_Service.fixbbs(subject, content, file_name, ori_name, bname, price);
+
+        return map;
+
     }
-    
-    b_Service.fixbbs(subject, content, file_name, ori_name, bname, price);
-
-    return map;
-        
-}
 
     @RequestMapping("/upload_img")
     public Map<String, Object> uploadImg(@RequestPart(value = "file", required = false) MultipartFile file) {
