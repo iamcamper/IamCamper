@@ -1,13 +1,13 @@
 import styles from '../../styles/Home.module.css'
 
-
+import EditIcon from '@mui/icons-material/Edit';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Main1 from '../../com/Main1';
 import Main1_Menu from '../../com/Main1_Menu';
 import Main_Bottom from '../../com/Main_Bottom';
 import Main_top from '../../com/Main_top';
-import { Box, Button, CardActions, CardContent, CardHeader, CardMedia, Grid, Link, Typography } from '@mui/material';
+import { Box, Button, CardActions, CardContent, CardHeader, CardMedia, Fab, Grid, Link, Pagination, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import  Axios  from 'axios';
 import { useRouter } from 'next/router';
@@ -48,6 +48,14 @@ export default function Home() {
                         query: { idx: list.b_idx },
                        })
       }
+      function edit(){
+        router.push({
+            pathname:'/bbs/edit_bbs',
+        });
+    }
+    const pageChange = (event, value) => {
+        setCpage(value);
+      };
 
   return (
     <>  <div className={styles.container}>
@@ -86,8 +94,24 @@ export default function Home() {
             </Grid>))}
             </Grid>
         </Box>
+        <div className="bottom-div">
+          <Grid item xs style={{ width: '1600px', textAlign: 'right', padding: '30px', float: 'right' }}>
+            <Fab color="secondary" aria-label="edit" onClick={edit}><EditIcon /></Fab>
+          </Grid>
+          <form className="search-form">
+            <input type="text" placeholder="Search" className="search-input" />
+            <button type="submit" className="search-button">
+              <img src={'/images/search_icon.png'} />
+            </button>
+          </form>
+          <Stack spacing={2} sx={{display:'inline-block'}}>
+          <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary'
+                            page={cPage}
+                            onChange={pageChange}/>
+          </Stack>
+        </div>
         <div>
             <Main_Bottom />
         </div></>
   )
-}
+                    }
