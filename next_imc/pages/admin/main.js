@@ -38,6 +38,7 @@ export default function main(){
         Axios.post(
             API_URL, null,
         ).then(json => {
+
             setRegData(json.data.regList);
             setTotalReg(json.data.totalReg);
             setTodayReg(json.data.todayReg);

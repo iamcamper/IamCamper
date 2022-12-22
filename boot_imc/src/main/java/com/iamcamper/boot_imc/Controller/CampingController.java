@@ -104,7 +104,7 @@ public class CampingController {
     public String Update1() throws Exception {// 캠핑 업데이트
 
         boolean del = service.del("캠핑");
-        System.out.println("del:" + del);
+
         String API_URL = "http://apis.data.go.kr/B551011/GoCamping/basedList?serviceKey=wBQmzgiBACZ1O%2FJ79%2FmqTep2O%2BGJZiXE2%2BHacF5l2epi%2FT4f1uh270dxEAiIzwstnzWTF74b6C%2BRli%2BRL4UlTQ%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=xml";
         URL url = new URL(API_URL);
 

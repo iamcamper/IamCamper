@@ -42,7 +42,7 @@ public class AdminBbsController {
     private HttpServletResponse res;
 
     String img_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_img";
-    String file_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_file";
+    String file_path = "C:/My test/main1219/IamCamper/next_imc/public/upload_file";
 
     /*
      * 공지사항 리스트 불러오기
