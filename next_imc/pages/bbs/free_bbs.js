@@ -4,7 +4,7 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main_Bottom from "../../com/Main_Bottom";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
-import { Button, Fab, Grid, Pagination, Stack } from "@mui/material";
+import { Button, Fab, Grid, Pagination, Stack, Typography } from "@mui/material";
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -30,6 +30,7 @@ export default function free_bbs(){
     const [totalPage, setTotalPage] = useState();
     const API_URL = "/bbs/list";
     const router = useRouter();
+    console.log(cookie);
   
   function getList(){
     Axios.post(
@@ -66,6 +67,11 @@ const pageChange = (event, value) => {
           <Main1 />
           <Main1_Menu />
           <Banner/>
+          <div>
+                <Typography variant="h3" color="text.secondary" sx={{width:1600, textAlign:'left', margin:'auto', padding:2}}>
+                        자유게시판
+                </Typography>
+            </div>
         <div>
 
           <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: 'auto' }}>
@@ -74,7 +80,7 @@ const pageChange = (event, value) => {
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/free_bbs")}> 자유 게시판 </Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/campreview")}>후기 게시판</Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/rest_bbs")}> 맛집 게시판</Button></Grid>
-              <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/buy_bbs")}>중고 거래 게시판</Button></Grid>
+              <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/QNA")}>자주 하는 질문</Button></Grid>
             </Grid>
 
             <TableContainer component={Paper}>

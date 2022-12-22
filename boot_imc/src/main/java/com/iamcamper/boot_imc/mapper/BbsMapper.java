@@ -27,4 +27,6 @@ public interface BbsMapper {
     void ViewCount(String b_idx);
 
     void like(@Param("b_idx") Integer b_idx);
+
+    BbsVO subchk(@Param("subject") String subject);
 }

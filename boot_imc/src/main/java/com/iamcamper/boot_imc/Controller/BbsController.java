@@ -63,14 +63,17 @@ public class BbsController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         int totalCount = b_Service.totalCount(bname);
+        System.out.println(totalCount);
 
+        page.setNumPerPage(9);
         page.setTotalCount(totalCount);
 
-        if (cPage != null) {
+        if (cPage.length() > 0) {
             page.setNowPage(Integer.parseInt(cPage));
         } else {
             page.setNowPage(1);
         }
+
 
         String begin = String.valueOf(page.getBegin());
         String end = String.valueOf(page.getEnd());

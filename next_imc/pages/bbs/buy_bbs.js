@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 
 
 
-export default function Home() {
+export default function buy_bbs() {
     const [list, setList] = useState([]);
     const [cPage, setCpage] = useState(1);
     const [totalPage, setTotalPage] = useState();
@@ -28,19 +28,19 @@ export default function Home() {
             API_URL, null,
             {params:{bname:'RESELL', cPage:cPage}}
           ).then((json) =>{
-            setTotalPage(json.data.totalPage);
+            
             if(json.data.list == null){
                 alert("데이터가 없습니다.");
                 setList([]);
               }else{
               setList(json.data.list);
-              }
+              }setTotalPage(json.data.totalPage);
           });
       }
 
       useEffect(() => {
         getList();
-      },[]);
+      },[cPage]);
 
       function linkview(){
         router.push({
@@ -62,17 +62,21 @@ export default function Home() {
           <Main_top />
           <Main1 />
             <Main1_Menu />
-        </div>
+            <div>
+                <Typography variant="h3" color="text.secondary" sx={{width:1600, textAlign:'left', margin:'auto', padding:2}}>
+                        중고 거래 게시판
+                </Typography>
+            </div>
             <Grid container my={8} style={{textAlign:'center', margin:'auto', width:'1600px'}}>
                 <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={()=>router.push("/bbs/free_bbs")} > 자유 게시판 </Button></Grid>
                 <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={() => router.push("/bbs/campreview")}>후기 게시판</Button></Grid>
-                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} > 맛집 게시판</Button></Grid>
-                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={()=>router.push("/bbs/buy_bbs")}>중고 거래 게시판</Button></Grid>
+                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={() => router.push("/bbs/rest_bbs")}> 맛집 게시판</Button></Grid>
+                <Grid item xs><Button variant="outlined" style={{width:'100%',height:"100%"}} onClick={() => router.push("/bbs/QNA")}>자주 하는 질문</Button></Grid>
           </Grid>
              <Box sx={{ flexGrow: 1, width: '1600px', margin:'auto', padding:'30px' }}>
             <Grid container spacing={1}>
             {list != null && list.map((bbs, b_idx) => (
-        <Grid item xs={4} key ={bbs.b_idx}>
+            <Grid item xs={4} key ={bbs.b_idx}>
                 <CardHeader
                     title={bbs.subject}
                     subheader={bbs.write_date} />
@@ -112,6 +116,6 @@ export default function Home() {
         </div>
         <div>
             <Main_Bottom />
-        </div></>
+        </div></div></>
   )
                     }

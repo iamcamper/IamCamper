@@ -14,10 +14,11 @@
 		SELECT a.* FROM(
 			SELECT @RN:=@RN+1 AS rownnum, b.*
 			FROM (SELECT * FROM bbs
-					WHERE status = 0 OR status = 2 ORDER BY b_idx DESC) b, (SELECT @RN:=0) r
+					WHERE (status = 0 OR status = 2) AND bname = #{bname} ORDER BY b_idx DESC) b, (SELECT @RN:=0) r
 		) a
 		WHERE (rownnum BETWEEN #{begin} AND #{end}) AND bname = #{bname}
 	</select>
+
     <insert id="add" parameterType="com.iamcamper.boot_imc.VO.BbsVO">
 		INSERT INTO bbs(subject, nickname, content, file_name, ori_name, thum_img, write_date, ip, bname, price)
    		VALUES (#{subject}, #{nickname}, #{content}, #{file_name}, #{ori_name}, #{thum_img}, NOW(), #{ip}, #{bname}, #{price})
@@ -61,7 +62,7 @@
 	<!-- 메인페이지 배너 불러오기 -->
 
 	<select id="totalCount" resultType="int" parameterType="String">
-    SELECT COUNT(*) FROM bbs
+    SELECT COUNT(*) FROM iamcamper.bbs
     WHERE bname = #{bname} AND status = 0
     </select>
 	<update id="like" parameterType="int">
