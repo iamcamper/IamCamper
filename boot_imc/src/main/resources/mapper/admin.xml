@@ -222,4 +222,16 @@
     SELECT * FROM iamcamper.bbs
     WHERE bname ='BANNERMAIN' AND status = 0 
   </select>
+
+  <!-- 어드민 글 삭제 -->
+  <update id="del" parameterType="String">
+    UPDATE bbs SET status = 1
+    WHERE b_idx = #{b_idx}
+  </update>
+
+  <!-- 어드민 글 삭제 검증 -->
+  <select id="delChk" parameterType="String" resultType="int">
+    SELECT COUNT(*) FROM bbs
+    WHERE b_idx = #{b_idx} AND status = 1 
+  </select>
 </mapper>

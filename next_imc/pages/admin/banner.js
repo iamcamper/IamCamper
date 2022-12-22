@@ -6,7 +6,11 @@ import Axios from 'axios';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+<<<<<<< HEAD
 import { hasCookie ,getCookie} from 'cookies-next';
+=======
+import { getCookie, hasCookie } from 'cookies-next';
+>>>>>>> 82f1900b2a128189eb452c99ccd7fede04cbbbfc
 
 
 
@@ -21,6 +25,8 @@ export default function banner(){
     const [cPage, setCpage] = useState(parsNum);
     const [totalPage, setTotalPage] = useState(1);
     const [cookieChk, setCookieChk] = useState(false);
+
+    const DEL_URL = "/admin/del";
 
     const pageChange = (event, value) => {
         setCpage(value);
@@ -58,6 +64,28 @@ export default function banner(){
             setCookieChk(false);
         }
     },[]);
+
+    function del(idx){
+
+        if(confirm("정말로 삭제하시겠습니까?")){
+            
+            Axios.post(
+                DEL_URL, null,
+                {params: {b_idx:idx}},
+            ).then(json => {
+                if(json.data.chk == 1){
+                    alert("삭제되었습니다!");
+                    getList();
+                }else{
+                    alert("삭제 실패!");
+                    return
+                }
+            })
+        } else {
+            return;
+        }
+
+    }
 
     return(
         <>
@@ -106,7 +134,9 @@ export default function banner(){
                                     <TableCell>{data.write_date}</TableCell>
                                     {data.nickname === getCookie("adminnickname") && (
                                     <TableCell align='center'>
-                                        <Button size='small' variant='contained' color='error'>삭제</Button>
+                                        <Button size='small' variant='contained' color='error' onClick={()=>{
+                                            del(data.b_idx);
+                                    }}>삭제</Button>
                                     </TableCell>
                                     )}
                                     {data.nickname !== getCookie("adminnickname") && (
