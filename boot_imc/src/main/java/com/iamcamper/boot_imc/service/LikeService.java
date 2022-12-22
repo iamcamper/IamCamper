@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iamcamper.boot_imc.VO.LikeVO;
+import com.iamcamper.boot_imc.mapper.BbsMapper;
 import com.iamcamper.boot_imc.mapper.LikeMapper;
 
 @Service
@@ -13,24 +14,27 @@ public class LikeService {
     @Autowired
     private LikeMapper mapper;
 
+    @Autowired
+    private BbsMapper bmap;
+
     public void Likeup(Integer b_idx, Integer m_idx) {
-         mapper.likeup(b_idx, m_idx);
+        mapper.likeup(b_idx, m_idx);
     }
 
     public void Likedel(Integer b_idx, Integer m_idx) {
-         mapper.likedel(b_idx, m_idx);
+        mapper.likedel(b_idx, m_idx);
     }
 
     public void CLikeup(Integer c_idx, Integer m_idx) {
-         mapper.clikeup(c_idx, m_idx);
+        mapper.clikeup(c_idx, m_idx);
     }
 
     public void CLikedel(Integer c_idx, Integer m_idx) {
-         mapper.clikedel(c_idx, m_idx);
+        mapper.clikedel(c_idx, m_idx);
     }
 
     public List<LikeVO> Chklike(Integer b_idx, Integer m_idx) {
-                return mapper.chklike(b_idx, m_idx);
+        return mapper.chklike(b_idx, m_idx);
     }
 
     public List<LikeVO> Chkclike(Integer c_idx, Integer m_idx) {
@@ -44,10 +48,17 @@ public class LikeService {
     public void Addclike(Integer m_idx, Integer c_idx) {
         mapper.addclike(m_idx, c_idx);
     }
-    public int Fchk(Integer b_idx, Integer m_idx){
+
+    public int Fchk(Integer b_idx, Integer m_idx) {
         return mapper.chk(b_idx, m_idx);
     }
-    public int FCchk(Integer c_idx, Integer m_idx){
+
+    public int FCchk(Integer c_idx, Integer m_idx) {
         return mapper.cchk(c_idx, m_idx);
     }
+
+    public void likeup(Integer b_idx) {
+        bmap.like(b_idx);
+    }
+
 }

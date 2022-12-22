@@ -4,15 +4,15 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iamcamper.boot_imc.mapper.LikeMapper">
 
-<select id="totallike" resultType="int" parameterType="String">
-    SELECT COUNT(*) FROM iamcamper.like
-    WHERE b_idx = #{b_idx} AND status = 1
+<select id="totallike" resultType="int" parameterType="Map">
+        SELECT a.* FROM (SELECT @RN:=@RN+1 AS rownum, b.*, IFNULL (l.cnt, 0) AS likehit 
+        FROM bbs b LEFT OUTER JOIN 
+        (SELECT b_idx, SUM(status) AS cnt FROM iamcamper.like
+        GROUP BY b_idx) l
+        ON l.b_idx = b.b_idx
+        WHERE b.status = 0 AND b.bname = #{bname}) a, (SELECT @RN:=0) r  
+        WHERE rownum BETWEEN #{begin} AND #{end};
 </select>
-<select id="totalclike" resultType="int" parameterType="String">
-    SELECT COUNT(*) FROM iamcamper.like
-    WHERE c_idx = #{c_idx} AND status = 1
-</select>
-
 <select id="chk" resultType="int" parameterType="Map">
     Select COUNT(*) from iamcamper.like
         Where m_idx = #{m_idx}
@@ -26,7 +26,7 @@
         And status = 1
 </select>
 <select id="chklike" resultType="com.iamcamper.boot_imc.VO.LikeVO" parameterType="Map">
-    SELECT ifnull(max(b_idx),0)b_idx FROM iamcamper.like
+    SELECT ifnull(max(b_idx),0) AS b_idx FROM iamcamper.like
     WHERE m_idx = #{m_idx}
 </select>
 <select id="chkclike" resultType="com.iamcamper.boot_imc.VO.LikeVO" parameterType="Map">
@@ -38,28 +38,28 @@
     VALUES (#{m_idx}, #{b_idx}, 1)
 </insert>
 <insert id='addclike' parameterType="com.iamcamper.boot_imc.VO.LikeVO">
-    INSERT INTO iamcamper.like(m_idx, c_idx)
+    INSERT INTO iamcamper.like(m_idx, c_idx, status)
     VALUES (#{m_idx}, #{c_idx}, 1)
 </insert>
 <update id="likeup">
-    UPDATE iamcamper.like
-    set status = 1
-    WHERE b_idx = #{b_idx} AND m_idx = #{m_idx}
+    UPDATE iamcamper.bbs b JOIN iamcamper.like l ON b.b_idx = l.b_idx
+    SET b.like = b.like + 1 , l.status = 1
+    WHERE l.b_idx = #{b_idx} AND b.b_idx = #{b_idx} AND l.m_idx = #{m_idx}
 </update>
 <update id="likedel">
-    UPDATE iamcamper.like
-    set status = 0
-    WHERE b_idx = #{b_idx} AND m_idx = #{m_idx}
+    UPDATE iamcamper.bbs b JOIN iamcamper.like l ON b.b_idx = l.b_idx
+    SET b.like = b.like -1 , l.status = 0
+    WHERE l.b_idx = #{b_idx} AND b.b_idx = #{b_idx} AND l.m_idx = #{m_idx}
 </update>
 
 <update id="clikeup">
-    UPDATE iamcamper.like
-    set status = 1
-    WHERE c_idx = #{c_idx} AND m_idx = #{m_idx}
+    UPDATE iamcamper.comment c JOIN iamcamper.like l ON c.c_idx = l.c_idx
+    SET c.like = c.like + 1 , l.status = 1
+    WHERE l.c_idx = #{c_idx} AND c.c_idx = #{c_idx} AND l.m_idx = #{m_idx}
 </update>
 <update id="clikedel">
-    UPDATE iamcamper.like
-    set status = 0
-    WHERE c_idx = #{c_idx} AND m_idx = #{m_idx}
+    UPDATE iamcamper.comment c JOIN iamcamper.like l ON c.c_idx = l.c_idx
+    SET c.like = c.like - 1 , l.status = 0
+    WHERE l.c_idx = #{c_idx} AND c.c_idx = #{c_idx} AND l.m_idx = #{m_idx}
 </update>
 </mapper>

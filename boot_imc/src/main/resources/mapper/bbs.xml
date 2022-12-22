@@ -64,6 +64,11 @@
     SELECT COUNT(*) FROM bbs
     WHERE bname = #{bname} AND status = 0
     </select>
+	<update id="like" parameterType="int">
+		UPDATE iamcamper.bbs b
+		set b.like = 1
+		WHERE b_idx = #{b_idx}
+	</update>
 
 	<update id="ViewCount">
     UPDATE bbs

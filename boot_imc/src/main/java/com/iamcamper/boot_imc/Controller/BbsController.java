@@ -19,9 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.iamcamper.boot_imc.VO.BbsVO;
 import com.iamcamper.boot_imc.VO.CamVO;
 import com.iamcamper.boot_imc.VO.CommVO;
+import com.iamcamper.boot_imc.VO.LikeVO;
 import com.iamcamper.boot_imc.service.BbsService;
 import com.iamcamper.boot_imc.service.CamService;
 import com.iamcamper.boot_imc.service.CommService;
+import com.iamcamper.boot_imc.service.LikeService;
 import com.iamcamper.boot_imc.util.FileRenameUtil;
 import com.iamcamper.boot_imc.util.Paging;
 import com.iamcamper.boot_imc.util.ThumImgUtil;
@@ -40,6 +42,9 @@ public class BbsController {
 
     @Autowired
     private CamService cam_Service;
+
+    @Autowired
+    private LikeService l_Service;
 
     @Autowired
     private HttpServletRequest req;

@@ -20,6 +20,7 @@ export default function viewList({list}){
   const API_LIKE = "/like/up";
   const API_DEL = "/like/dw";
   const API_CHK = "/like/chk";
+  console.log(list);
 
   function likesubmit(){
     if(likehit == 0){
@@ -45,12 +46,11 @@ export default function viewList({list}){
     0 : <FavoriteBorderIcon/>,
     1 : <FavoriteIcon color="error"/>
   }
-console.log(likehit);
 
 function likechk(){
   Axios.post(
     API_CHK,null,
-    {params:{b_idx:6, m_idx:1}}
+    {params:{b_idx:list.b_idx, m_idx:1}}
   ).then((json) =>{
     setLikehit(json.data.cnt);
   });

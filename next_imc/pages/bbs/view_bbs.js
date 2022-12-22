@@ -21,22 +21,17 @@ import { getCookie } from "cookies-next";
 export default function view_bbs(){
 
   const router = useRouter();
-  const b_idx = router.query.idx;
   const [list, setList] = useState([]);
-  const API_VIEW = "/bbs/view?b_idx="+b_idx; 
-  const API_DEL = "/bbs/del?b_idx="+b_idx;
-  const API_Comm = "/bbs/commList?b_idx="+b_idx;
+  const API_VIEW = "/bbs/view?b_idx="+router.query.idx; 
+  const API_DEL = "/bbs/del?b_idx="+router.query.idx;
+  const API_Comm = "/bbs/commList?b_idx="+router.query.idx;
   const API_Submit = "/bbs/commAdd";
   const API_CLIKE = "/like/cup";
   const API_CDEL = "/like/cdw";
   const API_CCHK = "/like/cchk";
   const [comm, setComm] = useState([]);
   const [commin, setCommin] = useState('');
- 
 
-  console.log(commin);
-  console.log(b_idx);
-  console.log(list);
 
   function fixAction(){
     router.push({
@@ -47,7 +42,6 @@ export default function view_bbs(){
 
   function changeComm(e){
     setCommin(e.target.value);
-    console.log(commin);
   }
   function getList(){
     Axios.get(
@@ -64,11 +58,11 @@ export default function view_bbs(){
   function getComm(){
     Axios.get(
       API_Comm
-    ).then((res) => {
-        if(res.data.clist === null)
+    ).then((json) => {
+        if(json.data.clist === null)
           setComm([{nickname:'', content:'댓글이 없습니다'}])
           else(
-          setComm(res.data.clist)
+          setComm(json.data.clist)
           )
     })
   }
@@ -92,22 +86,24 @@ export default function view_bbs(){
   }
   const [clikehit, setClikehit] = useState();
     
-  function clikesubmit(){
+  const cliksubmit = (idx) => {
+    
+    console.log(idx);
     if(clikehit == 0){
       setClikehit(1);
       Axios.post(
         API_CLIKE,null,
-        {params:{c_idx:1, m_idx:1}}
+        {params:{c_idx:idx, m_idx:1}}
       ).then(
-        router.push("/bbs/view_bbs?idx="+b_idx)
+        router.push("/bbs/view_bbs?idx="+router.query.idx)
       );
     }else if(clikehit == 1){
       setClikehit(0);
       Axios.post(
         API_CDEL,null,
-        {params:{c_idx:1, m_idx:1}}
+        {params:{c_idx:c_idx, m_idx:1}}
       ).then(
-        router.push("/bbs/view_bbs?idx="+b_idx)
+        router.push("/bbs/view_bbs?idx="+router.query.idx)
       );
     }
   }
@@ -118,7 +114,7 @@ export default function view_bbs(){
   function clikechk(){
       Axios.post(
         API_CCHK,null,
-          {params:{c_idx:1, m_idx:1}}
+          {params:{c_idx:comm.c_idx, m_idx:1}}
         ).then((json) =>{
           setClikehit(json.data.ccnt);
         });
@@ -200,12 +196,11 @@ export default function view_bbs(){
             <Typography noWrap>{comm.content}</Typography>
           </Grid> 
           <Grid>
-          <IconButton aria-label="FavoriteBorder" onClick={clikesubmit}>
+          <IconButton aria-label="FavoriteBorder" onClick={() => cliksubmit(comm.c_idx)}>
                           {likecolor[clikehit]}
                     </IconButton>
           </Grid>
       </Grid> 
-       
       </Paper>))} 
     </Box>
       <div> 

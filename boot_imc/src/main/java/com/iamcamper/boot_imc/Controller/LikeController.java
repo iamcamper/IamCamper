@@ -24,7 +24,7 @@ public class LikeController {
     private LikeService l_Service;
 
     @RequestMapping("/chk")
-    public Map<String, Object> First(Integer b_idx, Integer m_idx){
+    public Map<String, Object> First(Integer b_idx, Integer m_idx) {
         Map<String, Object> map = new HashMap<String, Object>();
 
         int cnt = l_Service.Fchk(b_idx, m_idx);
@@ -33,8 +33,9 @@ public class LikeController {
 
         return map;
     }
+
     @RequestMapping("/cchk")
-    public Map<String, Object> CFirst(Integer c_idx, Integer m_idx){
+    public Map<String, Object> CFirst(Integer c_idx, Integer m_idx) {
         Map<String, Object> map = new HashMap<String, Object>();
 
         int cnt = l_Service.FCchk(c_idx, m_idx);
@@ -43,25 +44,17 @@ public class LikeController {
 
         return map;
     }
-    
 
     @RequestMapping("/up")
     public void Up(Integer b_idx, Integer m_idx) {
 
-        List<LikeVO> lv = l_Service.Chklike(b_idx, m_idx);
+        int cnt = l_Service.Fchk(b_idx, m_idx);
 
-
-        LikeVO[] list = null;
-        if (lv != null && lv.size() > 0) {
-            list = new LikeVO[lv.size()];
-            lv.toArray(list);
-        }
-        for(int i = 0; i < list.length; i++){
-            if(list[i].getB_idx() == 0){
-                l_Service.Addlike(m_idx, b_idx);
-            }else{
-                l_Service.Likeup(b_idx, m_idx);
-            }
+        if (cnt == 0) {
+            l_Service.Addlike(m_idx, b_idx);
+            l_Service.likeup(b_idx);
+        } else {
+            l_Service.Likeup(b_idx, m_idx);
         }
     }
 
@@ -73,19 +66,12 @@ public class LikeController {
     @RequestMapping("/cup")
     public void Cup(Integer c_idx, Integer m_idx) {
 
-        List<LikeVO> lv = l_Service.Chkclike(c_idx, m_idx);
-       
-        LikeVO[] list = null;
-        if (lv != null && lv.size() > 0) {
-            list = new LikeVO[lv.size()];
-            lv.toArray(list);
-        }
-        for(int i = 0; i < list.length; i++){
-            if(list[i].getC_idx() == 0){
-                l_Service.Addclike(m_idx, c_idx);
-            }else{
-                l_Service.CLikeup(c_idx, m_idx);
-            }
+        int cnt = l_Service.FCchk(c_idx, m_idx);
+
+        if (cnt == 0) {
+            l_Service.Addclike(m_idx, c_idx);
+        } else {
+            l_Service.CLikeup(c_idx, m_idx);
         }
     }
 

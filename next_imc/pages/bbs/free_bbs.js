@@ -29,8 +29,8 @@ export default function free_bbs(){
     const [cPage, setCpage] = useState(1);
     const [totalPage, setTotalPage] = useState();
     const API_URL = "/bbs/list";
+    const API_CNT = "/like/totallike";
     const router = useRouter();
-    console.log(cookie);
   
   function getList(){
     Axios.post(

@@ -25,4 +25,6 @@ public interface BbsMapper {
     int totalCount(@Param("bname") String bname);
 
     int ViewCount(String b_idx);
+
+    void like(@Param("b_idx") Integer b_idx);
 }
