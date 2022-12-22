@@ -23,7 +23,7 @@ export default function edit_bbs(){
     
     const nickname = "testnick";
     const editorRef = useRef();
-    const [subject, setSubject] = useState({});
+    const [subject, setSubject] = useState();
     const WRITE_URL = "/bbs/addbbs";
     const router = useRouter();
     const formData = new FormData();
@@ -42,8 +42,14 @@ export default function edit_bbs(){
         console.log(subject);
     }
     const changePrice = (e) => {
-        setPrice(e.target.value);
-        console.log(price);
+        var checkprice = /[0-9]/gi
+        if(checkprice.test(e.target.value) == false){
+            alert("가격 칸에는 숫자만 입력하실 수 있습니다.");
+            e.target.value = '';
+            return;
+        }else if(checkprice.test(e.target.value) == true){
+            setPrice(e.target.value);
+        }
     }
     function changeFile(e){
         file = e.target.files[0];
@@ -52,9 +58,10 @@ export default function edit_bbs(){
 
         formData.append("file", file);
         formData.append("nickname", nickname);
-        formData.append("subject", subject);
-        
-        
+        if(subject == null){
+            alert("제목을 입력해주세요");
+            return;
+        }else{formData.append("subject", subject);}
         Axios.post(
             WRITE_URL, formData,
             {params:{

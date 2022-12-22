@@ -125,8 +125,8 @@ const pageChange = (event, value) => {
               <img src={'/images/search_icon.png'} />
             </button>
           </form>
-          <Stack spacing={2}>
-          <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary' sx={{marginTop:'30px'}}
+          <Stack spacing={2} sx={{display:'inline-block'}}>
+          <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary'
                             page={cPage}
                             onChange={pageChange}/>
           </Stack>

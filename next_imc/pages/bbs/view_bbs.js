@@ -134,7 +134,7 @@ export default function view_bbs(){
       sx={{
         p: 3,
         width:'1400px',
-        height:'700px',
+        height:'auto',
         margin: 'auto',
         flexGrow: 1,
         backgroundColor: (theme) =>

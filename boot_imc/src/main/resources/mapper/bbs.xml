@@ -14,7 +14,7 @@
 		SELECT a.* FROM(
 			SELECT @RN:=@RN+1 AS rownnum, b.*
 			FROM (SELECT * FROM bbs
-					WHERE status = 0 ORDER BY b_idx DESC) b, (SELECT @RN:=0) r
+					WHERE status = 0 OR status = 2 ORDER BY b_idx DESC) b, (SELECT @RN:=0) r
 		) a
 		WHERE (rownnum BETWEEN #{begin} AND #{end}) AND bname = #{bname}
 	</select>

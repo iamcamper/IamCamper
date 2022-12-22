@@ -33,6 +33,9 @@ public class BbsService {
 
         return view;
     }
+    public BbsVO subChk(String subject){
+        return mapper.subchk(subject);
+    }
 
     public BbsVO del(String b_idx) {
         BbsVO del = mapper.del(b_idx);
@@ -78,8 +81,8 @@ public class BbsService {
 
     }
 
-    public int ViewCount(String b_idx) {
-        return mapper.ViewCount(b_idx);
+    public void ViewCount(String b_idx) {
+        mapper.ViewCount(b_idx);
     }
 
 }

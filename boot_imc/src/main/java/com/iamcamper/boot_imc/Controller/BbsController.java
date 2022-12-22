@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -44,10 +46,10 @@ public class BbsController {
     private CamService cam_Service;
 
     @Autowired
-    private LikeService l_Service;
+    private HttpServletRequest req;
 
     @Autowired
-    private HttpServletRequest req;
+    private HttpServletResponse res;
 
     String img_path = "C:/ProJect/IamCamper/IamCamper/next_imc/public/upload_img";
     String file_path = "C:/ProJect/IamCamper/IamCamper/next_imc/public/upload_file";
@@ -85,6 +87,37 @@ public class BbsController {
         map.put("totalPage", page.getTotalPage());
 
         return map;
+
+    }
+
+    public void readCount(HttpServletRequest req, String b_idx, HttpServletResponse res) {
+
+        Cookie cookies[] = req.getCookies();
+        Cookie oldCookie = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("view")) {
+                    oldCookie = cookie;
+                }
+            }
+        }
+
+        if (oldCookie != null) {
+            if (!oldCookie.getValue().contains("[" + b_idx + "]")) {
+                b_Service.ViewCount(b_idx);
+                oldCookie.setValue(oldCookie.getValue() + "_[" + b_idx + "]");
+                oldCookie.setPath("/");
+                oldCookie.setMaxAge(60 * 60 * 24);
+                res.addCookie(oldCookie);
+            }
+        } else {
+            b_Service.ViewCount(b_idx);
+            Cookie newCookie = new Cookie("view", "[" + b_idx + "]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            res.addCookie(newCookie);
+        }
 
     }
 
@@ -174,6 +207,9 @@ public class BbsController {
         if (begin > 0 & end > 0) {
             String thum = content.substring(begin, end - 2);
             vo.setThum_img(thum);
+        }else if(begin <= 0 & end <=0){
+            String thum = "/upload_img/no-image.png";
+            vo.setThum_img(thum);
         }
 
         vo.setIp(req.getRemoteAddr());
@@ -182,7 +218,7 @@ public class BbsController {
         vo.setContent(content);
         vo.setBname(bname);
         vo.setPrice(price);
-
+        
         b_Service.add(vo);
 
         return map;
@@ -242,6 +278,8 @@ public class BbsController {
     @RequestMapping("/view")
     public BbsVO viewBbs(String b_idx) {
         BbsVO vo = b_Service.view(b_idx);
+
+        readCount(req, b_idx, res);
 
         return vo;
     }

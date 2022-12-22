@@ -29,7 +29,6 @@ export default function free_bbs(){
     const [cPage, setCpage] = useState(1);
     const [totalPage, setTotalPage] = useState();
     const API_URL = "/bbs/list";
-    const API_CNT = "/like/totallike";
     const router = useRouter();
   
   function getList(){
@@ -94,13 +93,14 @@ const pageChange = (event, value) => {
                   {list != null && list.map((bbs, index) => (
                     <TableRow key={index}>
                       <TableCell>{bbs.b_idx}</TableCell>
-                      <TableCell>
-                      <Link
-                       href={{
-                        pathname: '/bbs/view_bbs',
-                        query: { idx: bbs.b_idx },
-                       }}
-                      >{bbs.subject}</Link></TableCell>
+                       {bbs.status == 2 && <TableCell>규제된 글입니다.</TableCell>}
+                        {bbs.status == 0 &&<TableCell> 
+                            <Link
+                            href={{
+                              pathname: '/bbs/view_bbs',
+                              query: { idx: bbs.b_idx },
+                            }}
+                              >{bbs.subject}</Link></TableCell>}
                       <TableCell>{bbs.nickname}</TableCell>
                       <TableCell>{bbs.write_date}</TableCell>
                       <TableCell>{bbs.like}</TableCell>
@@ -123,8 +123,8 @@ const pageChange = (event, value) => {
               <img src={'/images/search_icon.png'} />
             </button>
           </form>
-          <Stack spacing={2}>
-          <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary' sx={{marginTop:'30px'}}
+          <Stack spacing={2} sx={{display:'inline-block'}}>
+          <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary'
                             page={cPage}
                             onChange={pageChange}/>
           </Stack>
