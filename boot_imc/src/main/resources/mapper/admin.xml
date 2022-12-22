@@ -234,4 +234,10 @@
     SELECT COUNT(*) FROM bbs
     WHERE b_idx = #{b_idx} AND status = 1 
   </select>
+
+  <!-- 대시보드 어제 가입한 회원 수 가져오기 -->
+  <select id="yRegCnt" resultType="int">
+    SELECT COUNT(*) FROM member
+    WHERE reg_date = DATE_FORMAT((SELECT NOW() - INTERVAL 1 DAY), '%Y-%m-%d');
+  </select>
 </mapper>

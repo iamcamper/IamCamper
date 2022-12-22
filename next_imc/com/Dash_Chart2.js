@@ -1,19 +1,29 @@
-import { PersonAdd } from "@mui/icons-material";
-import { Box, Typography } from "@mui/material";
+import { ArrowUpward, PersonAdd } from "@mui/icons-material";
+import { Box, Chip, Stack, Typography } from "@mui/material";
 
 
 
 
-export default function Dash_Chart2(props){
 
-    const totalReg = props.totalReg;
+export default function Dash_Chart2({regCount, ydayReg, totalReg}){
+
+    const toReg = {totalReg}; //(오늘까지의) 누적 가입 회원
+    const yesdayReg = {ydayReg}; //어제 가입한 회원
+    const todayCount = {regCount}; //오늘 가입한 회원
+
+    let per = ( todayCount.regCount / (toReg.totalReg - todayCount.regCount) ) * 100;
+
+    let msg = "전일 대비 " + per + "% 증가";
+
+    console.log(per);
+
 
     return(
-        <Box marginTop={2} paddingTop={4}>
-            <Typography variant="h5" gutterBottom>누적 가입 회원</Typography>
+        <Box marginTop={2} paddingTop={1}>
+            <Typography variant="h6" gutterBottom>누적 가입 회원</Typography>
             {totalReg != null && (
-            <Typography component="p" variant="h4">
-                {totalReg} 명
+            <Typography component="p" variant="h3" color="primary">
+                {totalReg}
             </Typography>
             )}
             {totalReg == null && (
@@ -21,6 +31,9 @@ export default function Dash_Chart2(props){
                데이터가 없습니다.
             </Typography>
             )}
+            <Stack spacing={1} marginTop={1} alignItems="center">
+              <Chip icon={<ArrowUpward/>} label={msg} color="primary" />
+            </Stack>
         </Box>
     );
 

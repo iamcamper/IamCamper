@@ -175,11 +175,6 @@ export default function reg(){
         let email = null;
         let phone = null;
 
-        if(!emailExp.test(email1+"@"+email2)){
-            alert("올바른 이메일 형식이 아닙니다.");
-            return;
-        }
-
         if(id.length < 1 && idChkValue === 1 ){
             alert("아이디를 다시 확인해 주세요.");
             return;
@@ -192,6 +187,11 @@ export default function reg(){
 
         if(nickname.length < 1){
             alert("닉네임을 입력해 주세요.");
+            return;
+        }
+
+        if(!emailExp.test(email1+"@"+email2)){
+            alert("올바른 이메일 형식이 아닙니다.");
             return;
         }
 

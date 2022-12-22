@@ -6,12 +6,7 @@ import Axios from 'axios';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-<<<<<<< HEAD
-import { hasCookie ,getCookie} from 'cookies-next';
-=======
 import { getCookie, hasCookie } from 'cookies-next';
->>>>>>> 82f1900b2a128189eb452c99ccd7fede04cbbbfc
-
 
 
 

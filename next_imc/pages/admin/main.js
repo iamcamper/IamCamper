@@ -28,6 +28,7 @@ export default function main(){
 
     const [todayReg, setTodayReg] = useState(''); //오늘 가입한 회원 수
     const [totalReg, setTotalReg] = useState(''); //전체 회원 수
+    const [ydayReg, setYdayReg] = useState('');
     const [regData, setRegData] = useState([]); //최근 5일 가입한 회원 수 배열
     const [bbsTotalList, setBbsTotalList] = useState([]); //게시판별 오늘 토탈 글 갯수
     const [bestBbs, setBestBbs] = useState();
@@ -44,6 +45,7 @@ export default function main(){
             setTodayReg(json.data.todayReg);
             setBbsTotalList(json.data.bbsTotalCntList);
             setBestBbs(json.data.bestBbs.bnameko);
+            setYdayReg(json.data.ydayReg);
         });
 
 
@@ -76,12 +78,12 @@ export default function main(){
                         <Grid container spacing={2}>
                             <Grid item xs={4}>
                                 <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
-                                    <Dash_Chart1 regCount={todayReg}/>
+                                    <Dash_Chart1 regCount={todayReg} ydayReg={ydayReg}/>
                                 </Paper>
                             </Grid>
                             <Grid item xs={4}>
                                 <Paper elevation={3} sx={{textAlign: 'center', height: '160px'}}>
-                                    <Dash_Chart2 totalReg={totalReg}/>
+                                    <Dash_Chart2 totalReg={totalReg} regCount={todayReg} ydayReg={ydayReg}/>
                                 </Paper>
                             </Grid>
                             <Grid item xs={4}>

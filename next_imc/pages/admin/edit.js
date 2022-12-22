@@ -1,4 +1,4 @@
-import { Box, Stack, Paper, Button, Input, Dialog, DialogTitle, DialogContent, DialogActions, InputLabel, MenuItem, FormControl } from '@mui/material';
+import { Box, Stack, Paper, Button, Input, Dialog, DialogTitle, DialogContent, DialogActions, InputLabel, MenuItem, FormControl, Typography } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import Admin_Footer from '../../com/Admin_Footer';
 import Admin_Navbar from '../../com/Admin_Navbar';
@@ -102,7 +102,9 @@ export default function write(){
         <Stack direction="row" spacing={2} justifyContent="space-between">  
             <Admin_Sidebar/>
             <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
-            <h5>글 작성하기</h5>
+            <Typography variant="h5" gutterBottom>
+                    [ 글 수정하기 ]
+            </Typography>
                 <Paper sx={{padding:"20px", margin:'auto'}}>
                     <form encType='multipart/form-data' id='frm'>
                         <table>

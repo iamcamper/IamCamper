@@ -148,8 +148,6 @@ public class AdminBbsController {
 
         a_service.write(vo);
 
-        map.put("chk", "1");
-
         return map;
 
     }
@@ -301,6 +299,8 @@ public class AdminBbsController {
 
         // 오늘 가입한 회원 수 가져오기
         int todayReg = a_service.todayRegCount();
+        // 어제 가입한 회원 수 가져오기
+        int yDayReg = a_service.yRegCnt();
         // 전체 가입한 회원 수 가져오기
         int totalReg = a_service.memberCnt();
 
@@ -323,11 +323,13 @@ public class AdminBbsController {
             regList.toArray(r_list);
         }
 
+
         map.put("bestBbs", bestBbs);
         map.put("bbsTotalCntList", b_total_list);
         map.put("regList", r_list);
         map.put("todayReg", todayReg);
         map.put("totalReg", totalReg);
+        map.put("ydayReg", yDayReg);
 
         return map;
 

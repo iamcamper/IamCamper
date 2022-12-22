@@ -94,4 +94,7 @@ public interface AdminMapper {
 
     // 어드민 글 삭제 검증
     int delChk(String b_idx);
+
+    // 어드민 대시보드 어제 가입자 
+    int yRegCnt();
 }

@@ -216,4 +216,11 @@ public class AdminService {
         return mapper.delChk(b_idx);
 
     }
+
+    //어드민 대시보드 어제 가입한 회원
+    public int yRegCnt(){
+
+        return mapper.yRegCnt();
+
+    }
 }
