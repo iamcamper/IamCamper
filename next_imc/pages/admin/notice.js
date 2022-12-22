@@ -22,6 +22,8 @@ export default function notice(){
     const [totalPage, setTotalPage] = useState();
     const [cookieChk, setCookieChk] = useState(false);
 
+    const DEL_URL = "/admin/del";
+
     const pageChange = (event, value) => {
         setCPage(value);
     };
@@ -44,8 +46,33 @@ export default function notice(){
         });
     }
 
+    function del(idx){
+
+        if(confirm("정말로 삭제하시겠습니까?")){
+            
+            Axios.post(
+                DEL_URL, null,
+                {params: {b_idx:idx}},
+            ).then(json => {
+                if(json.data.chk == 1){
+                    alert("삭제되었습니다!");
+                    getList();
+                }else{
+                    alert("삭제 실패!");
+                    return
+                }
+            })
+        } else {
+            return;
+        }
+
+    }
+
     useEffect(()=>{
-        getList();
+        async function gd(){
+            const gdata = await getList();
+        }
+        gd();
     },[]);
 
     useEffect(()=>{
@@ -103,7 +130,9 @@ export default function notice(){
                                     <TableCell align="right">{data.hit}</TableCell>
                                     {data.nickname === getCookie("adminnickname") && (
                                     <TableCell align='center'>
-                                        <Button size='small' variant='contained' color='error'>삭제</Button>
+                                        <Button size='small' variant='contained' color='error' onClick={()=>{
+                                            del(data.b_idx);
+                                    }}>삭제</Button>
                                     </TableCell>
                                     )}
                                     {data.nickname !== getCookie("adminnickname") && (

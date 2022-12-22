@@ -8,17 +8,24 @@ import { Router } from "react-router-dom";
 import Admin_Footer from "../../com/Admin_Footer";
 import Admin_Navbar from "../../com/Admin_Navbar";
 import Admin_Sidebar from "../../com/Admin_Sidebar";
+import { useEffect } from "react";
 
 
 
 
 export default function bbs(){
 
+ 
+
     const router = useRouter();
+
+    let sel = router.query.select;
+    let val = router.query.value;
+
     const API_URL = "/admin/bbs/search";
     const DEL_URL = "/admin/bbs/del";
     const [select, setSelect] = useState();
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState();
     const [list, setList] = useState([]);
     const [cPage, setCpage] = useState('');
     const [totalPage, setTotalPage] = useState('');
@@ -53,7 +60,29 @@ export default function bbs(){
 
     function pageChange(){
 
+
     }
+
+    function getList(){
+
+        setSelect(sel);
+        setSearchValue(val);
+
+        Axios.post(
+            API_URL, null,
+            {params: {category: sel, value: val, cPage: cPage}}
+        ).then(json=>{
+            setList(json.data.b_list);
+            setTotalPage(json.data.totalPage);
+        });
+
+    }
+
+    useEffect(()=>{
+        if(sel != null){
+            getList();
+        }
+    },[]);
 
     function del(idx){
 
@@ -176,7 +205,7 @@ export default function bbs(){
                                     <TableCell>
                                     <Link href={{
                                             pathname: "/admin/views",
-                                            query: {b_idx: data.b_idx, cPage: cPage, bname:data.bname, bbs:'banner'},
+                                            query: {b_idx: data.b_idx, cPage: cPage, bbs:'bbs', select:select, value:searchValue},
                                     }}>
                                         {data.subject}
                                     </Link>
@@ -192,7 +221,7 @@ export default function bbs(){
                             ))}
                             {(list == undefined || list.length < 0) && (
                                 <TableRow key={1}>
-                                    <TableCell rowSpan={5}>검색된 내용이 없습니다.</TableCell>
+                                    <TableCell colSpan={5}>검색된 내용이 없습니다.</TableCell>
                                 </TableRow>
                             )}
                         </TableBody>

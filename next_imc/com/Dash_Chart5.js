@@ -42,7 +42,12 @@ const options = {
         <Box marginTop={2} paddingTop={2}>
             <Typography variant="h5" gutterBottom>최근 5일 가입자 현황</Typography>
             <Box>
-                <Line data={data} options={options} style={{position: 'relative', height:'18vw', width:'35vw', margin:'auto'}}/>
+                {regData != null && (
+                <Line data={data} options={options} style={{position: 'relative', height:'14vw', width:'30vw', margin:'auto'}}/>
+                )}
+                {regData == null && (
+                    <Typography>데이터가 없습니다.</Typography>
+                )}
             </Box>
         </Box>
     );

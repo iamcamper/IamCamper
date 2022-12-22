@@ -88,4 +88,10 @@ public interface AdminMapper {
 
     // 메인페이지 배너 불러오기
     List<BbsVO> BannerMain();
+
+    // 어드민 글 삭제
+    void del(String b_idx);
+
+    // 어드민 글 삭제 검증
+    int delChk(String b_idx);
 }

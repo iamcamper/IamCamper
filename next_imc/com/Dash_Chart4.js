@@ -53,7 +53,12 @@ const options = {
         <Box marginTop={2} paddingTop={2}>
             <Typography variant="h5" gutterBottom>오늘 게시판별 게시글 통계</Typography>
             <Box>
-                <Bar data={data} options={options} style={{position: 'relative', height:'18vw', width:'35vw', margin:'auto'}}/>
+                {bbsTotalList != null && (
+                <Bar data={data} options={options} style={{position: 'relative',  height:'14vw', width:'30vw', margin:'auto'}}/>
+                )}
+                {bbsTotalList == null && (
+                    <Typography>데이터가 없습니다.</Typography>
+                )}
             </Box>
         </Box>
     );

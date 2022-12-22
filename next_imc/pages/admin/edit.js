@@ -27,6 +27,7 @@ export default function write(){
     const [bname, setBname] = useState(router.query.bname);
     const [content, setContent] = useState("");
     const bbs = router.query.bbs;
+    const cPage= router.query.cPage;
     const formData = new FormData();
     let file = null;
 
@@ -64,6 +65,13 @@ export default function write(){
         file = e.target.files[0];
     }
 
+    function cen(){
+        router.push({
+            pathname:'/admin/'+bbs,
+            query:{cPage:cPage}
+        })
+    }
+
     function editOk(){
 
         formData.append("file", file);
@@ -80,7 +88,10 @@ export default function write(){
             },
             headers:{'Content-Type': 'multipart/form-data',},},
         ).then(
-            router.push('/admin/'+bbs)
+            router.push({
+                pathname:'/admin/views',
+                query:{cPage: cPage, b_idx: b_idx, bname: bname, bbs:bbs}
+            })
         ); 
     }
 
@@ -101,7 +112,7 @@ export default function write(){
                                         <label htmlFor='subject'>제목</label>
                                     </th>
                                     <td>
-                                        <input/>
+                                        <Input type='text' key={data.b_idx} placeholder='제목' sx={{width:'450px'}} onChange={changeSubject} defaultValue={subject || ''}/>
                                     </td>
                                 </tr>
                                 {(bname === 'BANNER' || bname === 'BANNERMAIN' || bname === 'BANNERBBS') && (
@@ -160,7 +171,7 @@ export default function write(){
                         </table>
                         <div style={{textAlign:'center', padding:'20px', margin:'10px'}}>
                             <Button variant="contained" sx={{margin:"10px"}} onClick={editOk}>수정</Button>
-                            <Button variant="contained" sx={{margin:"10px"}}>취소</Button>
+                            <Button variant="contained" sx={{margin:"10px"}} onClick={cen}>취소</Button>
                         </div>
                     </form>
                 </Paper>

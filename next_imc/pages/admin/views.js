@@ -18,6 +18,8 @@ export default function views(){
     const b_idx = router.query.b_idx;
     const bname = router.query.bname;
     const bbs = router.query.bbs;
+    const sel = router.query.select;
+    const val = router.query.value;
     const DATA_URL = "/admin/views/data"
     const [data, setData] = useState({});
 
@@ -37,7 +39,7 @@ export default function views(){
     function goList(){
         router.push({
             pathname:'/admin/'+bbs,
-            query: {cPage: cPage},
+            query: {cPage: cPage, select: sel, value: val},
         });
     }
 

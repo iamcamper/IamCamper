@@ -1,9 +1,12 @@
 package com.iamcamper.boot_imc.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.iamcamper.boot_imc.VO.BbsTotalCntVO;
 import com.iamcamper.boot_imc.VO.BbsVO;
@@ -198,5 +201,19 @@ public class AdminService {
         }
 
         return vo;
+    }
+
+    //어드민 글 삭제
+    public void del(String b_idx){
+
+        mapper.del(b_idx);
+
+    }
+
+    //어드민 글 삭제 검증
+    public int delChk(String b_idx){
+
+        return mapper.delChk(b_idx);
+
     }
 }

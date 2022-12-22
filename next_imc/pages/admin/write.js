@@ -55,9 +55,10 @@ export default function write(){
                 cPage:1,
             },
             headers:{'Content-Type': 'multipart/form-data',},},
-        ).then(
+        ).then(json => {
+            alert("저장이 완료되었습니다!");
             router.push('/admin/'+bbs)
-        ); 
+        }); 
     }
 
     return(

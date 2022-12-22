@@ -148,6 +148,8 @@ public class AdminBbsController {
 
         a_service.write(vo);
 
+        map.put("chk", "1");
+
         return map;
 
     }
@@ -248,6 +250,7 @@ public class AdminBbsController {
         }
 
         a_service.bbsEdit(b_idx, subject, content, file_name, ori_name);
+
 
         return map;
 
@@ -461,6 +464,24 @@ public class AdminBbsController {
 
         map.put("vo", vo);
         map.put("path", file_path);
+
+        return map;
+
+    }
+
+    /*
+     * 어드민 글 삭제
+     */
+    @RequestMapping("/del")
+    public Map<String, Object> del(String b_idx){
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        a_service.del(b_idx);
+
+        int chk = a_service.delChk(b_idx);
+
+        map.put("chk", chk);
 
         return map;
 

@@ -28,6 +28,7 @@ export default function Admin_Editor(props){
 
     return(
         <div>
+           {con &&
            <Editor
                 ref = {editorRef}
                 placeholder="내용을 입력해 주세요!"
@@ -39,6 +40,19 @@ export default function Admin_Editor(props){
                     addImageBlobHook: addImage
                 }}
             />
+            }
+            {!con &&
+           <Editor
+                ref = {editorRef}
+                placeholder="내용을 입력해 주세요!"
+                previewStyle="vertical" // 미리보기 스타일 지정
+                height="300px" // 에디터 창 높이
+                initialEditType="wysiwyg"
+                hooks={{
+                    addImageBlobHook: addImage
+                }}
+            />
+            }
         </div>
     );
 }
