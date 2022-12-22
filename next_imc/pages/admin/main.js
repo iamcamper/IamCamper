@@ -19,6 +19,7 @@ import Dash_Chart4 from '../../com/Dash_Chart4';
 import Dash_Chart5 from '../../com/Dash_Chart5';
 import { ConstructionOutlined, Home } from '@mui/icons-material';
 import { getCookie, hasCookie, setCookie } from 'cookies-next';
+import Dash_Chart6 from '../../com/Dash_Chart6';
 
 
 
@@ -33,13 +34,14 @@ export default function main(){
     const [bbsTotalList, setBbsTotalList] = useState([]); //게시판별 오늘 토탈 글 갯수
     const [bestBbs, setBestBbs] = useState();
     const [cookieChk, setCookieChk] = useState(false);
+    const [snsList, setSnsList] = useState([]);
 
     function getData(){
 
         Axios.post(
             API_URL, null,
         ).then(json => {
-
+            setSnsList(json.data.snsCnt);
             setRegData(json.data.regList);
             setTotalReg(json.data.totalReg);
             setTodayReg(json.data.todayReg);
@@ -94,12 +96,24 @@ export default function main(){
                         </Grid>
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
-                                <Paper elevation={3} sx={{textAlign: 'center', height: '320px'}}>
+                                <Paper elevation={3} sx={{textAlign: 'center', height: '300px'}}>
                                     <Dash_Chart5 regData={regData}/>
                                 </Paper>
                             </Grid>
                             <Grid item xs={6}>
-                                <Paper elevation={3} sx={{textAlign: 'center', height: '320px'}}>
+                                <Paper elevation={3} sx={{textAlign: 'center', height: '300px'}}>
+                                    <Dash_Chart4 bbsTotalList={bbsTotalList}/>
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <Paper elevation={3} sx={{textAlign: 'center', height: '300px'}}>
+                                    <Dash_Chart6 snsList={snsList}/>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Paper elevation={3} sx={{textAlign: 'center', height: '300px'}}>
                                     <Dash_Chart4 bbsTotalList={bbsTotalList}/>
                                 </Paper>
                             </Grid>

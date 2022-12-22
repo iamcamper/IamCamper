@@ -29,7 +29,7 @@ export default function login () {
     function LoginChk(){
         Axios.post(
             LOGIN_URL, null,
-            {params:{id: admin.id, pw: admin.pw, grade: 9}}
+            {params:{id: admin.id, pw: admin.pw}}
         ).then(json =>{
             if(json.data.chk===0)
                 router.push("/admin/login");

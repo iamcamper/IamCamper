@@ -12,6 +12,7 @@ import com.iamcamper.boot_imc.VO.BbsTotalCntVO;
 import com.iamcamper.boot_imc.VO.BbsVO;
 import com.iamcamper.boot_imc.VO.MemVO;
 import com.iamcamper.boot_imc.VO.RegCntVO;
+import com.iamcamper.boot_imc.VO.SnsCountVO;
 import com.iamcamper.boot_imc.mapper.AdminMapper;
 
 @Service
@@ -21,9 +22,9 @@ public class AdminService {
     AdminMapper mapper;
 
     // 어드민 로그인 기능
-    public MemVO AdminLogin(String id, String pw, String grade) {
+    public MemVO AdminLogin(String id, String pw) {
 
-        MemVO mem = mapper.login(id, pw, grade);
+        MemVO mem = mapper.login(id, pw);
 
         return mem;
 
@@ -221,6 +222,13 @@ public class AdminService {
     public int yRegCnt(){
 
         return mapper.yRegCnt();
+
+    }
+
+    //어드민 대시보드 - 소셜별 회원 현황
+    public List<SnsCountVO> snsCount(){
+
+        return mapper.snsCount();
 
     }
 }

@@ -22,6 +22,7 @@ import com.iamcamper.boot_imc.VO.BbsTotalCntVO;
 import com.iamcamper.boot_imc.VO.BbsVO;
 import com.iamcamper.boot_imc.VO.MemVO;
 import com.iamcamper.boot_imc.VO.RegCntVO;
+import com.iamcamper.boot_imc.VO.SnsCountVO;
 import com.iamcamper.boot_imc.service.AdminService;
 import com.iamcamper.boot_imc.util.FileRenameUtil;
 import com.iamcamper.boot_imc.util.Paging;
@@ -304,6 +305,14 @@ public class AdminBbsController {
         // 전체 가입한 회원 수 가져오기
         int totalReg = a_service.memberCnt();
 
+        //소셜별 가입자 수 가져오기
+        List<SnsCountVO> snsCountList = a_service.snsCount();
+        SnsCountVO[] s_list = null;
+        if(snsCountList.size() > 0){
+            s_list = new SnsCountVO[snsCountList.size()];
+            snsCountList.toArray(s_list);
+        }
+
         // 오늘 게시판 글 수 가져오기
         List<BbsTotalCntVO> todayBbsCountList = a_service.bbsTotalCnt();
         BbsTotalCntVO[] b_total_list = null;
@@ -323,7 +332,7 @@ public class AdminBbsController {
             regList.toArray(r_list);
         }
 
-
+        map.put("snsCnt", s_list);
         map.put("bestBbs", bestBbs);
         map.put("bbsTotalCntList", b_total_list);
         map.put("regList", r_list);

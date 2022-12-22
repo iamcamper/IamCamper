@@ -15,7 +15,7 @@
 <!-- login 기능 -->
     <select id="login" resultType="com.iamcamper.boot_imc.VO.MemVO" parameterType="Map">
     SELECT * FROM member
-    WHERE id = #{id} AND pw = #{pw} AND grade = #{grade} AND activate = 0
+    WHERE id = #{id} AND pw = #{pw} AND grade = 9 AND activate = 0
     </select>
 
 <!-- 전체 게시글의 수 반환 -->
@@ -239,5 +239,12 @@
   <select id="yRegCnt" resultType="int">
     SELECT COUNT(*) FROM member
     WHERE reg_date = DATE_FORMAT((SELECT NOW() - INTERVAL 1 DAY), '%Y-%m-%d');
+  </select>
+
+  <!-- 메신저별 각 회원 가입 현황 -->
+  <select id="snsCount" resultType="com.iamcamper.boot_imc.VO.SnsCountVO">
+    SELECT snsAuth, COUNT(*) AS cnt FROM member
+    WHERE grade = 0 AND activate = 0
+    GROUP BY snsAuth;
   </select>
 </mapper>

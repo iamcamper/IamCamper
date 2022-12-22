@@ -20,9 +20,9 @@ public class AdminLoginController {
     private AdminService a_service;
 
     @RequestMapping("/chk")
-    public Map<String, Object> login(String id, String pw, String grade) {
+    public Map<String, Object> login(String id, String pw) {
 
-        MemVO mvo = a_service.AdminLogin(id, pw, grade);
+        MemVO mvo = a_service.AdminLogin(id, pw);
         int chk = 0;
         if (mvo != null) {
             chk = 1;

@@ -9,11 +9,12 @@ import com.iamcamper.boot_imc.VO.BbsTotalCntVO;
 import com.iamcamper.boot_imc.VO.BbsVO;
 import com.iamcamper.boot_imc.VO.MemVO;
 import com.iamcamper.boot_imc.VO.RegCntVO;
+import com.iamcamper.boot_imc.VO.SnsCountVO;
 
 public interface AdminMapper {
 
     // admin 로그인
-    MemVO login(@Param("id") String id, @Param("pw") String pw, @Param("grade") String grade);
+    MemVO login(@Param("id") String id, @Param("pw") String pw);
 
     // 게시판의 totalCount 구하기
     int totalCount(@Param("bname") String bname);
@@ -97,4 +98,7 @@ public interface AdminMapper {
 
     // 어드민 대시보드 어제 가입자 
     int yRegCnt();
+
+    // 어드민 대시보드 소셜 별 회원 가입
+    List<SnsCountVO> snsCount();
 }
