@@ -148,7 +148,7 @@
       <if test = "category.equals('bname')">
         AND bname = #{value}
       </if>
-      <if test = "category.equals('write_date')">
+      <if test = "category.equals('wdate')">
         AND write_date = #{value}
         AND bname IN ('CAMREVIEW', 'TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
       </if>
@@ -222,5 +222,4 @@
     SELECT * FROM iamcamper.bbs
     WHERE bname ='BANNERMAIN' AND status = 0 
   </select>
-
 </mapper>

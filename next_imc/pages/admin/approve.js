@@ -93,6 +93,11 @@ export default function approve(){
                                     </TableCell>
                                 </TableRow>
                             )}
+                            {list == null && (
+                                <TableRow key='null'>
+                                    <TableCell colSpan={6} sx={{textAlign:'center'}}>승인 요청을 한 회원이 없습니다.</TableCell>
+                                </TableRow>
+                            )}
                         </TableBody>
                     </Table>
                 </TableContainer>
