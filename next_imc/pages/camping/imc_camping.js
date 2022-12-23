@@ -131,27 +131,6 @@ const handleChange = (event) => {
     setAddr(event.target.value);
 };
 
-//삭제 예정
-function setTag (name) {
-  var chk = true;
-  var i = 0;
-  list.forEach(element => {
-
-      if(element == name){
-        chk=false;
-        list.slice(i,1);
-      }
-      i++;
-  });
-  if(chk){
-    list.push(name);
-  }
-  list.forEach(element => {
-    console.log(element);
-});
-
-  
-};
 
 //페이지 변경 시 사용하는 함수
 const PageChange = (event, value) => {
