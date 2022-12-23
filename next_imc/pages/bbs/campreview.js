@@ -119,14 +119,13 @@ const pageChange = (event, value) => {
             </div>
         <div>
 
-          <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: 'auto' }}>
-            
-            <Grid container my={8} style={{ textAlign: 'center', marginBottom: '15px' }}>
+        <Grid container my={8} style={{ width:'1600px', textAlign: 'center', margin: 'auto', backgroundColor:'lightcyan' }}>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/free_bbs")}> 자유 게시판 </Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/campreview")}>후기 게시판</Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/rest_bbs")}> 맛집 게시판</Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/QNA")}>자주 하는 질문</Button></Grid>
             </Grid>
+          <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: 'auto' }}>
             <TableContainer component={Paper}>
               <Table aria-label="simple table" >
                 <TableHead>
@@ -141,6 +140,14 @@ const pageChange = (event, value) => {
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{ width: '1600px', height: 'auto', textAlign: 'center'}}>
+                 <TableRow sx={{backgroundColor:'lightgrey'}}>
+                    <TableCell>공지사항</TableCell>
+                    <TableCell colSpan={2}>공지제목</TableCell>
+                    <TableCell>관리자</TableCell>
+                    <TableCell>작성일</TableCell>
+                    <TableCell>추천</TableCell>
+                    <TableCell>조회</TableCell>
+                  </TableRow>
                   {list != null && list.map((bbs, index) => (
                     <TableRow key={index}>
                       <TableCell align="center">{bbs.b_idx}</TableCell>
