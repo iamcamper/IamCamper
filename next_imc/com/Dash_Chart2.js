@@ -21,7 +21,7 @@ export default function Dash_Chart2({regCount, ydayReg, totalReg}){
     return(
         <Box marginTop={2} paddingTop={1}>
             <Typography variant="h6" gutterBottom>누적 가입 회원</Typography>
-            {(totalReg != null || regCount != null) && (
+            {(totalReg != null) && (
             <Typography component="p" variant="h3" color="primary">
                 {totalReg}
             </Typography>

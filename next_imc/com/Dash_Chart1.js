@@ -31,25 +31,25 @@ export default function Dash_Chart1({regCount, ydayReg}){
                 {regCount}
             </Typography>
             )}
-            {regCount == null && (
-            <Typography component="p" variant="h4">
-               데이터가 없습니다.
-            </Typography>
-            )}
-            {ydayReg == regCount && (
+            {(regCount != null && ydayReg == regCount) && (
             <Stack spacing={1} marginTop={1} alignItems="center">
               <Chip icon={<SentimentSatisfied/>} label="가입한 회원의 수가 어제와 동일해요!" color="success" />
             </Stack>
             )}
-            {ydayReg > regCount && (
+            {(regCount != null && ydayReg > regCount) && (
             <Stack spacing={1} marginTop={1} alignItems="center">
               <Chip icon={<SentimentVeryDissatisfied/>} label={msg} color="warning" />
             </Stack>
             )}
-            {ydayReg < regCount && (
+            {(regCount != null && ydayReg < regCount) && (
             <Stack spacing={1} marginTop={1} alignItems="center">
               <Chip icon={<SentimentSatisfiedAlt/>} label={msg} color="primary" />
             </Stack>
+            )}
+            {regCount == null && (
+            <Typography component="p" variant="h4">
+               데이터가 없습니다.
+            </Typography>
             )}
         </Box>
     );
