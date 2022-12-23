@@ -42,8 +42,8 @@ export default function free_bbs(){
     console.log(cookie);
     const API_SEARCH = "/bbs/search";
     const [bbschk, setBbschk] = useState('');
-    const [searchtxt, setSearchtxt] = useState();
-    const [waychk, setWaychk] = useState();
+    const [searchtxt, setSearchtxt] = useState('');
+    const [waychk, setWaychk] = useState('');
       console.log(searchtxt);
 
     const handleChange = (event) => {
@@ -127,7 +127,6 @@ const pageChange = (event, value) => {
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/rest_bbs")}> 맛집 게시판</Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/QNA")}>자주 하는 질문</Button></Grid>
             </Grid>
-
             <TableContainer component={Paper}>
               <Table aria-label="simple table" >
                 <TableHead>

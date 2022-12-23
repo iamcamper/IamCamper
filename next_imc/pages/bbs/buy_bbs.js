@@ -31,8 +31,8 @@ export default function buy_bbs() {
     const API_URL = "/bbs/list";
     console.log(list);
     const [bbschk, setBbschk] = useState('');
-    const [searchtxt, setSearchtxt] = useState();
-    const [waychk, setWaychk] = useState();
+    const [searchtxt, setSearchtxt] = useState('');
+    const [waychk, setWaychk] = useState('');
       console.log(searchtxt);
 
     const handleChange = (event) => {

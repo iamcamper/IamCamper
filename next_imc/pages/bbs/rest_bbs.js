@@ -42,8 +42,8 @@ export default function free_bbs(){
     const router = useRouter();
     console.log(cookie);
     const [bbschk, setBbschk] = useState('');
-    const [searchtxt, setSearchtxt] = useState();
-    const [waychk, setWaychk] = useState();
+    const [searchtxt, setSearchtxt] = useState('');
+    const [waychk, setWaychk] = useState('');
       console.log(searchtxt);
 
     const handleChange = (event) => {
