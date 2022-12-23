@@ -232,3 +232,8 @@ const pageChange = (event, value) => {
       </div>
     )
 }
+export async function getServerSideProps(context) {
+  return {
+    props: {},
+  };
+}

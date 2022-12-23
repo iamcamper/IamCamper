@@ -181,9 +181,6 @@ public class BbsController {
     public Map<String, Object> addComm(String nickname, String content, String b_idx) {
         Map<String, Object> map = new HashMap<String, Object>();
 
-        System.out.println(nickname);
-        System.out.println(content);
-        System.out.println(b_idx);
         CommVO vo = new CommVO();
 
         vo.setIp(req.getRemoteAddr());
@@ -193,6 +190,14 @@ public class BbsController {
 
         c_Service.addAns(vo);
 
+        List<CommVO> list = c_Service.list(b_idx);
+        CommVO[] c_list = null;
+        if (list != null && list.size() > 0) {
+            c_list = new CommVO[list.size()];
+            list.toArray(c_list);
+        }
+        map.put("clist", c_list);
+        
         return map;
     }
 

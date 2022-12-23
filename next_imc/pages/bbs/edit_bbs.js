@@ -164,3 +164,8 @@ export default function edit_bbs(){
         </div>
     )
 }
+export async function getServerSideProps(context) {
+    return {
+      props: {},
+    };
+  }

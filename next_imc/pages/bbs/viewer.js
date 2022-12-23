@@ -3,10 +3,11 @@ import { Viewer } from '@toast-ui/react-editor';
 
 
 export default function viewer({list}){
+
+
 	return (
-	<Viewer
-		initialValue = { list }
-		height="auto"
-      	/>
-	);
+		<div>
+			{list && <Viewer initialValue={list}/>}
+		</div>
+	)
 }

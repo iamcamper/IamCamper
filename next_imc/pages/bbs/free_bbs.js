@@ -44,9 +44,8 @@ export default function free_bbs(){
     const router = useRouter();
     console.log(cookie);
     const [bbschk, setBbschk] = useState('');
-    const [searchtxt, setSearchtxt] = useState();
-    const [waychk, setWaychk] = useState();
-      console.log(searchtxt);
+    const [searchtxt, setSearchtxt] = useState('');
+    const [waychk, setWaychk] = useState('');
 
     const handleChange = (event) => {
       setBbschk(event.target.value);
@@ -124,18 +123,18 @@ const pageChange = (event, value) => {
           <div>
            <Typography variant="h3" color="text.secondary" sx={{width:1600, textAlign:'left', margin:'auto', padding:2}}>
                         자유게시판
-                </Typography>
+            </Typography>
           </div>
         <div>
-          
-          <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: 'auto' }}>
-            
-            <Grid container my={8} style={{ textAlign: 'center', marginBottom: '15px' }}>
+           <Grid container my={8} style={{ width:'1600px', textAlign: 'center', margin: 'auto', backgroundColor:'lightcyan' }}>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/free_bbs")}> 자유 게시판 </Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/campreview")}>후기 게시판</Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/rest_bbs")}> 맛집 게시판</Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/QNA")}>자주 하는 질문</Button></Grid>
             </Grid>
+          <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: 'auto' }}>
+            
+           
 
             <TableContainer component={Paper}>
               <Table aria-label="simple table">
@@ -150,8 +149,13 @@ const pageChange = (event, value) => {
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{ width: '1600px', height: 'auto' }}>
-                  <TableRow sx={{ height:'70px'}}>
-                    <TableCell sx={{fontSize:'20px'}}>공지사항 : adnotice 집어넣기</TableCell>
+                  <TableRow sx={{backgroundColor:'lightgrey'}}>
+                    <TableCell>공지사항</TableCell>
+                    <TableCell>공지제목</TableCell>
+                    <TableCell>관리자</TableCell>
+                    <TableCell>작성일</TableCell>
+                    <TableCell>추천</TableCell>
+                    <TableCell>조회</TableCell>
                   </TableRow>
                   {list != null && list.map((bbs, index) => (
                     <TableRow key={index}>
@@ -239,4 +243,9 @@ const pageChange = (event, value) => {
         
       </div>
     )
+}
+export async function getServerSideProps(context) {
+  return {
+    props: {},
+  };
 }

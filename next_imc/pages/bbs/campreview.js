@@ -64,9 +64,6 @@ export default function free_bbs(){
         alert('검색종류를 선택해주세요')
         return;
       }
-      console.log(bbschk);
-      console.log(waychk);
-      console.log(searchtxt);
        Axios.post(
         API_SEARCH, null,
         {params:{bname:bbschk, way:waychk, search:searchtxt, cPage:cPage}}
@@ -231,4 +228,9 @@ const pageChange = (event, value) => {
         
       </div>
     )
+}
+export async function getServerSideProps(context) {
+  return {
+    props: {},
+  };
 }

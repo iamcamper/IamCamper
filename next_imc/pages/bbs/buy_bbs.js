@@ -207,3 +207,8 @@ export default function buy_bbs() {
         </div></div></>
   )
                     }
+                    export async function getServerSideProps(context) {
+                      return {
+                        props: {},
+                      };
+                    }

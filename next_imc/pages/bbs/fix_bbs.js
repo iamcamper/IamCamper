@@ -166,3 +166,8 @@ export default function fix_bbs(){
         </div>
     )
 }
+export async function getServerSideProps(context) {
+    return {
+      props: {},
+    };
+  }

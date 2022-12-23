@@ -106,3 +106,8 @@ export default function QNA(){
             </div>
     )
 }
+export async function getServerSideProps(context) {
+  return {
+    props: {},
+  };
+}
