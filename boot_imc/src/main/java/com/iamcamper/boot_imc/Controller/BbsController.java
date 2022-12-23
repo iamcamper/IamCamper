@@ -74,7 +74,6 @@ public class BbsController {
             page.setNowPage(1);
         }
 
-
         String begin = String.valueOf(page.getBegin());
         String end = String.valueOf(page.getEnd());
 
@@ -122,6 +121,44 @@ public class BbsController {
             res.addCookie(newCookie);
         }
 
+    }
+
+    @RequestMapping("/search")
+    public Map<String, Object> Result(String bname, String way, String search, String cPage) {
+        Map<String, Object> map = new HashMap<>();
+
+        Paging page = new Paging();
+
+        System.out.println(bname);
+        System.out.println(way);
+        System.out.println(search);
+
+        int totalCount = b_Service.searchCount(bname, way, search);
+
+        page.setTotalCount(totalCount);
+
+        if (cPage.length() > 0) {
+            page.setNowPage(Integer.parseInt(cPage));
+        } else {
+            page.setNowPage(1);
+        }
+
+        String begin = String.valueOf(page.getBegin());
+        String end = String.valueOf(page.getEnd());
+
+        List<BbsVO> list = b_Service.searchResult(bname, way, search, begin, end);
+        System.out.println("list" + list);
+        BbsVO[] b_list = null;
+
+        if (list.size() > 0) {
+            b_list = new BbsVO[list.size()];
+            list.toArray(b_list);
+        }
+        System.out.println("b_list:" + b_list);
+        map.put("list", b_list);
+        map.put("totalPage", page.getTotalPage());
+
+        return map;
     }
 
     @RequestMapping("/commList")
@@ -210,7 +247,7 @@ public class BbsController {
         if (begin > 0 & end > 0) {
             String thum = content.substring(begin, end - 2);
             vo.setThum_img(thum);
-        }else if(begin <= 0 & end <=0){
+        } else if (begin <= 0 & end <= 0) {
             String thum = "/upload_img/no-image.png";
             vo.setThum_img(thum);
         }
@@ -221,7 +258,7 @@ public class BbsController {
         vo.setContent(content);
         vo.setBname(bname);
         vo.setPrice(price);
-        
+
         b_Service.add(vo);
 
         return map;
@@ -230,7 +267,8 @@ public class BbsController {
 
     @RequestMapping("/fixbbs/submit")
     public Map<String, Object> editOk(String subject, String content,
-            @RequestPart(value = "file", required = false) MultipartFile file, String bname, String price) {
+            @RequestPart(value = "file", required = false) MultipartFile file, String bname, String price,
+            String b_idx) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -249,7 +287,7 @@ public class BbsController {
 
         }
 
-        b_Service.fixbbs(subject, content, file_name, ori_name, bname, price);
+        b_Service.fixbbs(subject, content, file_name, ori_name, bname, price, b_idx);
 
         return map;
 

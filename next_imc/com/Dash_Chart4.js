@@ -7,7 +7,6 @@ import { Chart } from "chart.js/auto";
 
 export default function Dash_Chart4({bbsTotalList}){
 
- 
 const data =  {
             labels: bbsTotalList.map((data)=>{
                 let label = data.bnameko;

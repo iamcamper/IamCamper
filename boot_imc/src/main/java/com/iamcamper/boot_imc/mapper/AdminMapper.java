@@ -101,4 +101,7 @@ public interface AdminMapper {
 
     // 어드민 대시보드 소셜 별 회원 가입
     List<SnsCountVO> snsCount();
+
+    // 어드민 대시보드 인기글
+    List<BbsVO> hitBbs();
 }

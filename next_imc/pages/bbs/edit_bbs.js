@@ -21,7 +21,7 @@ const Editbbs = dynamic(()=> import('./editor'), {ssr:false});
 
 export default function edit_bbs(){
     
-    const nickname = "testnick";
+    const nickname = getCookie('nickname');
     const editorRef = useRef();
     const [subject, setSubject] = useState();
     const WRITE_URL = "/bbs/addbbs";
@@ -72,7 +72,7 @@ export default function edit_bbs(){
             },
             headers:{'Content-Type': 'multipart/form-data',},},
         ).then(
-            router.push('/bbs/free_bbs')
+            router.back()
         );
     }
     

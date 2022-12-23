@@ -19,6 +19,132 @@
 		WHERE (rownnum BETWEEN #{begin} AND #{end}) AND bname = #{bname}
 	</select>
 
+	<select id="searchlist" resultMap="map1" parameterType="Map">
+		SELECT * FROM(
+			SELECT @RN:=@RN+1 AS rownum, b.*
+			FROM( SELECT * FROM bbs WHERE status = 0
+			<if test = 'bname.equals("FREE")'>
+					<if test = 'way.equals("subject")'>
+						AND subject LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('FREE')
+					</if>
+					<if test = 'way.equals("nickname")'>
+						AND nickname LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('FREE')
+					</if>
+					<if test = 'way.equals("content")'>
+						AND content LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('FREE')
+					</if>
+			</if>
+			<if test = 'bname.equals("TSREVIEW")'>
+					<if test = 'way.equals("subject")'>
+						AND subject LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW')
+					</if>
+					<if test = 'way.equals("nickname")'>
+						AND nickname LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW')
+					</if>
+					<if test = 'way.equals("content")'>
+						AND content LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW')
+					</if>
+			</if>
+				<if test = 'bname.equals("RESTREVIEW")'>
+					<if test = 'way.equals("subject")'>
+						AND subject LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('RESTREVIEW')
+					</if>
+					<if test = 'way.equals("nickname")'>
+						AND nickname LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('RESTREVIEW')
+					</if>
+					<if test = 'way.equals("content")'>
+						AND content LIKE CONCAT ('%',#{search}, '%')
+						AND bname IN ('RESTREVIEW')
+					</if>
+				</if>
+				<if test = 'bname.equals("RESELL")'>
+					<if test = 'way.equals("subject")'>
+						AND subject LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('RESELL')
+					</if>
+					<if test = 'way.equals("nickname")'>
+						AND nickname LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('RESELL')
+					</if>
+					<if test = 'way.equals("content")'>
+						AND content LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('RESELL')
+					</if>
+				</if>
+				ORDER BY b_idx DESC) b,
+        (SELECT @RN:=0) r
+      ) a
+    WHERE rownum BETWEEN #{begin} AND #{end}
+	</select>
+
+	<select id="searchCount" resultType="int" parameterType="Map">
+		SELECT COUNT(*) FROM bbs
+		WHERE status = 0
+		<if test = 'bname.equals("FREE")'>
+					<if test = 'way.equals("subject")'>
+						AND subject LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+					<if test = 'way.equals("nickname")'>
+						AND nickname LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+					<if test = 'way.equals("content")'>
+						AND content LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+				</if>
+				<if test = 'bname.equals("TSREVIEW")'>
+					<if test = 'way.equals("subject")'>
+						AND subject LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+					<if test = 'way.equals("nickname")'>
+						AND nickname LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+					<if test = 'way.equals("content")'>
+						AND content LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+				</if>
+				<if test = 'bname.equals("RESTREVIEW")'>
+					<if test = 'way.equals("subject")'>
+						AND subject LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+					<if test = 'way.equals("nickname")'>
+						AND nickname LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+					<if test = 'way.equals("content")'>
+						AND content LIKE CONCAT ('%',#{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+				</if>
+				<if test = 'bname.equals("RESELL")'>
+					<if test = 'way.equals("subject")'>
+						AND subject LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+					<if test = 'way.equals("nickname")'>
+						AND nickname LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+					<if test = 'way.equals("content")'>
+						AND content LIKE CONCAT ('%', #{search}, '%')
+						AND bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE')
+					</if>
+				</if>
+	</select>
     <insert id="add" parameterType="com.iamcamper.boot_imc.VO.BbsVO">
 		INSERT INTO bbs(subject, nickname, content, file_name, ori_name, thum_img, write_date, ip, bname, price)
    		VALUES (#{subject}, #{nickname}, #{content}, #{file_name}, #{ori_name}, #{thum_img}, NOW(), #{ip}, #{bname}, #{price})

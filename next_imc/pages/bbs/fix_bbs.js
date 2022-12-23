@@ -20,7 +20,6 @@ const Editbbs = dynamic(()=> import('./editor'), {ssr:false});
 export default function fix_bbs(){
     
     const nickname = getCookie("nickname");
-    
     const WRITE_URL = "/bbs/fixbbs/submit";
     const router = useRouter();
     const content = router.query.content;
@@ -28,9 +27,11 @@ export default function fix_bbs(){
     const [fix, setFix] = useState([]);
     const editorRef = useRef();
     const [subject, setSubject] = useState(fix.subject);
+    const b_idx = router.query.b_idx;
     
     console.log(fix);
     console.log(content);
+
     function getFixdata(){
         setFix(JSON.parse(router.query.list))
     };
@@ -64,7 +65,7 @@ export default function fix_bbs(){
                 bname:bname,    
                 cPage:1,
                 price:price,
-                b_idx:fix.b_idx,
+                b_idx:b_idx,
             },
             headers:{'Content-Type': 'multipart/form-data',},},
         ).then(
@@ -111,7 +112,7 @@ export default function fix_bbs(){
                          <label htmlFor='subject'>제목</label>
                     </th>
                     <td>
-                        <Input defaultValue={fix.subject} placeholder='제목' sx={{width:'450px'}} onChange={subjectChange} value={subject}/>
+                        <Input defaultValue={fix.subject} placeholder='제목' sx={{width:'450px'}} onChange={subjectChange} value={fix.subject}/>
                      </td>
                 </tr>
             </Stack>

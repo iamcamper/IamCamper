@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.junit.runners.Parameterized.Parameters;
 
 import com.iamcamper.boot_imc.VO.BbsVO;
 
@@ -14,7 +15,13 @@ public interface BbsMapper {
 
     List<BbsVO> blist2(Map<String, String> map);
 
-    void edit(String subject, String content, String file_name, String ori_name, String bname, String price);
+    List<BbsVO> searchlist(@Param("bname") String bname, @Param("way") String way, @Param("search") String search,
+            @Param("begin") String begin, @Param("end") String end);
+
+    int searchCount(@Param("bname") String bname, @Param("way") String way, @Param("search") String search);
+
+    void edit(String subject, String content, String file_name, String ori_name, String bname, String price,
+            String b_idx);
 
     BbsVO del(String b_idx);
 

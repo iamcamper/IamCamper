@@ -20,17 +20,22 @@ import { getCookie } from "cookies-next";
 
 export default function view_bbs(){
 
+  
+  const nickname = getCookie('nickname');
+  const m_idx = getCookie('m_idx');
   const router = useRouter();
   const [list, setList] = useState([]);
-  const API_VIEW = "/bbs/view?b_idx="+router.query.idx; 
-  const API_DEL = "/bbs/del?b_idx="+router.query.idx;
-  const API_Comm = "/bbs/commList?b_idx="+router.query.idx;
+  const API_VIEW = "/bbs/view";
+  const API_DEL = "/bbs/del";
+  const API_Comm = "/bbs/commList";
   const API_Submit = "/bbs/commAdd";
   const API_CLIKE = "/like/cup";
   const API_CDEL = "/like/cdw";
   const API_CCHK = "/like/cchk";
   const [comm, setComm] = useState([]);
   const [commin, setCommin] = useState('');
+  const cPage = router.query.cPage;
+  const b_idx = router.query.b_idx;
 
 
   function fixAction(){
@@ -44,8 +49,9 @@ export default function view_bbs(){
     setCommin(e.target.value);
   }
   function getList(){
-    Axios.get(
-      API_VIEW
+    Axios.post(
+      API_VIEW,null,
+      {params:{b_idx:router.query.b_idx}}
     ).then((res) => {
       if(res.data == null){
         alert("데이터가 없습니다.");
@@ -56,8 +62,9 @@ export default function view_bbs(){
     })
   }
   function getComm(){
-    Axios.get(
-      API_Comm
+    Axios.post(
+      API_Comm,null,
+      {params:{b_idx:router.query.b_idx}}
     ).then((json) => {
         if(json.data.clist === null)
           setComm([{nickname:'', content:'댓글이 없습니다'}])
@@ -68,42 +75,43 @@ export default function view_bbs(){
   }
 
   function deleteList(){
-    Axios.get(
-      API_DEL
+    Axios.post(
+      API_DEL,null,
+      {params:{b_idx:router.query.b_idx}}
     ).then(() => {
-      router.push("/bbs/free_bbs");
+      router.replace("/bbs/free_bbs");
     })
   }
 
   function commSubmit(){
     Axios.post(
       API_Submit, null,
-      {params:{nickname:"testnick", content:commin, b_idx:b_idx}}
+      {params:{nickname:nickname, content:commin, b_idx:router.query.b_idx}}
     ).then(
-      router.push("/bbs/view_bbs?b_idx="+b_idx)
+      router.push("/bbs/view_bbs?b_idx="+router.query.b_idx)
     );
 
   }
   const [clikehit, setClikehit] = useState();
     
-  const cliksubmit = (idx) => {
+  const cliksubmit = (c_idx) => {
     
     console.log(idx);
     if(clikehit == 0){
       setClikehit(1);
       Axios.post(
         API_CLIKE,null,
-        {params:{c_idx:idx, m_idx:1}}
+        {params:{c_idx:c_idx, m_idx:m_idx}}
       ).then(
-        router.push("/bbs/view_bbs?idx="+router.query.idx)
+        router.push("/bbs/view_bbs?b_idx="+router.query.b_idx)
       );
     }else if(clikehit == 1){
       setClikehit(0);
       Axios.post(
         API_CDEL,null,
-        {params:{c_idx:c_idx, m_idx:1}}
+        {params:{c_idx:c_idx, m_idx:m_idx}}
       ).then(
-        router.push("/bbs/view_bbs?idx="+router.query.idx)
+        router.push("/bbs/view_bbs?b_idx="+router.query.b_idx)
       );
     }
   }
@@ -114,7 +122,7 @@ export default function view_bbs(){
   function clikechk(){
       Axios.post(
         API_CCHK,null,
-          {params:{c_idx:comm.c_idx, m_idx:1}}
+          {params:{c_idx:comm.c_idx, m_idx:m_idx}}
         ).then((json) =>{
           setClikehit(json.data.ccnt);
         });
@@ -145,10 +153,10 @@ export default function view_bbs(){
       </Paper>
       <Grid item xs style={{ width: '1400px', textAlign: 'right', padding: '30px', margin: 'auto' }}>
           <Stack spacing={2} direction="row" justifyContent="flex-end">
-              <Button variant="contained" size="large" onClick={() => router.back()}>목록</Button>
+              <Button variant="contained" size="large" onClick={() => router.push("/bbs/free_bbs?cPage="+cPage)}>목록</Button>
               <Button variant="contained" size="large" ><Link href={{
                             pathname: '/bbs/fix_bbs',
-                            query: { list: JSON.stringify(list), bname:list.bname, content:list.content},
+                            query: { list: JSON.stringify(list), bname:list.bname, content:list.content, b_idx:b_idx},
                           }}>수정</Link></Button>
                           {(function (){ 
                     if(list.nickname === nickname){
@@ -181,7 +189,7 @@ export default function view_bbs(){
         </Grid>
       </Paper>
      <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, width:'1200px', marginLeft:'450px'}}>
-        {comm != null && comm.map((comm) => (<Paper
+        {comm != null && comm.map((comm, index) => (<Paper key={index} 
         sx={{
           my: 4,
           mx: 'auto',

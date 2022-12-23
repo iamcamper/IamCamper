@@ -53,7 +53,7 @@
   </select>
   <!-- 닉네임을 받아 db에 추가해 주는 update 문-->
   <update id="snsRegAdd" parameterType="Map">
-    UPDATE member SET nickname = #{nickname}, grade = 0
-    WHERE m_idx = #{m_idx}, reg_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
+    UPDATE member SET nickname = #{nickname}, grade = 0, reg_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
+    WHERE m_idx = #{m_idx}
   </update>
 </mapper> 

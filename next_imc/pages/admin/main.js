@@ -20,6 +20,7 @@ import Dash_Chart5 from '../../com/Dash_Chart5';
 import { ConstructionOutlined, Home } from '@mui/icons-material';
 import { getCookie, hasCookie, setCookie } from 'cookies-next';
 import Dash_Chart6 from '../../com/Dash_Chart6';
+import Dash_Chart7 from '../../com/Dash_Chart7';
 
 
 
@@ -32,9 +33,10 @@ export default function main(){
     const [ydayReg, setYdayReg] = useState('');
     const [regData, setRegData] = useState([]); //최근 5일 가입한 회원 수 배열
     const [bbsTotalList, setBbsTotalList] = useState([]); //게시판별 오늘 토탈 글 갯수
-    const [bestBbs, setBestBbs] = useState();
+    const [bestBbs, setBestBbs] = useState(); //베스트 게시판
     const [cookieChk, setCookieChk] = useState(false);
-    const [snsList, setSnsList] = useState([]);
+    const [snsList, setSnsList] = useState([]); //sns별 회원가입자 수
+    const [bestHit, setBestHit] = useState([]); //베스트글 3개
 
     function getData(){
 
@@ -48,6 +50,7 @@ export default function main(){
             setBbsTotalList(json.data.bbsTotalCntList);
             setBestBbs(json.data.bestBbs.bnameko);
             setYdayReg(json.data.ydayReg);
+            setBestHit(json.data.hitList);
         });
 
 
@@ -114,7 +117,7 @@ export default function main(){
                             </Grid>
                             <Grid item xs={6}>
                                 <Paper elevation={3} sx={{textAlign: 'center', height: '300px'}}>
-                                    <Dash_Chart4 bbsTotalList={bbsTotalList}/>
+                                    <Dash_Chart7 bestHit={bestHit}/>
                                 </Paper>
                             </Grid>
                         </Grid>

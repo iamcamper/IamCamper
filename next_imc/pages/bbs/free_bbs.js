@@ -14,6 +14,16 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useRouter } from 'next/router';
 import Link from "next/Link";
+import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Divider from '@mui/material/Divider';
 
 import EditIcon from '@mui/icons-material/Edit';
 import Axios from "axios";
@@ -24,13 +34,54 @@ import { getCookie, setCookie } from "cookies-next";
 
 export default function free_bbs(){ 
 
+
+    const [cPage, setCpage] = useState(1);
     const cookie = getCookie("nickname");
     const [list, setList] = useState([]);
-    const [cPage, setCpage] = useState(1);
     const [totalPage, setTotalPage] = useState();
     const API_URL = "/bbs/list";
+    const API_SEARCH = "/bbs/search";
     const router = useRouter();
     console.log(cookie);
+    const [bbschk, setBbschk] = useState('');
+    const [searchtxt, setSearchtxt] = useState();
+    const [waychk, setWaychk] = useState();
+      console.log(searchtxt);
+
+    const handleChange = (event) => {
+      setBbschk(event.target.value);
+      console.log(bbschk);
+    };
+    const whandleChange = (event) => {
+      setWaychk(event.target.value);
+    }
+    function searchSubmit(){
+      if(bbschk == null){
+        alert('게시판을 선택해주세요')
+        return;
+      }else if(searchtxt == null){
+        alert('검색내용을 입력해주세요')
+        return;
+      }else if(waychk == null){
+        alert('검색종류를 선택해주세요')
+        return;
+      }
+      console.log(bbschk);
+      console.log(waychk);
+      console.log(searchtxt);
+       Axios.post(
+        API_SEARCH, null,
+        {params:{bname:bbschk, way:waychk, search:searchtxt, cPage:cPage}}
+       ).then((json) => {
+          if(json.data.list == null){
+            alert("검색 결과가 없습니다.");
+            return;
+          }else{
+            setList(json.data.list);
+            setTotalPage(json.data.totalPage);
+          }
+       })
+    }
   
   function getList(){
     Axios.post(
@@ -48,6 +99,8 @@ export default function free_bbs(){
       });
   }
 
+  const bbstab = ['자유게시판', '후기게시판' , '맛집게시판' , '중고거래게시판']
+
   function edit(){
     router.push({
         pathname:'/bbs/edit_bbs',
@@ -59,6 +112,7 @@ const pageChange = (event, value) => {
 
   useEffect(() => { //최초 한번만 호출하기 위해 사용함!
     getList()
+    setCpage(cPage);
   },[cPage]);
   
     return(
@@ -68,12 +122,12 @@ const pageChange = (event, value) => {
           <Main1_Menu />
           <Banner/>
           <div>
-                <Typography variant="h3" color="text.secondary" sx={{width:1600, textAlign:'left', margin:'auto', padding:2}}>
+           <Typography variant="h3" color="text.secondary" sx={{width:1600, textAlign:'left', margin:'auto', padding:2}}>
                         자유게시판
                 </Typography>
-            </div>
+          </div>
         <div>
-
+          
           <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: 'auto' }}>
             
             <Grid container my={8} style={{ textAlign: 'center', marginBottom: '15px' }}>
@@ -96,6 +150,9 @@ const pageChange = (event, value) => {
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{ width: '1600px', height: 'auto' }}>
+                  <TableRow sx={{ height:'70px'}}>
+                    <TableCell sx={{fontSize:'20px'}}>공지사항 : adnotice 집어넣기</TableCell>
+                  </TableRow>
                   {list != null && list.map((bbs, index) => (
                     <TableRow key={index}>
                       <TableCell>{bbs.b_idx}</TableCell>
@@ -104,7 +161,7 @@ const pageChange = (event, value) => {
                             <Link
                             href={{
                               pathname: '/bbs/view_bbs',
-                              query: { idx: bbs.b_idx },
+                              query: { b_idx: bbs.b_idx, cPage: cPage },
                             }}
                               >{bbs.subject}</Link></TableCell>}
                       <TableCell>{bbs.nickname}</TableCell>
@@ -123,12 +180,53 @@ const pageChange = (event, value) => {
           <Grid item xs style={{ width: '1600px', textAlign: 'right', padding: '30px', float: 'right' }}>
             <Fab color="secondary" aria-label="edit" onClick={edit}><EditIcon /></Fab>
           </Grid>
-          <form className="search-form">
-            <input type="text" placeholder="Search" className="search-input" />
-            <button type="submit" className="search-button">
-              <img src={'/images/search_icon.png'} />
-            </button>
-          </form>
+          <Paper
+              component="form"
+              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '1000px'}}
+            >
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-standard-label">게시판검색</InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  value={bbschk}
+                  onChange={handleChange}
+                  label="게시판검색"
+                >
+                  <MenuItem value={'FREE'}>자유게시판
+                  </MenuItem>
+                  <MenuItem value={'TSREVIEW'}>후기게시판</MenuItem>
+                  <MenuItem value={'RESTREVIEW'}>맛집게시판</MenuItem>
+                  <MenuItem value={'RESELL'}>중고거래게시판</MenuItem>
+                </Select>
+              </FormControl>
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-standard-label">검색종류</InputLabel>
+                <Select
+                  labelId="demo-simple-select-standard-label"
+                  id="demo-simple-select-standard"
+                  value={waychk}
+                  onChange={whandleChange}
+                  label="검색종류"
+                >
+                  <MenuItem value={'subject'}>제목
+                  </MenuItem>
+                  <MenuItem value={'nickname'}>작성자</MenuItem>
+                  <MenuItem value={'content'}>글내용</MenuItem>
+                </Select>
+              </FormControl>
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+               <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="검색내용을 입력해주세요"
+                inputProps={{searchtxt}}
+                onChange={(e) => {setSearchtxt(e.target.value)}}
+              />
+              <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={searchSubmit}>
+                <SearchIcon />
+              </IconButton>
+              </Paper>
           <Stack spacing={2} sx={{display:'inline-block'}}>
           <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary'
                             page={cPage}

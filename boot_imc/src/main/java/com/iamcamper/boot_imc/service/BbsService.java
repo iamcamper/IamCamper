@@ -23,8 +23,9 @@ public class BbsService {
 
     }
 
-    public void fixbbs(String subject, String content, String file_name, String ori_name, String bname, String price){
-        mapper.edit(subject, content, file_name, ori_name, bname, price);
+    public void fixbbs(String subject, String content, String file_name, String ori_name, String bname, String price,
+            String b_idx) {
+        mapper.edit(subject, content, file_name, ori_name, bname, price, b_idx);
     }
 
     public BbsVO view(String b_idx) {
@@ -33,7 +34,8 @@ public class BbsService {
 
         return view;
     }
-    public BbsVO subChk(String subject){
+
+    public BbsVO subChk(String subject) {
         return mapper.subchk(subject);
     }
 
@@ -83,6 +85,14 @@ public class BbsService {
 
     public void ViewCount(String b_idx) {
         mapper.ViewCount(b_idx);
+    }
+
+    public List<BbsVO> searchResult(String bname, String value, String search, String begin, String end) {
+        return mapper.searchlist(bname, value, search, begin, end);
+    }
+
+    public int searchCount(String bname, String way, String search) {
+        return mapper.searchCount(bname, way, search);
     }
 
 }
