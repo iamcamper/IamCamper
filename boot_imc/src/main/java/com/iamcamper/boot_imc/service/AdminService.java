@@ -238,4 +238,5 @@ public class AdminService {
         return mapper.hitBbs();
 
     }
+    
 }

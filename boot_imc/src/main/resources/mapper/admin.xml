@@ -253,8 +253,10 @@
     SELECT a.*, bd.bnameko FROM (SELECT * FROM bbs
     WHERE bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE', 'CAMRIVIEW')
     AND write_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
+    AND status = 0
     ORDER BY hit ASC
     LIMIT 3) a, bbsdata bd
     WHERE a.bname = bd.bname;
   </select>
+
 </mapper>

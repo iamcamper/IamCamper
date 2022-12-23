@@ -104,4 +104,5 @@ public interface AdminMapper {
 
     // 어드민 대시보드 인기글
     List<BbsVO> hitBbs();
+
 }

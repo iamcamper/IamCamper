@@ -1,4 +1,4 @@
-import { Announcement, Campaign, Description, Event, Help, Home, Logout, Person, Upgrade } from "@mui/icons-material";
+import { Announcement, Campaign, Description, ErrorOutline, Event, Help, Home, Logout, Person, Upgrade } from "@mui/icons-material";
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import Axios from "axios";
 
@@ -57,6 +57,14 @@ export default function Admin_Sidebar(){
                             <Help/>
                         </ListItemIcon>
                         <ListItemText primary="자주하는 질문 등록"/>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton component="a" href="/admin/bbsnotice">
+                        <ListItemIcon>
+                            <ErrorOutline/>
+                        </ListItemIcon>
+                        <ListItemText primary="사용자 게시판 공지"/>
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
