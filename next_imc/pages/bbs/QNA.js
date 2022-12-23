@@ -67,7 +67,7 @@ export default function QNA(){
                         자주하는 질문
                 </Typography>
             </div>
-            <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: 'auto', padding:1}}>
+            <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: '600px', padding:1}}>
                 <Grid container my={8} style={{ textAlign: 'center', margin: 'auto', width: '1600px' }}>
                     <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/free_bbs")}> 자유 게시판 </Button></Grid>
                     <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/campreview")}>후기 게시판</Button></Grid>
@@ -91,28 +91,12 @@ export default function QNA(){
                                 title={list.subject} 
                                 subheader={list.content} />
                 </Paper>))}
-                <Paper
-                    sx={{
-                        p: 2,
-                        margin: '50px',
-                        width: 1000,
-                        height: 'auto',
-                        padding: 'auto',
-                        flexGrow: 1,
-                        backgroundColor: (theme) =>
-                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-                    }}
-    >
-                            <CardHeader sx={{textAlign:'left', padding:3}}
-                                title='Q  QNA질문'/>
-                </Paper>
-                
-                </Paper> 
+            </Paper> 
                 
             <div className="bottom-div">
                 <form className="search-form">
                         <input type="text" placeholder="Search" className="search-input" />
-                        <button type="submit" className="search-button">
+                            <button type="submit" className="search-button">
                         <img src={'/images/search_icon.png'} />
                     </button>
                 </form>
