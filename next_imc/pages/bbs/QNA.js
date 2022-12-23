@@ -94,12 +94,6 @@ export default function QNA(){
             </Paper> 
                 
             <div className="bottom-div">
-                <form className="search-form">
-                        <input type="text" placeholder="Search" className="search-input" />
-                            <button type="submit" className="search-button">
-                        <img src={'/images/search_icon.png'} />
-                    </button>
-                </form>
                 <Stack spacing={2} sx={{display:'inline-block', marginTop:8}}>
                 <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary'
                                     page={cPage}
