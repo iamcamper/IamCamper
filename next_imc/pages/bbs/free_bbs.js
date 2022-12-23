@@ -104,7 +104,7 @@ const pageChange = (event, value) => {
                             <Link
                             href={{
                               pathname: '/bbs/view_bbs',
-                              query: { idx: bbs.b_idx },
+                              query: { b_idx: bbs.b_idx },
                             }}
                               >{bbs.subject}</Link></TableCell>}
                       <TableCell>{bbs.nickname}</TableCell>

@@ -22,9 +22,9 @@ export default function view_bbs(){
 
   const router = useRouter();
   const [list, setList] = useState([]);
-  const API_VIEW = "/bbs/view?b_idx="+router.query.idx; 
-  const API_DEL = "/bbs/del?b_idx="+router.query.idx;
-  const API_Comm = "/bbs/commList?b_idx="+router.query.idx;
+  const API_VIEW = "/bbs/view";
+  const API_DEL = "/bbs/del?b_idx="+router.query.b_idx;
+  const API_Comm = "/bbs/commList?b_idx="+router.query.b_idx;
   const API_Submit = "/bbs/commAdd";
   const API_CLIKE = "/like/cup";
   const API_CDEL = "/like/cdw";
@@ -44,8 +44,9 @@ export default function view_bbs(){
     setCommin(e.target.value);
   }
   function getList(){
-    Axios.get(
-      API_VIEW
+    Axios.post(
+      API_VIEW,null,
+      {params:{b_idx:router.query.b_idx}}
     ).then((res) => {
       if(res.data == null){
         alert("데이터가 없습니다.");
@@ -71,16 +72,16 @@ export default function view_bbs(){
     Axios.get(
       API_DEL
     ).then(() => {
-      router.push("/bbs/free_bbs");
+      router.replace("/bbs/free_bbs");
     })
   }
 
   function commSubmit(){
     Axios.post(
       API_Submit, null,
-      {params:{nickname:"testnick", content:commin, b_idx:b_idx}}
+      {params:{nickname:"testnick", content:commin, b_idx:router.query.b_idx}}
     ).then(
-      router.push("/bbs/view_bbs?b_idx="+b_idx)
+      router.push("/bbs/view_bbs?b_idx="+router.query.b_idx)
     );
 
   }
@@ -181,7 +182,7 @@ export default function view_bbs(){
         </Grid>
       </Paper>
      <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, width:'1200px', marginLeft:'450px'}}>
-        {comm != null && comm.map((comm) => (<Paper
+        {comm != null && comm.map((comm, index) => (<Paper key={index} 
         sx={{
           my: 4,
           mx: 'auto',
