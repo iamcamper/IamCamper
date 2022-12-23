@@ -125,7 +125,11 @@ export default function Main_Card(){
                                     <Typography variant='body1' color='text.secondary'className='bbstitle'>
                                     <Link
                                     className='bbstitle'
-                                    href={"bbs/view_bbs?b_idx="+item.b_idx}
+                                    href={{
+                                        pathname: '/bbs/view_bbs',
+                                        query: { idx: item.b_idx },
+                                      }}
+                                   
                                     >{item.subject}
                                     </Link>
                                    </Typography>
