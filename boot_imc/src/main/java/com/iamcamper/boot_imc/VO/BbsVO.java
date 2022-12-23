@@ -13,6 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BbsVO {
     private String subject, nickname, content, file_name, ori_name, thum_img, write_date, bname, ip,
-            b_idx, hit, like, status, price;
+            b_idx, hit, like, status, price, bnameko;
     private List<CommVO> c_list;
 }

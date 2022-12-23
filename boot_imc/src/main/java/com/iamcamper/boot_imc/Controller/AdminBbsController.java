@@ -45,8 +45,7 @@ public class AdminBbsController {
     private HttpServletResponse res;
 
     String img_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_img";
-    String file_path = "C:/My test/main1219/IamCamper/next_imc/public/upload_file";
-
+    String file_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_file";
     /*
      * 공지사항 리스트 불러오기
      */
@@ -323,6 +322,14 @@ public class AdminBbsController {
             todayBbsCountList.toArray(b_total_list);
         }
 
+        //오늘 게시판 인기글 가져오기
+        List<BbsVO> hitList = a_service.hitBbs();
+        BbsVO[] b_list = null;
+        if(hitList.size() > 0){
+            b_list = new BbsVO[hitList.size()];
+            hitList.toArray(b_list);
+        }
+
         // 베스트 게시판 가져오기
         BbsTotalCntVO bestBbs = a_service.bestBbs();
 
@@ -334,6 +341,7 @@ public class AdminBbsController {
             regList.toArray(r_list);
         }
 
+        map.put("hitList", b_list);
         map.put("snsCnt", s_list);
         map.put("bestBbs", bestBbs);
         map.put("bbsTotalCntList", b_total_list);

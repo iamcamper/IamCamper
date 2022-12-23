@@ -247,4 +247,14 @@
     WHERE grade = 0 AND activate = 0
     GROUP BY snsAuth;
   </select>
+
+  <!-- 어드민 대시보드 상위 3개 게시물 가져오기-->
+  <select id="hitBbs" resultType="com.iamcamper.boot_imc.VO.BbsVO">
+    SELECT a.*, bd.bnameko FROM (SELECT * FROM bbs
+    WHERE bname IN ('TSREVIEW', 'RESTREVIEW', 'RESELL', 'FREE', 'CAMRIVIEW')
+    AND write_date = DATE_FORMAT(NOW(), '%Y-%m-%d')
+    ORDER BY hit ASC
+    LIMIT 3) a, bbsdata bd
+    WHERE a.bname = bd.bname;
+  </select>
 </mapper>

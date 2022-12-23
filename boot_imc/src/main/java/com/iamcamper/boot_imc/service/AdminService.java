@@ -231,4 +231,11 @@ public class AdminService {
         return mapper.snsCount();
 
     }
+
+    //어드민 대시보드 - 인기글
+    public List<BbsVO> hitBbs(){
+
+        return mapper.hitBbs();
+
+    }
 }
