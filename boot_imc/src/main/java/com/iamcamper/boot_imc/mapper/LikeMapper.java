@@ -8,10 +8,7 @@ import com.iamcamper.boot_imc.VO.LikeVO;
 import feign.Param;
 
 public interface LikeMapper {
-    List<LikeVO> chklike(@Param("b_idx") Integer b_idx, @Param("m_idx") Integer m_idx);
-
-    List<LikeVO> chkclike(@Param("c_idx") Integer c_idx, @Param("m_idx") Integer m_idx);
-
+    
     void likeup(@Param("b_idx") Integer b_idx, @Param("m_idx") Integer m_idx);
 
     void likedel(@Param("b_idx") Integer b_idx, @Param("m_idx") Integer m_idx);

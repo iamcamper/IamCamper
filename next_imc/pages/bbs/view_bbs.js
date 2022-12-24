@@ -5,7 +5,7 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
 import Main_Bottom from "../../com/Main_Bottom";
-import { Box, Button, Grid, Input, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, Grid, Input, Paper, Stack, TextField, Typography } from "@mui/material";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -53,25 +53,31 @@ export default function view_bbs(){
   const [hover, setHover] = useState(-1);  
   const cPage = router.query.cPage;
   const b_idx = router.query.b_idx;
-  const nick = list.nickname;
+  const c_idx = router.query.c_idx;
+  console.log(c_idx);
+  console.log(list);
+  console.log(comm);
 
 
   function likesubmit(){
     if(likehit == 0){
-      setLikehit(1);
+      if(m_idx == null){
+        alert("로그인이 필요합니다.");
+        return;
+      }
       Axios.post(
         API_LIKE,null,
         {params:{b_idx:b_idx, m_idx:m_idx}}
       ).then(
-        router.push({pathname:"/bbs/view_bbs", query:{b_idx:b_idx}})
-      );
+        setLikehit(1)
+      )
     }else if(likehit == 1){
-      setLikehit(0);
+      
       Axios.post(
         API_DWN,null,
         {params:{b_idx:b_idx, m_idx:m_idx}}
       ).then(
-        router.push({pathname:"/bbs/view_bbs", query:{b_idx:b_idx}})
+        setLikehit(0)
       );
     }
     console.log(likehit);
@@ -80,13 +86,19 @@ export default function view_bbs(){
     0 : <FavoriteBorderIcon/>,
     1 : <FavoriteIcon color="error"/>
   }
+  let clikecolor = {
+    0 : <FavoriteBorderIcon/>,
+    1 : <FavoriteIcon color="error"/>
+  }
 
 function likechk(){
   Axios.post(
     API_CHK,null,
-    {params:{b_idx:list.b_idx, m_idx:m_idx}}
+    {params:{b_idx:b_idx, m_idx:m_idx}}
   ).then((json) =>{
+    console.log(json.data);
     setLikehit(json.data.cnt);
+    console.log(json.data.cnt);
   });
 }
 function getLabelText(value) {
@@ -150,42 +162,24 @@ function getLabelText(value) {
   }
   const [clikehit, setClikehit] = useState();
     
-  const cliksubmit = (c_idx) => {
-    
-    if(clikehit == 0){
-      setClikehit(1);
-      Axios.post(
-        API_CLIKE,null,
-        {params:{c_idx:c_idx, m_idx:m_idx}}
-      ).then((res)=> {
-        setList(res.data);
-      }
-
-        
-      );
-    }else if(clikehit == 1){
-      setClikehit(0);
-      Axios.post(
-        API_CDEL,null,
-        {params:{c_idx:c_idx, m_idx:m_idx}}
-      ).then(
-        router.push({pathname:"/bbs/view_bbs", query:{b_idx:b_idx}})
-      );
-    }
+  function Likeaction(e){
+    console.log(e);
   }
+  
   function clikechk(){
       Axios.post(
         API_CCHK,null,
-          {params:{c_idx:comm.c_idx, m_idx:m_idx}}
+          {params:{c_idx:c_idx, m_idx:m_idx}}
         ).then((json) =>{
           setClikehit(json.data.ccnt);
+          console.log(json.data.ccnt);
         });
       }
   useEffect(() => {
     getList();
     getComm();  
-    clikechk();
     likechk();
+    clikechk();
      },[]);
 
    return( 
@@ -218,7 +212,8 @@ function getLabelText(value) {
                 {(list.bname === 'RESELL' && <Typography variant="h3" color="text.secondary" gutterBottom>
                         금액:  {list.price}원
                       </Typography>)}
-              </Grid><Grid item>
+              </Grid>
+              <Grid item>
                  <Viewer list={list.content}
                  />
                 </Grid>
@@ -303,7 +298,7 @@ function getLabelText(value) {
         </Grid>
       </Paper>
      <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, width:'1200px', marginLeft:'450px'}}>
-      {comm != null && comm.map((comm, c_idx) => (<Paper key={c_idx} 
+      {comm != null && comm.map((comm, l_idx) => (<Paper key={l_idx}
         sx={{
           my: 4,
           mx: 'auto',
@@ -318,9 +313,13 @@ function getLabelText(value) {
             <Typography noWrap>{comm.content}</Typography>
           </Grid> 
           <Grid>
-          <IconButton aria-label="FavoriteBorder" onClick={() => cliksubmit(comm.c_idx)}>
-                          {likecolor[clikehit]}
-                    </IconButton>
+          <IconButton aria-label="FavoriteBorder" value={comm.c_idx} onClick={(e) => {Likeaction(e.target.value)}}>
+                      {
+                        clikehit == 1
+                        ? <FavoriteIcon color="error"/>
+                        : <FavoriteBorderIcon/>
+                      }
+                 </IconButton>
           </Grid>
       </Grid> 
       </Paper>))} 

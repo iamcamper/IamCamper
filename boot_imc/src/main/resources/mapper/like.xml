@@ -17,21 +17,11 @@
     Select COUNT(*) from iamcamper.like
         Where m_idx = #{m_idx}
         And b_idx = #{b_idx} 
-        And status = 1
 </select>
 <select id="cchk" resultType="int" parameterType="Map">
     Select COUNT(*) from iamcamper.like
         Where m_idx = #{m_idx}
         And c_idx = #{c_idx} 
-        And status = 1
-</select>
-<select id="chklike" resultType="com.iamcamper.boot_imc.VO.LikeVO" parameterType="Map">
-    SELECT ifnull(max(b_idx),0) AS b_idx FROM iamcamper.like
-    WHERE m_idx = #{m_idx}
-</select>
-<select id="chkclike" resultType="com.iamcamper.boot_imc.VO.LikeVO" parameterType="Map">
-    SELECT ifnull(max(c_idx),0)c_idx FROM iamcamper.like
-    WHERE m_idx = #{m_idx}
 </select>
 <insert id='addlike' parameterType="com.iamcamper.boot_imc.VO.LikeVO">
     INSERT INTO iamcamper.like(m_idx, b_idx, status)

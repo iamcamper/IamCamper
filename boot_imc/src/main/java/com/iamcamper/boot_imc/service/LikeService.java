@@ -33,14 +33,6 @@ public class LikeService {
         mapper.clikedel(c_idx, m_idx);
     }
 
-    public List<LikeVO> Chklike(Integer b_idx, Integer m_idx) {
-        return mapper.chklike(b_idx, m_idx);
-    }
-
-    public List<LikeVO> Chkclike(Integer c_idx, Integer m_idx) {
-        return mapper.chkclike(c_idx, m_idx);
-    }
-
     public void Addlike(Integer m_idx, Integer b_idx) {
         mapper.addlike(m_idx, b_idx);
     }

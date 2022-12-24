@@ -42,7 +42,7 @@ export default function free_bbs(){
     const API_URL = "/bbs/list";
     const API_SEARCH = "/bbs/search";
     const router = useRouter();
-    console.log(cookie);
+    console.log(list);
     const [bbschk, setBbschk] = useState('');
     const [searchtxt, setSearchtxt] = useState('');
     const [waychk, setWaychk] = useState('');
@@ -65,9 +65,6 @@ export default function free_bbs(){
         alert('검색종류를 선택해주세요')
         return;
       }
-      console.log(bbschk);
-      console.log(waychk);
-      console.log(searchtxt);
        Axios.post(
         API_SEARCH, null,
         {params:{bname:bbschk, way:waychk, search:searchtxt, cPage:cPage}}
@@ -165,7 +162,7 @@ const pageChange = (event, value) => {
                             <Link
                             href={{
                               pathname: '/bbs/view_bbs',
-                              query: { b_idx: bbs.b_idx, cPage: cPage },
+                              query: { b_idx: bbs.b_idx, cPage: cPage, c_idx: bbs.c_list },
                             }}
                               >{bbs.subject}</Link></TableCell>}
                       <TableCell>{bbs.nickname}</TableCell>
