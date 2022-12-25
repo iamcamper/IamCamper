@@ -68,12 +68,6 @@ export default function QNA(){
                 </Typography>
             </div>
             <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: '600px', padding:1}}>
-                <Grid container my={8} style={{ textAlign: 'center', margin: 'auto', width: '1600px' }}>
-                    <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/free_bbs")}> 자유 게시판 </Button></Grid>
-                    <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/campreview")}>후기 게시판</Button></Grid>
-                    <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/rest_bbs")}> 맛집 게시판</Button></Grid>
-                    <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/QNA")}>자주 하는 질문</Button></Grid>
-                </Grid>
            {list != null && list.map((list, index) => (
                 <Paper key={index}
                     sx={{

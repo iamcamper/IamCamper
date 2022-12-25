@@ -38,6 +38,7 @@ export default function free_bbs(){
     const [cPage, setCpage] = useState('');
     const cookie = getCookie("nickname");
     const [list, setList] = useState([]);
+    const [notice, setNotice] = useState([]);
     const [totalPage, setTotalPage] = useState();
     const API_URL = "/bbs/list";
     const API_SEARCH = "/bbs/search";
@@ -94,6 +95,18 @@ export default function free_bbs(){
         
       });
   }
+  function getNotice(){
+    Axios.post(
+      API_URL, null,
+      {params:{bname:'USERNOTICE', cPage:cPage}}
+    ).then((json) =>{
+      if(json.data.list == null){
+        setNotice([]);
+      }else{
+      setNotice(json.data.list);
+      }
+    });
+  }
 
   const bbstab = ['자유게시판', '후기게시판' , '맛집게시판' , '중고거래게시판']
 
@@ -108,6 +121,7 @@ const pageChange = (event, value) => {
 
   useEffect(() => { //최초 한번만 호출하기 위해 사용함!
     getList();
+    getNotice();
   },[cPage]);
   
     return(
@@ -145,18 +159,24 @@ const pageChange = (event, value) => {
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{ width: '1600px', height: 'auto' }}>
-                  <TableRow sx={{backgroundColor:'lightgrey'}}>
-                    <TableCell>공지사항</TableCell>
-                    <TableCell>공지제목</TableCell>
+                  {notice != null && notice.map((notice, index)=> (
+                  <TableRow key={index} sx={{backgroundColor:'lightgrey'}}>
+                    <TableCell>{notice.b_idx}</TableCell>
+                    <TableCell><Link href={{
+                      pathname: '/bbs/view_bbs',
+                      query: { b_idx: notice.b_idx, cPage: cPage },
+                    }}>{notice.subject}</Link></TableCell>
                     <TableCell>관리자</TableCell>
-                    <TableCell>작성일</TableCell>
-                    <TableCell>추천</TableCell>
-                    <TableCell>조회</TableCell>
+                    <TableCell>{notice.write_date}</TableCell>
+                    <TableCell>{notice.like}</TableCell>
+                    <TableCell>{notice.hit}</TableCell>
                   </TableRow>
+                  ))}
+                  
                   {list != null && list.map((bbs, index) => (
                     <TableRow key={index}>
                       <TableCell>{bbs.b_idx}</TableCell>
-                       {bbs.status == 2 && <TableCell>규제된 글입니다.</TableCell>}
+                       {bbs.status == 2 && <TableCell sx={{color:'red'}}>규제된 글입니다.</TableCell>}
                         {bbs.status == 0 &&<TableCell> 
                             <Link
                             href={{
@@ -177,14 +197,14 @@ const pageChange = (event, value) => {
         </div>
 
         <div className="bottom-div">
-          <Grid item xs style={{ width: '1600px', textAlign: 'right', padding: '30px', float: 'right' }}>
+          <Grid item xs style={{ width: '1600px', textAlign: 'right', padding: '10px', float: 'right', position:'absolute' }}>
             <Fab color="secondary" aria-label="edit" onClick={edit}><EditIcon /></Fab>
           </Grid>
           <Paper
               component="form"
-              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '1000px'}}
+              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '1000px', margin:'auto', marginTop:5}}
             >
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 120, marginBottom: 2 }}>
                 <InputLabel id="demo-simple-select-standard-label">게시판검색</InputLabel>
                 <Select
                   labelId="demo-simple-select-standard-label"
@@ -195,13 +215,14 @@ const pageChange = (event, value) => {
                 >
                   <MenuItem value={'FREE'}>자유게시판
                   </MenuItem>
-                  <MenuItem value={'TSREVIEW'}>후기게시판</MenuItem>
+                  <MenuItem value={'TSREVIEW'}>관광지후기게시판</MenuItem>
                   <MenuItem value={'RESTREVIEW'}>맛집게시판</MenuItem>
                   <MenuItem value={'RESELL'}>중고거래게시판</MenuItem>
+                  <MenuItem value={'CAMREVIEW'}>캠핑리뷰게시판</MenuItem>
                 </Select>
               </FormControl>
               <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 120, marginBottom:2 }}>
                 <InputLabel id="demo-simple-select-standard-label">검색종류</InputLabel>
                 <Select
                   labelId="demo-simple-select-standard-label"
@@ -229,7 +250,7 @@ const pageChange = (event, value) => {
               </Paper>
           <Stack spacing={2} sx={{display:'inline-block'}}>
           <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary'
-                            page={cPage}
+                            page={cPage} sx={{marginTop:2}}
                             onChange={pageChange}/>
           </Stack>
         </div>

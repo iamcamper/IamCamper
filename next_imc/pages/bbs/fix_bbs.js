@@ -100,12 +100,12 @@ export default function fix_bbs(){
                     label="bbs"
                     onChange={BnameChange}
                 >
-                    <MenuItem value="FREE">
-                    자유게시판
-                    </MenuItem>
-                    <MenuItem value="CAMREVIEW">후기 게시판</MenuItem>
-                    <MenuItem value="RESTREVIEW">맛집 게시판</MenuItem>
-                    <MenuItem value="RESELL">중고거래 게시판</MenuItem>
+                    <MenuItem value={'FREE'}>자유게시판
+                  </MenuItem>
+                  <MenuItem value={'TSREVIEW'}>관광지후기게시판</MenuItem>
+                  <MenuItem value={'RESTREVIEW'}>맛집게시판</MenuItem>
+                  <MenuItem value={'RESELL'}>중고거래게시판</MenuItem>
+                  <MenuItem value={'CAMREVIEW'}>캠핑리뷰게시판</MenuItem>
                 </Select>
             </FormControl>
             </Stack>

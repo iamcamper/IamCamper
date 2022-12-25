@@ -147,14 +147,14 @@ export default function buy_bbs() {
             </Grid>
         </Box>
         <div className="bottom-div">
-          <Grid item xs style={{ width: '1600px', textAlign: 'right', padding: '30px', float: 'right' }}>
+          <Grid item xs style={{ width: '1600px', textAlign: 'right', padding: '10px', float: 'right', position:'absolute' }}>
             <Fab color="secondary" aria-label="edit" onClick={edit}><EditIcon /></Fab>
           </Grid>
           <Paper
               component="form"
-              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '1000px'}}
+              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '1000px', margin:'auto', marginTop:5}}
             >
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 120, marginBottom: 2 }}>
                 <InputLabel id="demo-simple-select-standard-label">게시판검색</InputLabel>
                 <Select
                   labelId="demo-simple-select-standard-label"
@@ -163,15 +163,16 @@ export default function buy_bbs() {
                   onChange={handleChange}
                   label="게시판검색"
                 >
-                  <MenuItem value={'FREE'}>자유게시판
+                 <MenuItem value={'FREE'}>자유게시판
                   </MenuItem>
-                  <MenuItem value={'TSREVIEW'}>후기게시판</MenuItem>
+                  <MenuItem value={'TSREVIEW'}>관광지후기게시판</MenuItem>
                   <MenuItem value={'RESTREVIEW'}>맛집게시판</MenuItem>
                   <MenuItem value={'RESELL'}>중고거래게시판</MenuItem>
+                  <MenuItem value={'CAMREVIEW'}>캠핑리뷰게시판</MenuItem>
                 </Select>
               </FormControl>
               <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-              <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+              <FormControl variant="standard" sx={{ m: 1, minWidth: 120, marginBottom:2 }}>
                 <InputLabel id="demo-simple-select-standard-label">검색종류</InputLabel>
                 <Select
                   labelId="demo-simple-select-standard-label"
@@ -199,7 +200,7 @@ export default function buy_bbs() {
               </Paper>
           <Stack spacing={2} sx={{display:'inline-block'}}>
           <Pagination count={totalPage} variant="outlined" shape="rounded" color='primary'
-                            page={cPage}
+                            page={cPage} sx={{marginTop:2}}
                             onChange={pageChange}/>
           </Stack>
         </div>

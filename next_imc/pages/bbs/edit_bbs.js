@@ -28,19 +28,21 @@ export default function edit_bbs(){
     const router = useRouter();
     const formData = new FormData();
     let file = null;
+    const [bname, setBname] = useState(0);
     const [status, setStatus] = useState(0);
-   const [bname, setBname] = useState('');
    const [price, setPrice] = useState('');
 
     
     const BnameChange = (e) => {
         setBname(e.target.value);
-        if(bname == 'RESELL'){
-            setStatus(3);
+        if(e.target.value === "RESELL"){
+            setStatus(3)
         }else{
-            setStatus(0);
-        }
-    }; 
+            setStatus(0)
+        }        
+    };  
+    
+
     const subjectChange = (e) => {
         setSubject(e.target.value);
         console.log(subject);
@@ -65,7 +67,11 @@ export default function edit_bbs(){
         if(subject == null){
             alert("제목을 입력해주세요");
             return;
-        }else{formData.append("subject", subject);}
+        }else{
+            formData.append("subject", subject);
+        }
+            console.log(bname);
+            console.log(status);
         Axios.post(
             WRITE_URL, formData,
             {params:{
@@ -99,16 +105,16 @@ export default function edit_bbs(){
                     label="bbs"
                     onChange={BnameChange}
                 >
-                    <MenuItem value="FREE">
-                    자유게시판
-                    </MenuItem>
-                    <MenuItem value="TSREVIEW">후기 게시판</MenuItem>
-                    <MenuItem value="RESTREVIEW">맛집 게시판</MenuItem>
-                    <MenuItem value="RESELL">중고거래 게시판</MenuItem>
+                    <MenuItem value={'FREE'}>자유게시판
+                  </MenuItem>
+                  <MenuItem value={'TSREVIEW'}>관광지후기게시판</MenuItem>
+                  <MenuItem value={'RESTREVIEW'}>맛집게시판</MenuItem>
+                  <MenuItem value={'RESELL'}>중고거래게시판</MenuItem>
+                  <MenuItem value={'CAMREVIEW'}>캠핑리뷰게시판</MenuItem>
                 </Select>
             </FormControl>
             </Stack>
-            <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
+            <Stack items sx={{width:'600px', paddingLeft:'30px'}}>
                 <tr>
                     <th style={{padding:'20px', textAlign:'left'}}> 
                          <label htmlFor='subject'>제목</label>
@@ -118,7 +124,7 @@ export default function edit_bbs(){
                      </td>
                 </tr>
             </Stack>
-                <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
+                <Stack items sx={{width:'600px', paddingLeft:'30px'}}>
                 <tr>
                                     <th style={{padding:'20px', textAlign:'left'}}>
                                         <label htmlFor='writer'>글쓴이</label>
@@ -131,7 +137,7 @@ export default function edit_bbs(){
                 {
                     (function() {
                         if (bname === 'RESELL') return (    
-                    <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
+                    <Stack items sx={{width:'600px', paddingLeft:'30px'}}>
                          <tr>
                             <th style={{padding:'20px', textAlign:'left'}}>
                                 <label htmlFor='price'>금액</label>

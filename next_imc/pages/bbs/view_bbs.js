@@ -202,8 +202,9 @@ function getLabelText(value) {
                 {(list.bname === 'RESELL' && <Typography variant="h3" color="text.secondary" gutterBottom>
                         금액:  {list.price}원
                       </Typography>)}
-              </Grid><Grid>{
-                list.nickname == nickname && (
+            </Grid><Grid>{
+                list.nickname === nickname & list.bname === 'RESELL' 
+                ? 
                 <><FormControl variant="standard" sx={{ width: '100px', marginLeft: 5 }}>
                      <InputLabel id="demo-simple-select-standard-label">거래상태</InputLabel>
                      <Select
@@ -218,8 +219,8 @@ function getLabelText(value) {
                        <MenuItem value={4}>예약중</MenuItem>
                        <MenuItem value={5}>거래완료</MenuItem>
                      </Select>
-                   </FormControl><Button variant="contained" size="small" sx={{marginTop:'15px', marginLeft:'15px'}} onClick={buystatsubmit}>거래상태수정</Button></>
-                  )
+                   </FormControl><Button variant="contained" size="small" sx={{ marginTop: '15px', marginLeft: '15px' }} onClick={buystatsubmit}>거래상태수정</Button></>
+                 : null 
               }</Grid>
               <Grid item>
                  <Viewer list={list.content}
@@ -278,7 +279,7 @@ function getLabelText(value) {
           </Grid>
         </Grid>
       </Paper>
-     <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, width:'1200px', marginLeft:'450px'}}>
+     <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 3, width:'1200px', marginLeft:'800px'}}>
       {comm != null && comm.map((comm, l_idx) => (<Paper key={l_idx}
         sx={{
           my: 4,
