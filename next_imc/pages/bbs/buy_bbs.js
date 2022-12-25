@@ -103,6 +103,11 @@ export default function buy_bbs() {
     const pageChange = (event, value) => {
         setCpage(value);
       };
+    var buyst = {
+        3 : <Typography variant="h3" color="green" gutterBottom>거래가능</Typography>,
+        4 : <Typography variant="h3" color="yellowgreen" gutterBottom>예약중</Typography>,
+        5 : <Typography variant="h3" color="black" gutterBottom>거래완료</Typography>,
+      }
 
   return (
     <>  <div className={styles.container}>
@@ -121,9 +126,11 @@ export default function buy_bbs() {
                 <CardHeader
                     title={bbs.subject}
                     subheader={bbs.write_date} />
+                        {buyst[bbs.status]}
+                    
                 <CardActions onClick={() =>  router.push({
                         pathname: '/bbs/view_bbs',
-                        query: { b_idx: bbs.b_idx },
+                        query: { b_idx: bbs.b_idx, status: bbs.status },
                        })
                        }>
                 <CardMedia

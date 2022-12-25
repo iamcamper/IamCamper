@@ -34,16 +34,6 @@ public class LikeController {
         return map;
     }
 
-    @RequestMapping("/cchk")
-    public Map<String, Object> CFirst(Integer c_idx, Integer m_idx) {
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        int cnt = l_Service.FCchk(c_idx, m_idx);
-
-        map.put("ccnt", cnt);
-
-        return map;
-    }
 
     @RequestMapping("/up")
     public void Up(Integer b_idx, Integer m_idx) {
@@ -61,22 +51,5 @@ public class LikeController {
     @RequestMapping("/dw")
     public void Down(Integer b_idx, Integer m_idx) {
         l_Service.Likedel(b_idx, m_idx);
-    }
-
-    @RequestMapping("/cup")
-    public void Cup(Integer c_idx, Integer m_idx) {
-
-        int cnt = l_Service.FCchk(c_idx, m_idx);
-
-        if (cnt == 0) {
-            l_Service.Addclike(m_idx, c_idx);
-        } else {
-            l_Service.CLikeup(c_idx, m_idx);
-        }
-    }
-
-    @RequestMapping("/cdw")
-    public void Cdw(Integer c_idx, Integer m_idx) {
-        l_Service.CLikedel(c_idx, m_idx);
     }
 }

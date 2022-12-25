@@ -5,7 +5,7 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
 import Main_Bottom from "../../com/Main_Bottom";
-import { Box, Button, FormControl, Grid, Input, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, Grid, Input, Paper, Stack, TextField, Typography, useStepContext } from "@mui/material";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -18,6 +18,10 @@ import { getCookie } from "cookies-next";
 import dynamic from "next/dynamic";
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+
+import MenuItem from '@mui/material/MenuItem';
 
 const Viewer = dynamic(()=> import('./viewer'), {ssr:false});
 
@@ -40,12 +44,10 @@ export default function view_bbs(){
   const API_DEL = "/bbs/del";
   const API_Comm = "/bbs/commList";
   const API_Submit = "/bbs/commAdd";
-  const API_CLIKE = "/like/cup";
-  const API_CDEL = "/like/cdw";
-  const API_CCHK = "/like/cchk";
   const API_LIKE = "/like/up";
   const API_DWN = "/like/dw";
   const API_CHK = "/like/chk";
+  const API_Stat = "/bbs/buystat";
   const [comm, setComm] = useState([]);
   const [commin, setCommin] = useState('');
   const [likehit, setLikehit] = useState();
@@ -53,11 +55,8 @@ export default function view_bbs(){
   const [hover, setHover] = useState(-1);  
   const cPage = router.query.cPage;
   const b_idx = router.query.b_idx;
-  const c_idx = router.query.c_idx;
-  console.log(c_idx);
-  console.log(list);
-  console.log(comm);
-
+  const status = router.query.status; 
+  const [buystatus, setBuystatus] = useState();
 
   function likesubmit(){
     if(likehit == 0){
@@ -86,19 +85,13 @@ export default function view_bbs(){
     0 : <FavoriteBorderIcon/>,
     1 : <FavoriteIcon color="error"/>
   }
-  let clikecolor = {
-    0 : <FavoriteBorderIcon/>,
-    1 : <FavoriteIcon color="error"/>
-  }
 
 function likechk(){
   Axios.post(
     API_CHK,null,
     {params:{b_idx:b_idx, m_idx:m_idx}}
   ).then((json) =>{
-    console.log(json.data);
     setLikehit(json.data.cnt);
-    console.log(json.data.cnt);
   });
 }
 function getLabelText(value) {
@@ -141,15 +134,6 @@ function getLabelText(value) {
     })
   }
 
-  function deleteList(){
-    Axios.post(
-      API_DEL,null,
-      {params:{b_idx:b_idx}}
-    ).then(() => {
-      router.replace("/bbs/free_bbs");
-    })
-  }
-
   function commSubmit(){
     Axios.post(
       API_Submit, null,
@@ -160,26 +144,32 @@ function getLabelText(value) {
     );
 
   }
-  const [clikehit, setClikehit] = useState();
-    
-  function Likeaction(e){
-    console.log(e);
-  }
-  
-  function clikechk(){
+  function buyChange(e){
+        setBuystatus(e.target.value)
+        console.log(buystatus);
+  } 
+  function buystatsubmit(){
       Axios.post(
-        API_CCHK,null,
-          {params:{c_idx:c_idx, m_idx:m_idx}}
-        ).then((json) =>{
-          setClikehit(json.data.ccnt);
-          console.log(json.data.ccnt);
-        });
-      }
+        API_Stat,null,
+        {params:{status:buystatus, b_idx:b_idx}}
+      ).then(
+        router.back()
+      )
+  }
+  function deletebbs(){
+    Axios.post(
+        API_DEL,null,
+        {params:{b_idx:b_idx}}
+    ).then(
+      router.back()
+    )
+  }
+
   useEffect(() => {
     getList();
     getComm();  
     likechk();
-    clikechk();
+    setBuystatus(status);
      },[]);
 
    return( 
@@ -212,7 +202,25 @@ function getLabelText(value) {
                 {(list.bname === 'RESELL' && <Typography variant="h3" color="text.secondary" gutterBottom>
                         금액:  {list.price}원
                       </Typography>)}
-              </Grid>
+              </Grid><Grid>{
+                list.nickname == nickname && (
+                <><FormControl variant="standard" sx={{ width: '100px', marginLeft: 5 }}>
+                     <InputLabel id="demo-simple-select-standard-label">거래상태</InputLabel>
+                     <Select
+                       labelId="demo-simple-select-standard-label"
+                       id="demo-simple-select-standard"
+                       value={buystatus}
+                       onChange={buyChange}
+                       label="검색종류"
+                     >
+                       <MenuItem value={3}>거래가능
+                       </MenuItem>
+                       <MenuItem value={4}>예약중</MenuItem>
+                       <MenuItem value={5}>거래완료</MenuItem>
+                     </Select>
+                   </FormControl><Button variant="contained" size="small" sx={{marginTop:'15px', marginLeft:'15px'}} onClick={buystatsubmit}>거래상태수정</Button></>
+                  )
+              }</Grid>
               <Grid item>
                  <Viewer list={list.content}
                  />
@@ -235,34 +243,7 @@ function getLabelText(value) {
                     </IconButton>
             </Typography>
             </Box>
-            <Typography variant="subtitle1" component="div" sx={{width:250, marginTop:'30px'}}>판매자를 평가해주세요
-            <Box
-              sx={{
-                width: 250,
-                display: 'block',
-                alignItems: 'center',
-              }}
-            >
-              <Rating
-                name="hover-feedback"
-                value={value}
-                precision={1}
-                getLabelText={getLabelText}
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                  console.log(value);
-                }}
-                onChangeActive={(event, newHover) => {
-                  setHover(newHover);
-                  console.log(hover);
-                }}
-                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-              />
-              {value !== null && (
-                <Box sx={{ ml: 1 }}>{labels[hover !== -1 ? hover : value]}</Box>
-              )}
-            </Box>
-            </Typography>
+            {list.nickname == nickname && <Button variant="contained" size="medium" sx={{marginRight:'15px'}} onClick={deletebbs}>삭제</Button>}
           </Grid> 
         </Grid>
       </Grid>
@@ -312,15 +293,6 @@ function getLabelText(value) {
           <Grid item xs zeroMinWidth>
             <Typography noWrap>{comm.content}</Typography>
           </Grid> 
-          <Grid>
-          <IconButton aria-label="FavoriteBorder" value={comm.c_idx} onClick={(e) => {Likeaction(e.target.value)}}>
-                      {
-                        clikehit == 1
-                        ? <FavoriteIcon color="error"/>
-                        : <FavoriteBorderIcon/>
-                      }
-                 </IconButton>
-          </Grid>
       </Grid> 
       </Paper>))} 
     </Box>

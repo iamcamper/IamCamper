@@ -81,7 +81,7 @@ export default function free_bbs(){
   function getList(){
     Axios.post(
         API_URL, null,
-        {params:{bname:'CAMREVIEW', cPage:cPage}}
+        {params:{bname:'TSREVIEW', cPage:cPage}}
       ).then((json) =>{
         setTotalPage(json.data.totalPage);
         if(json.data.list == null){
@@ -114,13 +114,13 @@ const pageChange = (event, value) => {
           <Banner/>
           <div>
                 <Typography variant="h3" color="text.secondary" sx={{width:1600, textAlign:'left', margin:'auto', padding:2}}>
-                        캠핑 리뷰 게시판
+                        관광지 후기 게시판
                 </Typography>
             </div>
         <div>
 
         <Grid container my={8} style={{ width:'1600px', textAlign: 'center', margin: 'auto', backgroundColor:'lightcyan' }}>
-          <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/free_bbs")}> 자유 게시판 </Button></Grid>
+              <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/free_bbs")}> 자유 게시판 </Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/campreview")}>캠핑 리뷰 게시판</Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/rest_bbs")}> 맛집 게시판</Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/tsreview")}>관광지 후기 게시판</Button></Grid>

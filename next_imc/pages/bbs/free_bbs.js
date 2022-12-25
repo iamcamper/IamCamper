@@ -35,7 +35,7 @@ import { getCookie, setCookie } from "cookies-next";
 export default function free_bbs(){ 
 
 
-    const [cPage, setCpage] = useState(1);
+    const [cPage, setCpage] = useState('');
     const cookie = getCookie("nickname");
     const [list, setList] = useState([]);
     const [totalPage, setTotalPage] = useState();
@@ -107,8 +107,7 @@ const pageChange = (event, value) => {
 };
 
   useEffect(() => { //최초 한번만 호출하기 위해 사용함!
-    getList()
-    setCpage(cPage);
+    getList();
   },[cPage]);
   
     return(
@@ -124,10 +123,10 @@ const pageChange = (event, value) => {
           </div>
         <div>
            <Grid container my={8} style={{ width:'1600px', textAlign: 'center', margin: 'auto', backgroundColor:'lightcyan' }}>
-              <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/free_bbs")}> 자유 게시판 </Button></Grid>
-              <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/campreview")}>후기 게시판</Button></Grid>
+           <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/free_bbs")}> 자유 게시판 </Button></Grid>
+              <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/campreview")}>캠핑 리뷰 게시판</Button></Grid>
               <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/rest_bbs")}> 맛집 게시판</Button></Grid>
-              <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/QNA")}>자주 하는 질문</Button></Grid>
+              <Grid item xs><Button variant="outlined" style={{ width: '100%', height: "100%" }} onClick={() => router.push("/bbs/tsreview")}>관광지 후기 게시판</Button></Grid>
             </Grid>
           <Paper sx={{ width: '1600px', margin: 'auto', textAlign: 'center', height: 'auto' }}>
             
@@ -162,7 +161,7 @@ const pageChange = (event, value) => {
                             <Link
                             href={{
                               pathname: '/bbs/view_bbs',
-                              query: { b_idx: bbs.b_idx, cPage: cPage, c_idx: bbs.c_list },
+                              query: { b_idx: bbs.b_idx, cPage: cPage },
                             }}
                               >{bbs.subject}</Link></TableCell>}
                       <TableCell>{bbs.nickname}</TableCell>

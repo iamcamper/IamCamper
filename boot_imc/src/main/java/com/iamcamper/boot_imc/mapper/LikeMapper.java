@@ -13,16 +13,8 @@ public interface LikeMapper {
 
     void likedel(@Param("b_idx") Integer b_idx, @Param("m_idx") Integer m_idx);
 
-    void clikeup(@Param("c_idx") Integer c_idx, @Param("m_idx") Integer m_idx);
-
-    void clikedel(@Param("c_idx") Integer c_idx, @Param("m_idx") Integer m_idx);
-
     void addlike(@Param("m_idx") Integer m_idx, @Param("b_idx") Integer b_idx);
 
-    void addclike(@Param("m_idx") Integer m_idx, @Param("c_idx") Integer c_idx);
-
     int chk(@Param("b_idx") Integer b_idx, @Param("m_idx") Integer m_idx);
-
-    int cchk(@Param("c_idx") Integer c_idx, @Param("m_idx") Integer m_idx);
 
 }

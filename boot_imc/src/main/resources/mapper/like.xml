@@ -3,7 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iamcamper.boot_imc.mapper.LikeMapper">
-
 <select id="totallike" resultType="int" parameterType="Map">
         SELECT a.* FROM (SELECT @RN:=@RN+1 AS rownum, b.*, IFNULL (l.cnt, 0) AS likehit 
         FROM bbs b LEFT OUTER JOIN 
@@ -18,18 +17,9 @@
         Where m_idx = #{m_idx}
         And b_idx = #{b_idx} 
 </select>
-<select id="cchk" resultType="int" parameterType="Map">
-    Select COUNT(*) from iamcamper.like
-        Where m_idx = #{m_idx}
-        And c_idx = #{c_idx} 
-</select>
 <insert id='addlike' parameterType="com.iamcamper.boot_imc.VO.LikeVO">
     INSERT INTO iamcamper.like(m_idx, b_idx, status)
     VALUES (#{m_idx}, #{b_idx}, 1)
-</insert>
-<insert id='addclike' parameterType="com.iamcamper.boot_imc.VO.LikeVO">
-    INSERT INTO iamcamper.like(m_idx, c_idx, status)
-    VALUES (#{m_idx}, #{c_idx}, 1)
 </insert>
 <update id="likeup">
     UPDATE iamcamper.bbs b JOIN iamcamper.like l ON b.b_idx = l.b_idx
@@ -40,16 +30,5 @@
     UPDATE iamcamper.bbs b JOIN iamcamper.like l ON b.b_idx = l.b_idx
     SET b.like = b.like -1 , l.status = 0
     WHERE l.b_idx = #{b_idx} AND b.b_idx = #{b_idx} AND l.m_idx = #{m_idx}
-</update>
-
-<update id="clikeup">
-    UPDATE iamcamper.comment c JOIN iamcamper.like l ON c.c_idx = l.c_idx
-    SET c.like = c.like + 1 , l.status = 1
-    WHERE l.c_idx = #{c_idx} AND c.c_idx = #{c_idx} AND l.m_idx = #{m_idx}
-</update>
-<update id="clikedel">
-    UPDATE iamcamper.comment c JOIN iamcamper.like l ON c.c_idx = l.c_idx
-    SET c.like = c.like - 1 , l.status = 0
-    WHERE l.c_idx = #{c_idx} AND c.c_idx = #{c_idx} AND l.m_idx = #{m_idx}
 </update>
 </mapper>

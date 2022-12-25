@@ -218,10 +218,9 @@ public class BbsController {
 
         return map;
     }
-
     @RequestMapping("/addbbs")
     public Map<String, Object> addBbs(String nickname, String subject, String content, String bname, String price,
-            @RequestPart(value = "file", required = false) MultipartFile file, String thum_img) {
+            @RequestPart(value = "file", required = false) MultipartFile file, String thum_img, String status) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -257,6 +256,7 @@ public class BbsController {
             vo.setThum_img(thum);
         }
 
+        vo.setStatus(status);
         vo.setIp(req.getRemoteAddr());
         vo.setSubject(subject);
         vo.setNickname(nickname);
@@ -273,7 +273,7 @@ public class BbsController {
     @RequestMapping("/fixbbs/submit")
     public Map<String, Object> editOk(String subject, String content,
             @RequestPart(value = "file", required = false) MultipartFile file, String bname, String price,
-            String b_idx) {
+            String b_idx, String status) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -292,7 +292,7 @@ public class BbsController {
 
         }
 
-        b_Service.fixbbs(subject, content, file_name, ori_name, bname, price, b_idx);
+        b_Service.fixbbs(subject, content, file_name, ori_name, bname, price, b_idx, status);
 
         return map;
 
@@ -329,12 +329,16 @@ public class BbsController {
 
         return vo;
     }
-
     @RequestMapping("/del")
     public BbsVO delBbs(String b_idx) {
         BbsVO vo = b_Service.del(b_idx);
 
         return vo;
+    }
+
+    @RequestMapping("/buystat")
+    public void buystatus(String status, String b_idx){
+        b_Service.fixstat(status, b_idx);
     }
 
 }
