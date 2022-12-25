@@ -207,7 +207,7 @@ public class BbsController {
 
         int ren = (int) (Math.random() * 3000 + 1);
 
-        BbsVO[] ar = b_Service.blist2("CAMREVIEW", "TSREVIEW", "RESTREVIEW");
+        BbsVO[] ar = b_Service.blist2("CAMREVIEW", "TSREVIEW", "RESTREVIEW","FREE");
         BbsVO[] ar2 = b_Service.blist("RESELL");
         CamVO[] ar3 = cam_Service.picklist(ren);
         BbsVO[] ar4 = null;
