@@ -24,8 +24,11 @@ public class BbsService {
     }
 
     public void fixbbs(String subject, String content, String file_name, String ori_name, String bname, String price,
-            String b_idx) {
-        mapper.edit(subject, content, file_name, ori_name, bname, price, b_idx);
+            String b_idx, String status) {
+        mapper.edit(subject, content, file_name, ori_name, bname, price, b_idx, status);
+    }
+    public void fixstat(String status, String b_idx){
+        mapper.Buystat(status, b_idx);
     }
 
     public BbsVO view(String b_idx) {

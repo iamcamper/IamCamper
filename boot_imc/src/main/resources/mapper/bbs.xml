@@ -14,7 +14,7 @@
 		SELECT a.* FROM(
 			SELECT @RN:=@RN+1 AS rownnum, b.*
 			FROM (SELECT * FROM bbs
-					WHERE (status = 0 OR status = 2) AND bname = #{bname} ORDER BY b_idx DESC) b, (SELECT @RN:=0) r
+					WHERE (status = 0 OR status = 2 OR status = 3 OR status = 4 OR status = 5) AND bname = #{bname} ORDER BY b_idx DESC) b, (SELECT @RN:=0) r
 		) a
 		WHERE (rownnum BETWEEN #{begin} AND #{end}) AND bname = #{bname}
 	</select>
@@ -146,8 +146,8 @@
 				</if>
 	</select>
     <insert id="add" parameterType="com.iamcamper.boot_imc.VO.BbsVO">
-		INSERT INTO bbs(subject, nickname, content, file_name, ori_name, thum_img, write_date, ip, bname, price)
-   		VALUES (#{subject}, #{nickname}, #{content}, #{file_name}, #{ori_name}, #{thum_img}, NOW(), #{ip}, #{bname}, #{price})
+		INSERT INTO bbs(subject, nickname, content, file_name, ori_name, thum_img, write_date, ip, bname, price, status)
+   		VALUES (#{subject}, #{nickname}, #{content}, #{file_name}, #{ori_name}, #{thum_img}, NOW(), #{ip}, #{bname}, #{price}, #{status})
 	</insert>
 	
 	<!-- 원글 검색 -->
@@ -159,7 +159,7 @@
 	<!-- 원글 수정 -->
 	<update id="edit" parameterType="java.util.Map">
 		UPDATE bbs 
-		SET subject = #{subject}, content = #{content}, file_name = #{file_name}, ori_name = #{ori_name}, bname=#{bname}, price=#{price}
+		SET subject = #{subject}, content = #{content}, file_name = #{file_name}, ori_name = #{ori_name}, bname=#{bname}, price=#{price}, status=#{status}
 		WHERE b_idx = #{b_idx}
 	</update>
 	<update id="del" parameterType="String">
@@ -201,5 +201,11 @@
     UPDATE bbs
     SET hit = hit + 1
     WHERE b_idx = #{b_idx}
+	</update>
+
+	<update id="Buystat" parameterType="Map">
+	UPDATE bbs
+	SET status = #{status}
+	WHERE b_idx = #{b_idx}
 	</update>
 </mapper>

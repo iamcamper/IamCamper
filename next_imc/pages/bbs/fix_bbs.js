@@ -27,10 +27,10 @@ export default function fix_bbs(){
     const [fix, setFix] = useState([]);
     const editorRef = useRef();
     const [subject, setSubject] = useState(fix.subject);
+    const [status, setStatus] = useState(fix.status);
     const b_idx = router.query.b_idx;
     
-    console.log(fix);
-    console.log(content);
+    console.log(fix.status);
 
     function getFixdata(){
         setFix(JSON.parse(router.query.list))
@@ -42,15 +42,17 @@ export default function fix_bbs(){
 
     const BnameChange = (e) => {
         setBname(e.target.value);
-        console.log(bname);
+        if(bname == 'RESELL'){
+            setStatus(3);
+        }else{
+            setStatus(0);
+        }
     }; 
     const subjectChange = (e) => {
         setSubject(e.target.value);
-        console.log(subject);
     }
     const changePrice = (e) => {
         setPrice(e.target.value);
-        console.log(price);
     }
     function changeFile(e){
         formData.append('file', e.target.files[0]);
@@ -66,6 +68,7 @@ export default function fix_bbs(){
                 cPage:1,
                 price:price,
                 b_idx:b_idx,
+                status:status,
             },
             headers:{'Content-Type': 'multipart/form-data',},},
         ).then(

@@ -5,7 +5,7 @@ import Main1_Menu from "../../com/Main1_Menu";
 import Main1_top from "../../com/Main_top";
 import styles from '../../styles/Home.module.css';
 import Main_Bottom from "../../com/Main_Bottom";
-import { Box, Button, FormControl, Grid, Input, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, Grid, Input, Paper, Stack, TextField, Typography, useStepContext } from "@mui/material";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -47,15 +47,16 @@ export default function view_bbs(){
   const API_LIKE = "/like/up";
   const API_DWN = "/like/dw";
   const API_CHK = "/like/chk";
+  const API_Stat = "/bbs/buystat";
   const [comm, setComm] = useState([]);
   const [commin, setCommin] = useState('');
   const [likehit, setLikehit] = useState();
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);  
-  const [buystatus, setBuystatus] = useState('');
   const cPage = router.query.cPage;
   const b_idx = router.query.b_idx;
-
+  const status = router.query.status; 
+  const [buystatus, setBuystatus] = useState();
 
   function likesubmit(){
     if(likehit == 0){
@@ -90,9 +91,7 @@ function likechk(){
     API_CHK,null,
     {params:{b_idx:b_idx, m_idx:m_idx}}
   ).then((json) =>{
-    console.log(json.data);
     setLikehit(json.data.cnt);
-    console.log(json.data.cnt);
   });
 }
 function getLabelText(value) {
@@ -135,15 +134,6 @@ function getLabelText(value) {
     })
   }
 
-  function deleteList(){
-    Axios.post(
-      API_DEL,null,
-      {params:{b_idx:b_idx}}
-    ).then(() => {
-      router.replace("/bbs/free_bbs");
-    })
-  }
-
   function commSubmit(){
     Axios.post(
       API_Submit, null,
@@ -155,13 +145,31 @@ function getLabelText(value) {
 
   }
   function buyChange(e){
-    setBuystatus(e.target.value);
+        setBuystatus(e.target.value)
+        console.log(buystatus);
+  } 
+  function buystatsubmit(){
+      Axios.post(
+        API_Stat,null,
+        {params:{status:buystatus, b_idx:b_idx}}
+      ).then(
+        router.back()
+      )
+  }
+  function deletebbs(){
+    Axios.post(
+        API_DEL,null,
+        {params:{b_idx:b_idx}}
+    ).then(
+      router.back()
+    )
   }
 
   useEffect(() => {
     getList();
     getComm();  
     likechk();
+    setBuystatus(status);
      },[]);
 
    return( 
@@ -194,25 +202,25 @@ function getLabelText(value) {
                 {(list.bname === 'RESELL' && <Typography variant="h3" color="text.secondary" gutterBottom>
                         금액:  {list.price}원
                       </Typography>)}
-              </Grid>{
+              </Grid><Grid>{
                 list.nickname == nickname && (
-                  <FormControl variant="standard" sx={{ width:'300px', marginLeft:5 }}>
-                  <InputLabel id="demo-simple-select-standard-label">거래상태</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    value={buystatus}
-                    onChange={buyChange}
-                    label="검색종류"
-                  >
-                    <MenuItem value={'거래가능'}>거래가능
-                    </MenuItem>
-                    <MenuItem value={'예약중'}>예약중</MenuItem>
-                    <MenuItem value={'거래완료'}>거래완료</MenuItem>
-                  </Select>
-                </FormControl>
+                <><FormControl variant="standard" sx={{ width: '100px', marginLeft: 5 }}>
+                     <InputLabel id="demo-simple-select-standard-label">거래상태</InputLabel>
+                     <Select
+                       labelId="demo-simple-select-standard-label"
+                       id="demo-simple-select-standard"
+                       value={buystatus}
+                       onChange={buyChange}
+                       label="검색종류"
+                     >
+                       <MenuItem value={3}>거래가능
+                       </MenuItem>
+                       <MenuItem value={4}>예약중</MenuItem>
+                       <MenuItem value={5}>거래완료</MenuItem>
+                     </Select>
+                   </FormControl><Button variant="contained" size="small" sx={{marginTop:'15px', marginLeft:'15px'}} onClick={buystatsubmit}>거래상태수정</Button></>
                   )
-              }
+              }</Grid>
               <Grid item>
                  <Viewer list={list.content}
                  />
@@ -235,32 +243,7 @@ function getLabelText(value) {
                     </IconButton>
             </Typography>
             </Box>
-            <Typography variant="subtitle1" component="div" sx={{width:250, marginTop:'30px'}}>판매자를 평가해주세요
-            <Box
-              sx={{
-                width: 250,
-                display: 'block',
-                alignItems: 'center',
-              }}
-            >
-              <Rating
-                name="hover-feedback"
-                value={value}
-                precision={1}
-                getLabelText={getLabelText}
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                }}
-                onChangeActive={(event, newHover) => {
-                  setHover(newHover);
-                }}
-                emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-              />
-              {value !== null && (
-                <Box sx={{ ml: 1 }}>{labels[hover !== -1 ? hover : value]}</Box>
-              )}
-            </Box>
-            </Typography>
+            {list.nickname == nickname && <Button variant="contained" size="medium" sx={{marginRight:'15px'}} onClick={deletebbs}>삭제</Button>}
           </Grid> 
         </Grid>
       </Grid>

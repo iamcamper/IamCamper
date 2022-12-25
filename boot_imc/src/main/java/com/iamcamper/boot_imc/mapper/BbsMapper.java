@@ -21,7 +21,7 @@ public interface BbsMapper {
     int searchCount(@Param("bname") String bname, @Param("way") String way, @Param("search") String search);
 
     void edit(String subject, String content, String file_name, String ori_name, String bname, String price,
-            String b_idx);
+            String b_idx, String status);
 
     BbsVO del(String b_idx);
 
@@ -36,4 +36,6 @@ public interface BbsMapper {
     void like(@Param("b_idx") Integer b_idx);
 
     BbsVO subchk(@Param("subject") String subject);
+
+    void Buystat(String status, String b_idx);
 }

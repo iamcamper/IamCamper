@@ -33,5 +33,5 @@ public class LikeService {
     public void likeup(Integer b_idx) {
         bmap.like(b_idx);
     }
-
+    
 }

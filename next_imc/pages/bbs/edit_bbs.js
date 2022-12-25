@@ -28,14 +28,18 @@ export default function edit_bbs(){
     const router = useRouter();
     const formData = new FormData();
     let file = null;
-
+    const [status, setStatus] = useState(0);
    const [bname, setBname] = useState('');
    const [price, setPrice] = useState('');
 
     
     const BnameChange = (e) => {
         setBname(e.target.value);
-        console.log(bname);
+        if(bname == 'RESELL'){
+            setStatus(3);
+        }else{
+            setStatus(0);
+        }
     }; 
     const subjectChange = (e) => {
         setSubject(e.target.value);
@@ -69,6 +73,7 @@ export default function edit_bbs(){
                 bname:bname,
                 price:price,
                 cPage:1,
+                status:status,
             },
             headers:{'Content-Type': 'multipart/form-data',},},
         ).then(
