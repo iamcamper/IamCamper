@@ -218,11 +218,6 @@ public class BbsController {
 
         return map;
     }
-    @RequestMapping("/del")
-    public void delbbs(String b_idx){
-        b_Service.del(b_idx);
-    }
-
     @RequestMapping("/addbbs")
     public Map<String, Object> addBbs(String nickname, String subject, String content, String bname, String price,
             @RequestPart(value = "file", required = false) MultipartFile file, String thum_img, String status) {
