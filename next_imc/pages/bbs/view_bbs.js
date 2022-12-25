@@ -18,6 +18,10 @@ import { getCookie } from "cookies-next";
 import dynamic from "next/dynamic";
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+
+import MenuItem from '@mui/material/MenuItem';
 
 const Viewer = dynamic(()=> import('./viewer'), {ssr:false});
 
@@ -40,9 +44,6 @@ export default function view_bbs(){
   const API_DEL = "/bbs/del";
   const API_Comm = "/bbs/commList";
   const API_Submit = "/bbs/commAdd";
-  const API_CLIKE = "/like/cup";
-  const API_CDEL = "/like/cdw";
-  const API_CCHK = "/like/cchk";
   const API_LIKE = "/like/up";
   const API_DWN = "/like/dw";
   const API_CHK = "/like/chk";
@@ -51,12 +52,9 @@ export default function view_bbs(){
   const [likehit, setLikehit] = useState();
   const [value, setValue] = useState(2);
   const [hover, setHover] = useState(-1);  
+  const [buystatus, setBuystatus] = useState('');
   const cPage = router.query.cPage;
   const b_idx = router.query.b_idx;
-  const c_idx = router.query.c_idx;
-  console.log(c_idx);
-  console.log(list);
-  console.log(comm);
 
 
   function likesubmit(){
@@ -83,10 +81,6 @@ export default function view_bbs(){
     console.log(likehit);
   }
   let likecolor = {
-    0 : <FavoriteBorderIcon/>,
-    1 : <FavoriteIcon color="error"/>
-  }
-  let clikecolor = {
     0 : <FavoriteBorderIcon/>,
     1 : <FavoriteIcon color="error"/>
   }
@@ -160,26 +154,14 @@ function getLabelText(value) {
     );
 
   }
-  const [clikehit, setClikehit] = useState();
-    
-  function Likeaction(e){
-    console.log(e);
+  function buyChange(e){
+    setBuystatus(e.target.value);
   }
-  
-  function clikechk(){
-      Axios.post(
-        API_CCHK,null,
-          {params:{c_idx:c_idx, m_idx:m_idx}}
-        ).then((json) =>{
-          setClikehit(json.data.ccnt);
-          console.log(json.data.ccnt);
-        });
-      }
+
   useEffect(() => {
     getList();
     getComm();  
     likechk();
-    clikechk();
      },[]);
 
    return( 
@@ -212,7 +194,25 @@ function getLabelText(value) {
                 {(list.bname === 'RESELL' && <Typography variant="h3" color="text.secondary" gutterBottom>
                         금액:  {list.price}원
                       </Typography>)}
-              </Grid>
+              </Grid>{
+                list.nickname == nickname && (
+                  <FormControl variant="standard" sx={{ width:'300px', marginLeft:5 }}>
+                  <InputLabel id="demo-simple-select-standard-label">거래상태</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    id="demo-simple-select-standard"
+                    value={buystatus}
+                    onChange={buyChange}
+                    label="검색종류"
+                  >
+                    <MenuItem value={'거래가능'}>거래가능
+                    </MenuItem>
+                    <MenuItem value={'예약중'}>예약중</MenuItem>
+                    <MenuItem value={'거래완료'}>거래완료</MenuItem>
+                  </Select>
+                </FormControl>
+                  )
+              }
               <Grid item>
                  <Viewer list={list.content}
                  />
@@ -250,11 +250,9 @@ function getLabelText(value) {
                 getLabelText={getLabelText}
                 onChange={(event, newValue) => {
                   setValue(newValue);
-                  console.log(value);
                 }}
                 onChangeActive={(event, newHover) => {
                   setHover(newHover);
-                  console.log(hover);
                 }}
                 emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
               />
@@ -312,15 +310,6 @@ function getLabelText(value) {
           <Grid item xs zeroMinWidth>
             <Typography noWrap>{comm.content}</Typography>
           </Grid> 
-          <Grid>
-          <IconButton aria-label="FavoriteBorder" value={comm.c_idx} onClick={(e) => {Likeaction(e.target.value)}}>
-                      {
-                        clikehit == 1
-                        ? <FavoriteIcon color="error"/>
-                        : <FavoriteBorderIcon/>
-                      }
-                 </IconButton>
-          </Grid>
       </Grid> 
       </Paper>))} 
     </Box>
