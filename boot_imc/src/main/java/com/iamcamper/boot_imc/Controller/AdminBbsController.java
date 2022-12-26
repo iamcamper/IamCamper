@@ -29,7 +29,6 @@ import com.iamcamper.boot_imc.util.Paging;
 import com.iamcamper.boot_imc.util.ThumImgUtil;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin(originPatterns = "http://localhost:3000")
@@ -44,8 +43,9 @@ public class AdminBbsController {
     @Autowired
     private HttpServletResponse res;
 
-    String img_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_img";
-    String file_path = "/Users/yura/ReactTest/work/IamCamper/next_imc/public/upload_file";
+    String img_path = "C:/ProJect/IamCamper/IamCamper/next_imc/public/upload_img";
+    String file_path = "C:/ProJect/IamCamper/IamCamper/next_imc/public/upload_file";
+
     /*
      * 공지사항 리스트 불러오기
      */
@@ -251,7 +251,6 @@ public class AdminBbsController {
 
         a_service.bbsEdit(b_idx, subject, content, file_name, ori_name);
 
-
         return map;
 
     }
@@ -306,10 +305,10 @@ public class AdminBbsController {
         // 전체 가입한 회원 수 가져오기
         int totalReg = a_service.memberCnt();
 
-        //소셜별 가입자 수 가져오기
+        // 소셜별 가입자 수 가져오기
         List<SnsCountVO> snsCountList = a_service.snsCount();
         SnsCountVO[] s_list = null;
-        if(snsCountList.size() > 0){
+        if (snsCountList.size() > 0) {
             s_list = new SnsCountVO[snsCountList.size()];
             snsCountList.toArray(s_list);
         }
@@ -322,10 +321,10 @@ public class AdminBbsController {
             todayBbsCountList.toArray(b_total_list);
         }
 
-        //오늘 게시판 인기글 가져오기
+        // 오늘 게시판 인기글 가져오기
         List<BbsVO> hitList = a_service.hitBbs();
         BbsVO[] b_list = null;
-        if(hitList.size() > 0){
+        if (hitList.size() > 0) {
             b_list = new BbsVO[hitList.size()];
             hitList.toArray(b_list);
         }
@@ -494,7 +493,7 @@ public class AdminBbsController {
      * 어드민 글 삭제
      */
     @RequestMapping("/del")
-    public Map<String, Object> del(String b_idx){
+    public Map<String, Object> del(String b_idx) {
 
         Map<String, Object> map = new HashMap<String, Object>();
 

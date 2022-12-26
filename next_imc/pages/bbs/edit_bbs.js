@@ -62,7 +62,11 @@ export default function edit_bbs(){
     function submit(){
 
         formData.append("file", file);
-        formData.append("nickname", nickname);
+        if(nickname == null){
+            alert("로그인이 필요합니다")
+        }else(
+            formData.append("nickname", nickname)
+        );
         if(subject == null){
             alert("제목을 입력해주세요");
             return;

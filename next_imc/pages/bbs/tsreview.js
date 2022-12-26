@@ -122,7 +122,6 @@ function getNotice(){
           <Main1_top />
           <Main1 />
           <Main1_Menu />
-          <Banner/>
           <div>
                 <Typography variant="h3" color="text.secondary" sx={{width:1600, textAlign:'left', margin:'auto', padding:2}}>
                         관광지 후기 게시판

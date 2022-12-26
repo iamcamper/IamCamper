@@ -125,7 +125,6 @@ const pageChange = (event, value) => {
           <Main1_top />
           <Main1 />
           <Main1_Menu />
-          <Banner/>
           <div>
            <Typography variant="h3" color="text.secondary" sx={{width:1600, textAlign:'left', margin:'auto', padding:2}}>
                         자유게시판

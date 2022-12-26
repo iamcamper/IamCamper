@@ -12,6 +12,7 @@ export default function Main_Card(){
     const [blist,setBlist] = useState([]);
     const [ulist,setUlist] = useState([]);
     const [plist,setPlist] = useState([]);
+    console.log(ulist);
     
     function getBlist(){
         Axios.get(
@@ -125,8 +126,10 @@ export default function Main_Card(){
                                     <Typography variant='body1' color='text.secondary'className='bbstitle'>
                                     <Link
                                     className='bbstitle'
-                                    href={"bbs/buy_bbs?b_idx="+item.b_idx}
-                                    >{item.subject}
+                                    href={{pathname:'/bbs/view_bbs',
+                                          query:{ b_idx : item.b_idx },
+                                        }}
+                                    > {item.subject}
                                     </Link>
                                    </Typography>
                                  </Grid>
