@@ -174,7 +174,7 @@
 		SELECT a.* FROM(
 			SELECT @RN:=@RN+1 AS rownnum, b.* 
 			FROM (SELECT * FROM bbs
-					WHERE status = 0 AND bname= #{bname} ORDER BY hit DESC) b, (SELECT @RN:=0) r) a
+					WHERE status = 3 AND bname= #{bname} ORDER BY hit DESC) b, (SELECT @RN:=0) r) a
 			WHERE rownnum BETWEEN '1' AND '10'
 	</select>
 	<!-- 베스트 글 불러오기 -->
