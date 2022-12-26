@@ -39,17 +39,14 @@ export default function free_bbs(){
     const [totalPage, setTotalPage] = useState();
     const API_URL = "/bbs/list";
     const router = useRouter();
-    console.log(cookie);
     const API_SEARCH = "/bbs/search";
     const [bbschk, setBbschk] = useState('');
     const [searchtxt, setSearchtxt] = useState('');
     const [waychk, setWaychk] = useState('');
     const [notice, setNotice] = useState([]);
-      console.log(searchtxt);
 
     const handleChange = (event) => {
       setBbschk(event.target.value);
-      console.log(bbschk);
     };
     const whandleChange = (event) => {
       setWaychk(event.target.value);

@@ -29,15 +29,12 @@ export default function buy_bbs() {
     const router = useRouter();
 
     const API_URL = "/bbs/list";
-    console.log(list);
     const [bbschk, setBbschk] = useState('');
     const [searchtxt, setSearchtxt] = useState('');
     const [waychk, setWaychk] = useState('');
-      console.log(searchtxt);
 
     const handleChange = (event) => {
       setBbschk(event.target.value);
-      console.log(bbschk);
     };
     const whandleChange = (event) => {
       setWaychk(event.target.value);
@@ -53,9 +50,6 @@ export default function buy_bbs() {
         alert('검색종류를 선택해주세요')
         return;
       }
-      console.log(bbschk);
-      console.log(waychk);
-      console.log(searchtxt);
        Axios.post(
         API_SEARCH, null,
         {params:{bname:bbschk, way:waychk, search:searchtxt, cPage:cPage}}

@@ -28,7 +28,7 @@ export default function edit_bbs(){
     const router = useRouter();
     const formData = new FormData();
     let file = null;
-    const [bname, setBname] = useState(0);
+    const [bname, setBname] = useState('FREE');
     const [status, setStatus] = useState(0);
    const [price, setPrice] = useState('');
 
@@ -45,7 +45,6 @@ export default function edit_bbs(){
 
     const subjectChange = (e) => {
         setSubject(e.target.value);
-        console.log(subject);
     }
     const changePrice = (e) => {
         var checkprice = /[0-9]/gi
@@ -70,8 +69,6 @@ export default function edit_bbs(){
         }else{
             formData.append("subject", subject);
         }
-            console.log(bname);
-            console.log(status);
         Axios.post(
             WRITE_URL, formData,
             {params:{
@@ -135,9 +132,8 @@ export default function edit_bbs(){
                                 </tr>
                 </Stack> 
                 {
-                    (function() {
-                        if (bname === 'RESELL') return (    
-                    <Stack items sx={{width:'600px', paddingLeft:'30px'}}>
+                bname === 'RESELL'
+                 ?   <Stack items sx={{width:'600px', paddingLeft:'30px'}}>
                          <tr>
                             <th style={{padding:'20px', textAlign:'left'}}>
                                 <label htmlFor='price'>금액</label>
@@ -145,10 +141,9 @@ export default function edit_bbs(){
                             <td>
                                 <Input placeholder='금액' sx={{width:'450px'}} onChange={changePrice}/>
                             </td>
-                        </tr>
+                        </tr>   
                    </Stack>
-                            );
-                    })()
+                : <Stack></Stack>
                     }
                 <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
                          <th style={{padding:'20px', textAlign:'left'}}>

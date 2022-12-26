@@ -18,7 +18,6 @@ export default function QNA(){
     const [list, setList] = useState([]);
     const [cPage, setCpage] = useState(1);
     const [totalPage, setTotalPage] = useState();
-    console.log(list);
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,

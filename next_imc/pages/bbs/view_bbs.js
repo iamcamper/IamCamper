@@ -79,7 +79,6 @@ export default function view_bbs(){
         setLikehit(0)
       );
     }
-    console.log(likehit);
   }
   let likecolor = {
     0 : <FavoriteBorderIcon/>,
@@ -146,7 +145,6 @@ function getLabelText(value) {
   }
   function buyChange(e){
         setBuystatus(e.target.value)
-        console.log(buystatus);
   } 
   function buystatsubmit(){
       Axios.post(
@@ -199,9 +197,11 @@ function getLabelText(value) {
                 <Typography variant="h4" color="text.secondary" gutterBottom>
                     작성자: {list.nickname}
                 </Typography>
-                {(list.bname === 'RESELL' && <Typography variant="h3" color="text.secondary" gutterBottom>
+                {list.bname === 'RESELL' 
+                ?<Typography variant="h3" color="text.secondary" gutterBottom>
                         금액:  {list.price}원
-                      </Typography>)}
+                      </Typography>
+                : <Typography> </Typography>}
             </Grid><Grid>{
                 list.nickname === nickname & list.bname === 'RESELL' 
                 ? 

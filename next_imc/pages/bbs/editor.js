@@ -10,7 +10,6 @@ export default function editor(props){
     const con = props.content;
    
     const addImage = async(blob, callback) => {
-        console.log(blob);
        const frm = new FormData();
        frm.append('file', blob);
         try{

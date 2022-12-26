@@ -43,14 +43,12 @@ export default function free_bbs(){
     const API_URL = "/bbs/list";
     const API_SEARCH = "/bbs/search";
     const router = useRouter();
-    console.log(list);
     const [bbschk, setBbschk] = useState('');
     const [searchtxt, setSearchtxt] = useState('');
     const [waychk, setWaychk] = useState('');
 
     const handleChange = (event) => {
       setBbschk(event.target.value);
-      console.log(bbschk);
     };
     const whandleChange = (event) => {
       setWaychk(event.target.value);
@@ -92,7 +90,6 @@ export default function free_bbs(){
         setList(json.data.list);
         }
         setTotalPage(json.data.totalPage);
-        
       });
   }
   function getNotice(){
@@ -107,7 +104,6 @@ export default function free_bbs(){
       }
     });
   }
-
   const bbstab = ['자유게시판', '후기게시판' , '맛집게시판' , '중고거래게시판']
 
   function edit(){

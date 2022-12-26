@@ -63,7 +63,6 @@ public class BbsController {
         Map<String, Object> map = new HashMap<String, Object>();
 
         int totalCount = b_Service.totalCount(bname);
-        System.out.println(totalCount);
 
         page.setNumPerPage(9);
         page.setTotalCount(totalCount);
@@ -129,10 +128,6 @@ public class BbsController {
 
         Paging page = new Paging();
 
-        System.out.println(bname);
-        System.out.println(way);
-        System.out.println(search);
-
         int totalCount = b_Service.searchCount(bname, way, search);
 
         page.setTotalCount(totalCount);
@@ -147,14 +142,14 @@ public class BbsController {
         String end = String.valueOf(page.getEnd());
 
         List<BbsVO> list = b_Service.searchResult(bname, way, search, begin, end);
-        System.out.println("list" + list);
+
         BbsVO[] b_list = null;
 
         if (list.size() > 0) {
             b_list = new BbsVO[list.size()];
             list.toArray(b_list);
         }
-        System.out.println("b_list:" + b_list);
+
         map.put("list", b_list);
         map.put("totalPage", page.getTotalPage());
 
@@ -197,7 +192,7 @@ public class BbsController {
             list.toArray(c_list);
         }
         map.put("clist", c_list);
-        
+
         return map;
     }
 
@@ -207,7 +202,7 @@ public class BbsController {
 
         int ren = (int) (Math.random() * 3000 + 1);
 
-        BbsVO[] ar = b_Service.blist2("CAMREVIEW", "TSREVIEW", "RESTREVIEW","FREE");
+        BbsVO[] ar = b_Service.blist2("CAMREVIEW", "TSREVIEW", "RESTREVIEW", "FREE");
         BbsVO[] ar2 = b_Service.blist("RESELL");
         CamVO[] ar3 = cam_Service.picklist(ren);
         BbsVO[] ar4 = null;
@@ -218,6 +213,7 @@ public class BbsController {
 
         return map;
     }
+
     @RequestMapping("/addbbs")
     public Map<String, Object> addBbs(String nickname, String subject, String content, String bname, String price,
             @RequestPart(value = "file", required = false) MultipartFile file, String thum_img, String status) {
@@ -314,8 +310,6 @@ public class BbsController {
                 e.printStackTrace();
             }
         }
-        System.out.println(img_path);
-        System.out.println(fname);
         map.put("fname", fname);
 
         return map;
@@ -329,6 +323,7 @@ public class BbsController {
 
         return vo;
     }
+
     @RequestMapping("/del")
     public BbsVO delBbs(String b_idx) {
         BbsVO vo = b_Service.del(b_idx);
@@ -337,7 +332,7 @@ public class BbsController {
     }
 
     @RequestMapping("/buystat")
-    public void buystatus(String status, String b_idx){
+    public void buystatus(String status, String b_idx) {
         b_Service.fixstat(status, b_idx);
     }
 

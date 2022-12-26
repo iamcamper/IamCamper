@@ -30,7 +30,6 @@ export default function fix_bbs(){
     const [status, setStatus] = useState(fix.status);
     const b_idx = router.query.b_idx;
     
-    console.log(fix.status);
 
     function getFixdata(){
         setFix(JSON.parse(router.query.list))
@@ -120,7 +119,7 @@ export default function fix_bbs(){
                 </tr>
             </Stack>
                 <Stack items sx={{width:'300px', paddingLeft:'30px'}}>
-                <tr>
+                        <tr>
                                     <th style={{padding:'20px', textAlign:'left'}}>
                                         <label htmlFor='writer'>글쓴이</label>
                                     </th>
