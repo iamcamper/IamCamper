@@ -98,7 +98,7 @@ export default function write(){
                                             <InputLabel id="category">
                                                     카테고리
                                             </InputLabel>
-                                                <Select labelId='category' onChange={changeBname} value='BANNERMAIN'>
+                                                <Select labelId='category' onChange={changeBname} value={bname}>
                                                     <MenuItem value='BANNERMAIN'>
                                                         메인
                                                     </MenuItem>
