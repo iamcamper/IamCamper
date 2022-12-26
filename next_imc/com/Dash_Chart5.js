@@ -23,7 +23,7 @@ const data =  {
                 type: 'line',
                 label: '회원 가입 현황 (단위:명)',
                 backgroundColor: 'rgb(255, 99, 132)',
-                data: regData.reverse().map((data)=>{
+                data: regData.map((data)=>{
                     return data.cnt;
                 }),
                 borderColor: 'red',
@@ -32,6 +32,7 @@ const data =  {
               
     ],
 };
+
 
 const options = {
     responsive: false
@@ -53,3 +54,6 @@ const options = {
     );
 
 }
+
+
+

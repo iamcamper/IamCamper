@@ -1,3 +1,4 @@
+
 import { Box, Stack, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button, Pagination, Typography} from '@mui/material';
 import { useRouter } from 'next/router';
 import Admin_Footer from '../../com/Admin_Footer';
@@ -97,7 +98,7 @@ export default function bbsnotice(){
                 <Admin_Sidebar/>
                 <Box flex={4} p={2} sx={{display:{xs:'none', sm:'block', backgroundColor:'lightgray'}}}>
                 <Typography variant="h5" gutterBottom>
-                    [ 공지사항 ]
+                    [ 게시판 공지사항 ]
                 </Typography>
                     <Button size="small" variant="contained" sx={{margin:"10px"}} onClick={write}>
                         글쓰기</Button>
@@ -119,7 +120,7 @@ export default function bbsnotice(){
                                         <TableCell>
                                             <Link href={{
                                                 pathname: "/admin/views",
-                                                query: {b_idx: data.b_idx, cPage: cPage, bname:'ADNOTICE', bbs:'notice'},
+                                                query: {b_idx: data.b_idx, cPage: cPage, bname:'ADNOTICE', bbs:'bbsnotice'},
                                             }}>
                                                 {data.subject}
                                             </Link>

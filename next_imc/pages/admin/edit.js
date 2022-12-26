@@ -1,3 +1,4 @@
+
 import { Box, Stack, Paper, Button, Input, Dialog, DialogTitle, DialogContent, DialogActions, InputLabel, MenuItem, FormControl, Typography } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import Admin_Footer from '../../com/Admin_Footer';
@@ -88,6 +89,7 @@ export default function write(){
             },
             headers:{'Content-Type': 'multipart/form-data',},},
         ).then(
+            alert("수정이 완료되었습니다!"),
             router.push({
                 pathname:'/admin/views',
                 query:{cPage: cPage, b_idx: b_idx, bname: bname, bbs:bbs}
@@ -185,3 +187,4 @@ export default function write(){
         );
     }
    
+
