@@ -12,7 +12,3 @@ module.exports = {
     loader: "file-loader",
   }]
 }
-
-const withImages = require('next-images')
-
-module.exports = withImages();
