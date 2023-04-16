@@ -3,7 +3,7 @@
     "react": "^18.2.0"
   },
   "scripts": {
-    "build": "webpack --mode development  --config ./webpack-config.js",
+    "build": "webpack",
     "dev": "next",
     "start": "webpack --mode development",
     "next build": "next build",
