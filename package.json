@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack",
     "dev": "next",
-    "start": "next start",
+    "start": "webpack --mode development",
     "next build": "next build",
     "webpack": "webpack",
  }
