@@ -7,5 +7,5 @@
     "dev": "next",
     "start": "next start",
     "next build": "next build"
- },
+ }
 }
