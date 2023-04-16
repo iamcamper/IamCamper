@@ -3,6 +3,9 @@
     "react": "^18.2.0"
   },
   "scripts": {
-    "build": "webpack"
-}
+    "build": "webpack",
+    "dev": "next",
+    "start": "next start",
+    "next build": "next build",
+ }
 }
