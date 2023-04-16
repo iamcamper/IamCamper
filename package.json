@@ -7,6 +7,6 @@
     "dev": "next",
     "start": "webpack --mode development",
     "next build": "next build",
-    "webpack": "webpack",
+    "webpack": "webpack"
  }
 }
