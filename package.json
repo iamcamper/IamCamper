@@ -6,6 +6,7 @@
     "build": "webpack",
     "dev": "next",
     "start": "next start",
-    "next build": "next build"
+    "next build": "next build",
+    "webpack": "webpack",
  }
 }
