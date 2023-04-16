@@ -7,8 +7,8 @@ module.exports = {
     path : path.resolve(__dirname, './dist'),
   },
   mode : 'development',
-  loaders:[  {
+  loaders:{
     test: /\.(gif|svg|jpg|png)$/,
     loader: "file-loader",
-  }]
+  },
 }
